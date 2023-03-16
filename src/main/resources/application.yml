@@ -1,0 +1,19 @@
+spring:
+  main.banner-mode: off
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/goji_database'
+    username: 'postgres'
+    password: 'postgres'
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: update
+    properties:
+      hibernate:
+        dialect: 'org.hibernate.dialect.PostgreSQL9Dialect'
+        jdbc.time_zone: UTC
+        use_nationalized_character_data: true
+  servlet:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+      enabled: true

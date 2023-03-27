@@ -12,11 +12,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "product_id")
-    private Long product_id;
+    private Long productId;
 
     @NotBlank(message = "Product name must not be blank")
     @Column(name = "product_name", unique = true)
-    private String product_name;
+    private String productName;
 
     @Column(name = "version")
     private String version;

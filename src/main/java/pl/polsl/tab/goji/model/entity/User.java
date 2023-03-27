@@ -1,9 +1,10 @@
 package pl.polsl.tab.goji.model.entity;
 
-import lombok.Data;
+import  lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -33,4 +34,9 @@ public class User {
     @NotBlank(message = "Password must not be blank")
     @Column(name = "password")
     private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "roleId")
+    @NotNull(message = "Role must be provided")
+    private UserRole userRole;
 }

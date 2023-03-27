@@ -7,17 +7,17 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "issue")
+@Table(name = "task")
 @Data
-public class Issue {
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "issue_id")
-    private Long issueId;
+    @Column(name = "task_id")
+    private Long requestId;
 
-    @NotBlank(message = "Issue name must not be blank")
-    @Column(name = "issue_name")
-    private String issueName;
+    @NotBlank(message = "Task name must not be blank")
+    @Column(name = "task_name")
+    private String requestName;
 
     @Column(name = "description")
     private String description;
@@ -43,8 +43,8 @@ public class Issue {
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    @Column(name = "responsible_manager")
-    private User responsibleManager;
+    @Column(name = "responsible_worker")
+    private User responsibleWorker;
 
     @PrePersist
     public void prePersist() {

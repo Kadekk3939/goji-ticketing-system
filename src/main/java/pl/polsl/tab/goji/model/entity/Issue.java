@@ -7,17 +7,17 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "request")
+@Table(name = "issue")
 @Data
-public class Request {
+public class Issue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "request_id")
-    private Long requestId;
+    @Column(name = "issue_id")
+    private Long issueId;
 
     @NotBlank(message = "Request name must not be blank")
-    @Column(name = "request_name")
-    private String requestName;
+    @Column(name = "issue_name")
+    private String issueName;
 
     @Column(name = "description")
     private String description;

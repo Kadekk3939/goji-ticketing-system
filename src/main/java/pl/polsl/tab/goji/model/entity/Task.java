@@ -40,12 +40,12 @@ public class Task {
 
     @Column(name = "finalization_date")
     private LocalDateTime finalizationDate;
-
+    /*
     @ManyToOne
     @JoinColumn(name = "userId")
     @Column(name = "responsible_worker")
     private User responsibleWorker;
-
+*/
     @PrePersist
     public void prePersist() {
         openDate = LocalDateTime.now();

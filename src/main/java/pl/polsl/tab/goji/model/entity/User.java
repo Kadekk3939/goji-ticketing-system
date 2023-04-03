@@ -34,9 +34,10 @@ public class User {
     @NotBlank(message = "Password must not be blank")
     @Column(name = "password")
     private String password;
-
+    /*
     @ManyToOne
     @JoinColumn(name = "roleId")
     @NotNull(message = "Role must be provided")
     private UserRole userRole;
+     */
 }

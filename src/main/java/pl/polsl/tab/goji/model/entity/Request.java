@@ -37,12 +37,12 @@ public class Request {
 
     @Column(name = "finalization_date")
     private LocalDateTime finalizationDate;
-
+    /*
     @ManyToOne
     @JoinColumn(name = "userId")
     @Column(name = "responsible_manager")
     private User responsibleManager;
-
+*/
     @PrePersist
     public void prePersist() {
         openDate = LocalDateTime.now();

@@ -9,12 +9,14 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LoginComponent } from './components/login/login.component';
 import {FormsModule} from "@angular/forms";
 import { UserComponent } from './components/user/user.component';
+import { ListComponent } from './components/list/list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    ListComponent
   ],
     imports: [
         BrowserModule,

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user',
@@ -7,4 +8,8 @@ import { Component } from '@angular/core';
 })
 export class UserComponent {
 
+  constructor( private router: Router) {}
+  public logout(): void {
+    this.router.navigateByUrl('/');
+  }
 }

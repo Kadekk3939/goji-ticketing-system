@@ -1,1 +1,17 @@
-<p>login works!</p>
+<body>
+<header>
+  <h1>Welcome</h1>
+</header>
+
+<main>
+  <form (submit)="login()" class="form_class" name="login_form">
+    <div class="form_div">
+      <label>Login:</label>
+      <input class="field_class" for="username" [(ngModel)]="credentials.login" type="text" placeholder="login" name="username" autofocus>
+      <label>Password:</label>
+      <input class="field_class" for="password" [(ngModel)]="credentials.password" type="password" placeholder="password" name="password">
+      <button class="submit_class" type="submit">Login</button>
+    </div>
+  </form>
+</main>
+</body>

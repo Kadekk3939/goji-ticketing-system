@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "client")
@@ -17,7 +16,7 @@ public class Client {
 
     @NotBlank(message = "Name must not be blank")
     @Column(name = "Name")
-    private String firstName;
+    private String name;
 
 
     @NotBlank(message = "Email must not be blank")

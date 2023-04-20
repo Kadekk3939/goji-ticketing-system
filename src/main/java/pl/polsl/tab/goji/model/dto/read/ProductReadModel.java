@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientReadModel {
-    String name;
-    String email;
-    String phoneNumber;
+public class ProductReadModel {
+    private String productName;
+    private String version;
+    private String description;
 }

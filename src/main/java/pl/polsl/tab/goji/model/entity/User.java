@@ -40,4 +40,6 @@ public class User {
     @NotNull(message = "Role must be provided")
     private UserRole userRole;
      */
+
+    //TODO: is active
 }

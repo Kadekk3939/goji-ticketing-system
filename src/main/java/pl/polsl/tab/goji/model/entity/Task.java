@@ -13,11 +13,11 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "task_id")
-    private Long requestId;
+    private Long taskId;
 
     @NotBlank(message = "Task name must not be blank")
     @Column(name = "task_name")
-    private String requestName;
+    private String taskName;
 
     @Column(name = "description")
     private String description;

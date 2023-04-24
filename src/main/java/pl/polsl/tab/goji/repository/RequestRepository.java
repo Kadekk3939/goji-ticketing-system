@@ -10,5 +10,5 @@ public interface RequestRepository extends JpaRepository<Request, Long>{
 
     Optional<Request> findRequestByRequestId(Long requestId);
 
-    Optional<Request> findIssueByRequestName(String requestId);
+    Optional<Request> findRequestByRequestName(String requestId);
 }

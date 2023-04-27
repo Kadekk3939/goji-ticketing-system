@@ -1,1 +1,26 @@
-<p>list works!</p>
+<body>
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
+  <a class="navbar-brand" href="#"><img src="../../../assets/goji.png" class="d-inline-block" alt="Goji"> </a>
+  <button class ="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="mainmenu">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users/Requests/Issues/Tasks</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<button mat-fab color="primary">
+
+<!--  <mat-icon>note_add</mat-icon>-->
+  <mat-icon>add</mat-icon>
+</button>
+</body>

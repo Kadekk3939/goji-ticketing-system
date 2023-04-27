@@ -10,6 +10,8 @@ import { LoginComponent } from './components/login/login.component';
 import {FormsModule} from "@angular/forms";
 import { UserComponent } from './components/user/user.component';
 import { ListComponent } from './components/list/list.component';
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -18,13 +20,15 @@ import { ListComponent } from './components/list/list.component';
     UserComponent,
     ListComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatSlideToggleModule,
-        FormsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    FormsModule,
+    MatIconModule,
+    MatButtonModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -31,8 +31,33 @@ img {
 .nav-item {
   float: left;
 }
-button {
+.add-button {
   float: right;
   margin-right: 5rem;
 }
+
+.element-card {
+  max-width: 50svw;
+  max-height: 50svh;
+  margin: 10px;
+}
+.element-card-actions {
+  margin-left:auto;
+}
+
+
+.mod-button {
+  margin: 0px 5px;
+}
+.paginator{
+  max-width: 50svw;
+  margin-top: 40svh;
+}
+
+
+
+
+
+
+
 

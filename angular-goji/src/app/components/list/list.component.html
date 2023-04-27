@@ -18,9 +18,37 @@
     </ul>
   </div>
 </nav>
-<button mat-fab color="primary">
-
-<!--  <mat-icon>note_add</mat-icon>-->
+<button mat-fab color="primary" class="add-button">
   <mat-icon>add</mat-icon>
 </button>
+<div class="container" id="main-container">
+  <mat-card class="element-card mat-elevation-z8" *ngFor="let element of pageSlice">
+
+    <mat-card-header>
+      <mat-card-title>{{element}}</mat-card-title>
+      <mat-card-actions class="element-card-actions ">
+        <button mat-mini-fab color="primary" class="mod-button">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-mini-fab color="primary" class="mod-button">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Author: ahahah
+      </p>
+      <p>Total Pages:dcdcdcddc</p>
+      <p>Price:dcdcdccdcdcd</p>
+    </mat-card-content>
+  </mat-card>
+  <mat-paginator [length]="this.elements.length"
+                 [pageSize]="2"
+                 [pageSizeOptions]="[1,2,4]"
+                 (page)="OnPageChange($event)" class="paginator">
+
+  </mat-paginator>
+</div>
+
 </body>

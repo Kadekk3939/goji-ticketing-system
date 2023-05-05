@@ -20,4 +20,6 @@ public class UserWriteModel {
     private String password;
     @NotBlank(message = "Email must not be blank")
     private String email;
+    @NotBlank(message = "Role must not be blank")
+    private String role;
 }

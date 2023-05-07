@@ -6,9 +6,8 @@ body {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-}
-
-body {
+    min-height: 100%;
     margin: 0;
+    height: 100%;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }

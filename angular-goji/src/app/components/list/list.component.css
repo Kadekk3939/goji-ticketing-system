@@ -5,6 +5,7 @@ body {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    min-height: 100%;
 }
 
 header {
@@ -54,5 +55,12 @@ img {
 
 .paginator {
     max-width: 50svw;
-    margin-top: 40svh;
+    margin-top: 10svh;
+    margin-left: 10px;
+    bottom: 0;
+}
+
+.container {
+    margin-left: auto;
+    bottom: 0;
 }

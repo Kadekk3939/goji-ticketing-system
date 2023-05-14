@@ -1,0 +1,65 @@
+<mat-toolbar>
+<!--  <span>{{service.form.controls['$key'].value?"Modify Usr":"New User"}}</span>-->
+    <span>Add user</span>
+
+  <span class="fill-remaining-space"></span>
+<!--  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>-->
+</mat-toolbar>
+<form >
+  <mat-grid-list cols="2" >
+    <mat-grid-tile>
+      <div class="controles-container">
+<!--        <input type="hidden" formControlName="$key">-->
+        <mat-form-field class="formField">
+          <input formControlName="firstName" matInput placeholder="First Name">
+          <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field><br>
+        <mat-form-field class="formField">
+          <input formControlName="lastName" matInput placeholder="Last Name">
+          <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field><br>
+        <mat-form-field class="formField">
+          <input formControlName="usernamae" matInput placeholder="Username">
+          <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field><br>
+        <mat-form-field class="formField">
+          <input formControlName="password" matInput placeholder="Password" [type]="hide ? 'password' : 'text'">
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          <mat-error>This field is mandatory.</mat-error>
+        </mat-form-field><br>
+        <mat-form-field class="formField">
+          <input formControlName="email" matInput placeholder="Email">
+          <mat-error>Invalid email address.</mat-error>
+        </mat-form-field><br>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+
+      <div class="controles-container">
+        <div class="add-bottom-padding">
+          <label>Role:</label><br>
+          <mat-radio-group formControlName="role">
+                          <mat-radio-button value="1">Account Manager</mat-radio-button>
+                          <mat-radio-button value="2">Project Manager</mat-radio-button><br>
+                          <mat-radio-button value="3">Worker</mat-radio-button>
+                          <mat-radio-button value="3">Admin</mat-radio-button>
+          </mat-radio-group>
+        </div><br>
+        <span class="button-row" >
+<!--          <button mat-raised-button color="primary" type="submit" [disabled]="service.form.invalid">Submit</button>-->
+<!--          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>-->
+          <button class="button" mat-raised-button color="primary" type="submit" >Submit</button>
+          <button mat-raised-button color="warn" (click)="onNoClick()">Cancel</button>
+        </span>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
+<style>
+  .button{
+    margin-right: 20px;
+  }
+  .formField{
+    width: 100%;
+  }
+</style>

@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
         this.userMapper = userMapper;
     }
 
-    public User addUser(UserWriteModel userWriteModel) {
+    public UserReadModel addUser(UserWriteModel userWriteModel) {
         User user = userMapper.toEntity(userWriteModel);
         user.setPassword(encoder.encode(userWriteModel.getPassword()));
 
@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
 
         role.ifPresent(user::setUserRole);
         return userRepository.existsUserByLoginOrEmail(user.getLogin(), user.getEmail())
-                ? null : userRepository.save(user);
+                ? null : userMapper.toReadModel(userRepository.save(user));
     }
 
     public List<User> getAllUsers(){

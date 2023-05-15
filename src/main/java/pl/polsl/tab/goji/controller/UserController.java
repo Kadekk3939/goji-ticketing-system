@@ -30,4 +30,9 @@ public class UserController {
     public ResponseEntity<UserReadModel> addUser(@RequestBody UserWriteModel userWriteModel) {
         return new ResponseEntity<>(userService.addUser(userWriteModel), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserReadModel> getUserById(@PathVariable Long id){
+        return ResponseEntity.ok(userService.findUserByUserId(id));
+    }
 }

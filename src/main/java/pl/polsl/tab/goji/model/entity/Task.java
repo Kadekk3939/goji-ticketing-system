@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -40,12 +41,16 @@ public class Task {
 
     @Column(name = "finalization_date")
     private LocalDateTime finalizationDate;
-    /*
+
     @ManyToOne
     @JoinColumn(name = "userId")
-    @Column(name = "responsible_worker")
-    private User responsibleWorker;
-*/
+    private User responsiblePerson;
+
+    @ManyToOne
+    @NotNull(message = "Issue must not be null")
+    @JoinColumn(name = "issueId")
+    private Issue issue;
+
     @PrePersist
     public void prePersist() {
         openDate = LocalDateTime.now();

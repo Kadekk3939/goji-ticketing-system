@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -23,4 +26,12 @@ public class Product {
 
     @Column(name = "description")
     private String description;
+
+    @ManyToOne
+    @NotNull(message = "Client must not be null")
+    @JoinColumn(name = "clientId")
+    private Client client;
+
+    @OneToMany
+    private Set<Request> requests = new HashSet<>();
 }

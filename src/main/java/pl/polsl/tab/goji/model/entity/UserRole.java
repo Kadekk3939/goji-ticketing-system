@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_roles")
@@ -17,4 +19,7 @@ public class UserRole {
     @NotBlank(message = "Role must not be blank")
     @Column(name = "role", unique = true)
     private String roleName;
+
+    @OneToMany
+    private Set<User> users = new HashSet<>();
 }

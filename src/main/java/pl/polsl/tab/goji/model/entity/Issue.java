@@ -4,7 +4,10 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "issue")
@@ -40,12 +43,19 @@ public class Issue {
 
     @Column(name = "finalization_date")
     private LocalDateTime finalizationDate;
-/*
+
     @ManyToOne
     @JoinColumn(name = "userId")
-    @Column(name = "responsible_manager")
-    private User responsibleManager;
-*/
+    private User responsiblePerson;
+
+    @ManyToOne
+    @NotNull(message = "Request must not be null")
+    @JoinColumn(name = "requestId")
+    private Request request;
+
+    @OneToMany
+    private Set<Task> tasks = new HashSet<>();
+
     @PrePersist
     public void prePersist() {
         openDate = LocalDateTime.now();

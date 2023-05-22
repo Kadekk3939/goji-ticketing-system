@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ClientReadModel {
 
     private Long clientId;
-    String name;
-    String email;
-    String phoneNumber;
+    private String name;
+    private String email;
+    private String phoneNumber;
 }

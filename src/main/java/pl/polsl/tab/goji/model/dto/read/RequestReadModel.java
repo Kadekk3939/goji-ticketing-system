@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestReadModel {
+
+    private Long requestId;
     private String requestName;
     private String description;
     private String result;

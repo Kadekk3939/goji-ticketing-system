@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductReadModel {
+
+    private Long productId;
     private String productName;
     private String version;
     private String description;

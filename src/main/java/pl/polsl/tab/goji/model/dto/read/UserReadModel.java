@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserReadModel {
+
+    private Long userId;
     private String firstName;
     private String lastName;
     private String login;

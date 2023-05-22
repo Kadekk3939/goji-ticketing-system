@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientReadModel {
+
+    private Long clientId;
     String name;
     String email;
     String phoneNumber;

@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class IssueReadModel {
+
+    private Long issueId;
     private String issueName;
     private String description;
     private String result;

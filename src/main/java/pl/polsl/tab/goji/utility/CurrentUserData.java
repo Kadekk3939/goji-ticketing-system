@@ -19,7 +19,6 @@ public class CurrentUserData {
         return principal instanceof User;
     }
 
-
     public static User getCurrentUser() {
         Object principal = getPrincipal();
 

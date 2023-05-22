@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskReadModel {
+
+    private Long taskId;
     private String taskName;
     private String description;
     private String result;

@@ -17,3 +17,7 @@ spring:
       max-file-size: 1000MB
       max-request-size: 1000MB
       enabled: true
+polsl:
+  app:
+    jwtSecret: kluczBezpieczenstwa
+    jwtExpirationMs: 86400000

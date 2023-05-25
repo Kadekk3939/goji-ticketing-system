@@ -11,7 +11,7 @@ import pl.polsl.tab.goji.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/user") //TODO: 's
 public class UserController {
 
     private final UserService userService;

@@ -31,18 +31,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return authProvider;
     }
 
-    /*
-    Example user:
-    {
-    "firstName":"ad",
-    "lastName":"min",
-    "login":"admin",
-    "password":"admin",
-    "email":"ad@m.in"
-    }
-    http://localhost:8080/login
-    http://localhost:8080/logout
-     */
     @Override
     public void configure(final HttpSecurity http)
             throws Exception {

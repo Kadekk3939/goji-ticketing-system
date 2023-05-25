@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.polsl.tab.goji.mappers.UserMapper;
+import pl.polsl.tab.goji.mapper.UserMapper;
 import pl.polsl.tab.goji.model.dto.read.UserReadModel;
 import pl.polsl.tab.goji.model.dto.write.UserWriteModel;
 import pl.polsl.tab.goji.model.entity.User;

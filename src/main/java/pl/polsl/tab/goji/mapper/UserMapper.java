@@ -1,4 +1,4 @@
-package pl.polsl.tab.goji.mappers;
+package pl.polsl.tab.goji.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

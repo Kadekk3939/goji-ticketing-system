@@ -10,6 +10,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductWriteModel {
+    @NotBlank(message = "Client Id must not be blank")
+    private Long clientId;
     @NotBlank(message = "Product name must not be blank")
     private String productName;
     private String version;

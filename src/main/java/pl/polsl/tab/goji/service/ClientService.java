@@ -6,10 +6,10 @@ import pl.polsl.tab.goji.mappers.ClientMapper;
 import pl.polsl.tab.goji.model.dto.read.ClientReadModel;
 import pl.polsl.tab.goji.model.dto.write.ClientWriteModel;
 import pl.polsl.tab.goji.model.entity.Client;
-import pl.polsl.tab.goji.model.entity.User;
 import pl.polsl.tab.goji.repository.ClientRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -39,5 +39,10 @@ public class ClientService {
 
     public void deletClientById(Long clientId){
         clientRepository.deleteById(clientId);
+    }
+
+    public Client getClientActionEntityById(Long id) {
+        Optional<Client> client = clientRepository.findClientByClientId(id);
+        return client.orElse(null);
     }
 }

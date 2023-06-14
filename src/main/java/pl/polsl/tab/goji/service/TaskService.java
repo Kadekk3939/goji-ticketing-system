@@ -2,37 +2,49 @@ package pl.polsl.tab.goji.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import pl.polsl.tab.goji.mappers.TaskMapper;
 import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
 import pl.polsl.tab.goji.model.dto.write.TaskWriteModel;
+import pl.polsl.tab.goji.model.entity.Issue;
 import pl.polsl.tab.goji.model.entity.Task;
 import pl.polsl.tab.goji.model.entity.User;
+import pl.polsl.tab.goji.model.enums.Status;
 import pl.polsl.tab.goji.repository.TaskRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TaskService {
 
     private final TaskMapper taskMapper;
     private final TaskRepository taskRepository;
+    private final IssueService issueService;
 
     @Autowired
-    public TaskService(TaskMapper taskMapper,TaskRepository taskRepository){
+    public TaskService(TaskMapper taskMapper,TaskRepository taskRepository,IssueService issueService){
         this.taskMapper = taskMapper;
         this.taskRepository = taskRepository;
+        this.issueService = issueService;
     }
 
     public TaskReadModel addTask(TaskWriteModel taskWriteModel){
         Task task = taskMapper.toEntity(taskWriteModel);
+        Issue issue = issueService.getIssueById(taskWriteModel.getIssueId());
+        Set<Task> tasks = issue.getTasks();
+        tasks.add(task);
+        issue.setTasks(tasks);
+        task.setIssue(issue);
+        task.setStatus(Status.OPEN);
 
-        return taskRepository.existsById(task.getTaskId())
-                ? null : taskMapper.toReadModel(taskRepository.save(task));
+
+        return taskMapper.toReadModel(taskRepository.save(task));
     }
 
-    public List<Task> getAllTasks(){
-        return taskRepository.findAll();
+    public List<TaskReadModel> getAllTasks(){
+        return taskMapper.map(taskRepository.findAll());
     }
 
 }

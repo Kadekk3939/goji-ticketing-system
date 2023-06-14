@@ -1,24 +1,28 @@
 package pl.polsl.tab.goji.model.entity;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
+import pl.polsl.tab.goji.model.enums.Status;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "issue")
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Issue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "issue_id")
     private Long issueId;
 
-    @NotBlank(message = "Issue name must not be blank")
     @Column(name = "issue_name")
     private String issueName;
 
@@ -29,7 +33,8 @@ public class Issue {
     private String result;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @Column(name = "type")
     private String type;
@@ -54,6 +59,7 @@ public class Issue {
     private Request request;
 
     @OneToMany
+    @ToString.Exclude
     private Set<Task> tasks = new HashSet<>();
 
     @PrePersist
@@ -61,4 +67,16 @@ public class Issue {
         openDate = LocalDateTime.now();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Issue issue = (Issue) o;
+        return issueId != null && Objects.equals(issueId, issue.issueId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -1,22 +1,26 @@
 package pl.polsl.tab.goji.model.entity;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
+import pl.polsl.tab.goji.model.enums.Status;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "task")
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "task_id")
     private Long taskId;
 
-    @NotBlank(message = "Task name must not be blank")
     @Column(name = "task_name")
     private String taskName;
 
@@ -27,7 +31,8 @@ public class Task {
     private String result;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @Column(name = "type")
     private String type;
@@ -56,4 +61,16 @@ public class Task {
         openDate = LocalDateTime.now();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Task task = (Task) o;
+        return taskId != null && Objects.equals(taskId, task.taskId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

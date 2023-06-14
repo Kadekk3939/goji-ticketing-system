@@ -3,15 +3,15 @@ package pl.polsl.tab.goji.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.polsl.tab.goji.mappers.RequestMapper;
-import pl.polsl.tab.goji.model.dto.read.ProductReadModel;
 import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
 import pl.polsl.tab.goji.model.dto.write.RequestWriteModel;
 import pl.polsl.tab.goji.model.entity.Product;
 import pl.polsl.tab.goji.model.entity.Request;
-import pl.polsl.tab.goji.model.enums.RequestStatus;
+import pl.polsl.tab.goji.model.enums.Status;
 import pl.polsl.tab.goji.repository.RequestRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -30,17 +30,22 @@ public class RequestService {
     public RequestReadModel addRequest(RequestWriteModel requestWriteModel){
         Request request = requestMapper.toEntity(requestWriteModel);
         Product product = productService.getProductById(requestWriteModel.getProductId());
-        Set<Request> requestSet = product.getRequests();
-        requestSet.add(request);
-        product.setRequests(requestSet);
+        Set<Request> requests = product.getRequests();
+        requests.add(request);
+        product.setRequests(requests);
         request.setProduct(product);
-        request.setStatus(RequestStatus.OPEN);
+        request.setStatus(Status.OPEN);
 
         return  requestMapper.toReadModel(requestRepository.save(request));
     }
 
     public List<RequestReadModel> getAllRequests(){
         return requestMapper.map(requestRepository.findAll());
+    }
+
+    public Request getRequestById(Long id){
+        Optional<Request> request = requestRepository.findRequestByRequestId(id);
+        return request.orElse(null);
     }
 
 }

@@ -23,10 +23,9 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Task>> getAllTasks(){
-        List<Task> listOfTasks = taskService.getAllTasks();
-        return new ResponseEntity<>(listOfTasks, HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<List<TaskReadModel>> getAllTasks(){
+        return new ResponseEntity<>(taskService.getAllTasks(), HttpStatus.OK);
     }
 
     @PostMapping

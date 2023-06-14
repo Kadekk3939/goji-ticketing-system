@@ -10,6 +10,8 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class IssueWriteModel {
+    @NotBlank(message = "Request Id must not be blank")
+    private Long requestId;
     @NotBlank(message = "Issue name must not be blank")
     private String issueName;
     private String description;

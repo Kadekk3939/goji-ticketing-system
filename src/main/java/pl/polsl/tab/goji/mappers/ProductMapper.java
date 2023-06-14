@@ -12,8 +12,7 @@ import pl.polsl.tab.goji.model.entity.Product;
 import java.util.List;
 
 @Mapper(componentModel = "spring",
-        unmappedTargetPolicy = ReportingPolicy.WARN,
-        uses = {ClientMapper.class})
+        unmappedTargetPolicy = ReportingPolicy.WARN)
 public interface ProductMapper {
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 

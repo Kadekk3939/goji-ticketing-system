@@ -10,8 +10,10 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TaskWriteModel {
+    @NotBlank(message = "Issue Id must not be blank")
+    private Long issueId;
     @NotBlank(message = "Task name must not be blank")
-    private String requestName;
+    private String taskName;
     private String description;
     private String type;
 }

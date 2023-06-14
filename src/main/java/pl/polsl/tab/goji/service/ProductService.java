@@ -10,6 +10,8 @@ import pl.polsl.tab.goji.model.entity.Product;
 import pl.polsl.tab.goji.repository.ClientRepository;
 import pl.polsl.tab.goji.repository.ProductRepository;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -34,5 +36,14 @@ public class ProductService {
         product.setClient(client);
 
         return  productMapper.toReadModel(productRepository.save(product));
+    }
+
+    public Product getProductById(Long id) {
+        Optional<Product> product = productRepository.findProductByProductId(id);
+        return product.orElse(null);
+    }
+
+    public List<ProductReadModel> getAllProducts(){
+        return productMapper.map(productRepository.findAll());
     }
 }

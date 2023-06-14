@@ -1,6 +1,7 @@
 package pl.polsl.tab.goji.model.entity;
 
 import lombok.Data;
+import pl.polsl.tab.goji.model.enums.RequestStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -26,10 +27,12 @@ public class Request {
     private String description;
 
     @Column(name = "result")
+    @Enumerated(EnumType.STRING)
     private String result;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private RequestStatus status;
 
     @GeneratedValue()
     @Column(name = "open_date")

@@ -9,6 +9,8 @@ import pl.polsl.tab.goji.model.dto.write.ClientWriteModel;
 import pl.polsl.tab.goji.model.dto.write.ProductWriteModel;
 import pl.polsl.tab.goji.service.ProductService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -19,5 +21,10 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ProductReadModel> addProduct(@RequestBody ProductWriteModel productWriteModel){
         return new ResponseEntity<>(productService.addProduct(productWriteModel), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductReadModel>> getAllProducts(){
+        return new ResponseEntity<>(productService.getAllProducts(),HttpStatus.OK);
     }
 }

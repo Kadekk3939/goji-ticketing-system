@@ -12,6 +12,8 @@ import javax.validation.constraints.NotBlank;
 public class RequestWriteModel {
     @NotBlank(message = "Request name must not be blank")
     private String requestName;
+    @NotBlank(message = "Product Id must not be blank")
+    private Long productId;
     private String description;
     private String type;
 }

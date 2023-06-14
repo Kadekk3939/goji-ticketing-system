@@ -31,11 +31,12 @@ public class ProductService {
         Product product = productMapper.toEntity(productWriteModel);
         Client client = clientService.getClientActionEntityById(productWriteModel.getClientId());
         Set<Product> products = client.getProducts();
-        products.add(product);
-        client.setProducts(products);
         product.setClient(client);
+        products.add(product);
+        productRepository.save(product);
+        client.setProducts(products);
 
-        return  productMapper.toReadModel(productRepository.save(product));
+        return  productMapper.toReadModel(product);
     }
 
     public Product getProductById(Long id) {

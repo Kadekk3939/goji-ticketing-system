@@ -27,7 +27,6 @@ public class Request {
     private String description;
 
     @Column(name = "result")
-    @Enumerated(EnumType.STRING)
     private String result;
 
     @Column(name = "status")

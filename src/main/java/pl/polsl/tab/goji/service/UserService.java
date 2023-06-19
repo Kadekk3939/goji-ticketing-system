@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import pl.polsl.tab.goji.mappers.UserMapper;
 import pl.polsl.tab.goji.model.dto.read.UserReadModel;
 import pl.polsl.tab.goji.model.dto.write.UserWriteModel;
+import pl.polsl.tab.goji.model.entity.Task;
 import pl.polsl.tab.goji.model.entity.User;
 import pl.polsl.tab.goji.model.entity.UserRole;
 import pl.polsl.tab.goji.repository.UserRepository;
@@ -17,6 +18,8 @@ import pl.polsl.tab.goji.utility.CurrentUserData;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
@@ -36,9 +39,18 @@ public class UserService implements UserDetailsService {
         User user = userMapper.toEntity(userWriteModel);
         user.setPassword(encoder.encode(userWriteModel.getPassword()));
 
+
         Optional<UserRole> role = userRoleRepository.findUserRoleByRoleName(userWriteModel.getRole());
 
         role.ifPresent(user::setUserRole);
+        UserRole userRole;
+        if(role.isPresent()){
+            userRole = role.get();
+            Set<User> users = userRole.getUsers();
+            users.add(user);
+            userRole.setUsers(users);
+        }
+
         return userRepository.existsUserByLoginOrEmail(user.getLogin(), user.getEmail())
                 ? null : userMapper.toReadModel(userRepository.save(user));
     }

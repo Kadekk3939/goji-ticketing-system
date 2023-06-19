@@ -99,6 +99,7 @@ public class UserService implements UserDetailsService {
         return String.format("%04x", userId);
     }
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findUserByLogin(username);

@@ -11,6 +11,7 @@ import pl.polsl.tab.goji.service.UserService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/user")
 public class UserController {
 
@@ -35,4 +36,11 @@ public class UserController {
     public ResponseEntity<UserReadModel> getUserById(@PathVariable Long id){
         return ResponseEntity.ok(userService.findUserByUserId(id));
     }
+
+    @GetMapping("/login/{login}")
+    public ResponseEntity<UserReadModel> getUserByLogin(@PathVariable String login){
+        return ResponseEntity.ok(userService.findUserByLogin(login));
+    }
+
+
 }

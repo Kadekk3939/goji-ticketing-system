@@ -19,11 +19,6 @@ export class LoginComponent {
   login() {
     localStorage.clear()
     this.app.authenticate(this.credentials, () => {
-      this.userService.getUserByLogin(this.credentials.login).subscribe(
-        (response:User)=>{
-          this.app.user = response;
-        }
-      )
       this.router.navigateByUrl('/user');
     });
     return false;

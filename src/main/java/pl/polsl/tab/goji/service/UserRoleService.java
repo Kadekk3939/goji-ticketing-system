@@ -22,7 +22,9 @@ public class UserRoleService {
         return role.map(UserRole::getRoleId).orElse(null);
     }
 
-    public String addUserRole(UserRole userRole){
+    public String addUserRole(String userRoleName){
+        UserRole userRole = new UserRole();
+        userRole.setRoleName(userRoleName);
         userRoleRepository.save(userRole);
         return userRole.getRoleName();
     }

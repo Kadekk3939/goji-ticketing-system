@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
+import { User } from 'src/app/interfaces/user';
 import { AppService } from 'src/app/services/app.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -11,12 +13,17 @@ import { AppService } from 'src/app/services/app.service';
 export class LoginComponent {
   credentials = { login: '', password: '' };
   authenticatied: boolean = false
-  constructor(private router: Router,private app:AppService) {
+  constructor(private router: Router,private app:AppService,private userService:UserService) {
   }
-  
+
   login() {
     localStorage.clear()
     this.app.authenticate(this.credentials, () => {
+      this.userService.getUserByLogin(this.credentials.login).subscribe(
+        (response:User)=>{
+          this.app.user = response;
+        }
+      )
       this.router.navigateByUrl('/user');
     });
     return false;

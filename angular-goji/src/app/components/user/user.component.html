@@ -1,37 +1,37 @@
 <body>
-<nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
-  <a class="navbar-brand" href="#"><img src="../../../assets/goji.png" class="d-inline-block" alt="Goji"> </a>
-  <button class ="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
+        <a class="navbar-brand" href="#"><img src="../../../assets/goji.png" class="d-inline-block" alt="Goji"> </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
     <span class="navbar-toggler-icon"></span>
   </button>
-    <div class="collapse navbar-collapse" id="mainmenu">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users/Requests/Issues/Tasks</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
-        </li>
-      </ul>
+        <div class="collapse navbar-collapse" id="mainmenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users/Requests/Issues/Tasks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <header>
+        <h1>Welcome User</h1>
+    </header>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="card border-0 shadow my-5">
+            <div class="card-body p-5">
+                <p class="lead">User name : {{user?.firstName}} {{user?.lastName}}</p>
+                <p class="lead">User login : {{user?.login}}</p>
+                <p class="lead">User email : {{user?.email}}</p>
+                <p class="lead">User role : {{user?.role}}</p>
+                <p>This is a starter page for a logged user.</p>
+                <p> They can use the navigation bar above to view the list of Users, Requests, Issues or Tasks as well as to log out. </p>
+            </div>
+        </div>
     </div>
-</nav>
-<header>
-  <h1>Welcome User</h1>
-</header>
-<!-- Page Content -->
-<div class="container">
-  <div class="card border-0 shadow my-5">
-    <div class="card-body p-5">
-<!--      <p class="lead">User name : {{user?.firstName}} {{user?.lastName}}</p>-->
-<!--      <p class="lead">User login : {{user?.login}}</p>-->
-<!--      <p class="lead">User email : {{user?.email}}</p>-->
-<!--      <p class="lead">User role : {{user?.role}}</p>-->
-      <p>This is a starter page for a logged user (Admin/Account Manager/Product Manager/Worker).</p>
-      <p> They can use the navigation bar above to view the list of Users, Requests, Issues or Tasks as well as to log out. </p>
-    </div>
-  </div>
-</div>
 </body>

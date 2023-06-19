@@ -36,7 +36,6 @@ export class AppService {
         this.userService.getUserByLogin(this.login).subscribe(
           (response: User) => {
             this.user = response;
-            console.log(this.user.login);
           },
           (error: HttpErrorResponse) => {
             alert(error.message);

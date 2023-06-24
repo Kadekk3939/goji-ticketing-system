@@ -30,7 +30,9 @@
             <mat-card class="element-card mat-elevation-z8">
 
                 <mat-card-header>
-                    <mat-card-title>{{element}}</mat-card-title>
+                    <mat-card-title>{{ getName(element) }}</mat-card-title>
+
+
                     <mat-card-actions class="element-card-actions ">
                         <button mat-mini-fab color="primary" class="mod-button">
           <mat-icon>edit</mat-icon>
@@ -44,8 +46,9 @@
                     <p>
                         Author: ahahah
                     </p>
-                    <p>Total Pages:dcdcdcddc</p>
+                    <p>Status:{{element.status}}</p>
                     <p>Price:dcdcdccdcdcd</p>
+
                 </mat-card-content>
             </mat-card>
         </div>

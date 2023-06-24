@@ -11,6 +11,7 @@ import { AppService } from 'src/app/services/app.service';
 import { Issue } from 'src/app/interfaces/issue';
 import { Task } from 'src/app/interfaces/task';
 import { UserService } from 'src/app/services/user.service';
+import { Request } from 'src/app/interfaces/request';
 
 @Component({
   selector: 'app-list',
@@ -20,14 +21,15 @@ import { UserService } from 'src/app/services/user.service';
 export class ListComponent implements OnInit {
   public users: User[] | undefined;
   public user:User|undefined;
-  public elements:Request[]|undefined;
-  public pageSlice: (Request|Issue|Task)[]|undefined;
+  public elements:(Request|Issue|Task)[];
+  public pageSlice: (Request|Issue|Task)[];
   constructor(private router: Router,private addDialog: MatDialog,private listService:ListService,
     private app:AppService,private userService:UserService) {
       this.app.refresh();//In case of refresh
       this.user = this.app.user;
       this.user = this.app.user;
       this.elements = [];
+      this.pageSlice = [];
     }
   ngOnInit() {
     this.userService.getUserByLogin(this.app.login).subscribe(
@@ -43,13 +45,14 @@ export class ListComponent implements OnInit {
               
             }
           )
-          
+
         }
       }
     )
 
     
   }
+
 
   // public getUsers(): void {
   //   this.listService.getUsers().subscribe(
@@ -64,6 +67,25 @@ export class ListComponent implements OnInit {
   // }
   public logout(): void {
     this.router.navigateByUrl('/');
+  }
+
+  getName(obj:Request|Issue|Task):string{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return (obj as Request).requestName;
+        } else if ('issueName' in obj) {
+          return (obj as Issue).issueName;
+        } else if ('taskName' in obj) {
+          return (obj as Task).taskName;
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return '';
   }
 
   public OnPageChange(event:PageEvent) {

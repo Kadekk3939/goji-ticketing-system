@@ -15,7 +15,6 @@ export class UserComponent implements OnInit{
   constructor( private router: Router,private app:AppService,private userService:UserService) {
     this.app.refresh();//In case of refresh
     this.user = this.app.user;
-    console.log(this.user?.firstName);
   }
 
   ngOnInit(){

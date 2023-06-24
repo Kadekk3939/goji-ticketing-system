@@ -11,6 +11,7 @@ import pl.polsl.tab.goji.service.RequestService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/request")
 public class RequestController {
 

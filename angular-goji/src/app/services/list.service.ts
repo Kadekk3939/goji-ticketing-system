@@ -10,7 +10,7 @@ export class ListService {
     private apiServerUrl = environment.apiBaseUrl;
   constructor(private http: HttpClient) { }
 
-  public getUsers(): Observable<any> {
-    return this.http.get<any>(`${this.apiServerUrl}/action/all`);
+  public getAllRequests():Observable<Request[]>{
+    return this.http.get<Request[]>(`${environment.apiBaseUrl}/request`);
   }
 }

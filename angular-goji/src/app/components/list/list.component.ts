@@ -7,6 +7,10 @@ import {ListService} from "../../services/list.service";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {MatDialogConfig} from "@angular/material/dialog";
+import { AppService } from 'src/app/services/app.service';
+import { Issue } from 'src/app/interfaces/issue';
+import { Task } from 'src/app/interfaces/task';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-list',
@@ -15,14 +19,38 @@ import {MatDialogConfig} from "@angular/material/dialog";
 })
 export class ListComponent implements OnInit {
   public users: User[] | undefined;
-  public elements = ['Element1', 'Element2','Element3', 'Element4','Element5', 'Element6'];
-  public pageSlice = this.elements.slice(0,2);
-  constructor(private router: Router,
-              private addDialog: MatDialog) {}
+  public user:User|undefined;
+  public elements:Request[]|undefined;
+  public pageSlice: (Request|Issue|Task)[]|undefined;
+  constructor(private router: Router,private addDialog: MatDialog,private listService:ListService,
+    private app:AppService,private userService:UserService) {
+      this.app.refresh();//In case of refresh
+      this.user = this.app.user;
+      this.user = this.app.user;
+      this.elements = [];
+    }
   ngOnInit() {
-    //this.getUsers();
+    this.userService.getUserByLogin(this.app.login).subscribe(
+      (response:User)=>{
+        this.user = response;
+        if(this.user.role=='Admin'){
 
+          this.listService.getAllRequests().subscribe(
+            (response:Request[])=>{
+              response.forEach(request=>{
+                this.elements?.push(request);
+              })
+              
+            }
+          )
+          
+        }
+      }
+    )
+
+    
   }
+
   // public getUsers(): void {
   //   this.listService.getUsers().subscribe(
   //     (response: User[]) => {
@@ -41,10 +69,10 @@ export class ListComponent implements OnInit {
   public OnPageChange(event:PageEvent) {
     const startIndex = event.pageIndex*event.pageSize;
     let endIndex = startIndex+event.pageSize;
-    if(endIndex>this.elements.length){
-      endIndex=this.elements.length;
+    if(endIndex>this.elements!.length){
+      endIndex=this.elements!.length;
     }
-    this.pageSlice = this.elements.slice(startIndex,endIndex);
+    this.pageSlice = this.elements!.slice(startIndex,endIndex);
   }
 
   openAddDialog(): void {

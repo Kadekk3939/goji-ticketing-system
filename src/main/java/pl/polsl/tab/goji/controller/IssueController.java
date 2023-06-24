@@ -10,6 +10,7 @@ import pl.polsl.tab.goji.service.IssueService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/issue")
 public class IssueController {
 

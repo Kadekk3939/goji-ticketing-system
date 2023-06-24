@@ -35,7 +35,7 @@ export class ListComponent implements OnInit {
     this.userService.getUserByLogin(this.app.login).subscribe(
       (response:User)=>{
         this.user = response;
-        if(this.user.role=='Admin'){
+        if(this.user.role=='Admin'||this.user.role=='Account Manager'){
 
           this.listService.getAllRequests().subscribe(
             (response:Request[])=>{
@@ -45,7 +45,47 @@ export class ListComponent implements OnInit {
               
             }
           )
+          this.listService.getAllIssues().subscribe(
+            (response:Issue[])=>{
+              response.forEach(issue=>{
+                this.elements?.push(issue);
+              })
+            }
+          )
+          this.listService.getAllTasks().subscribe(
+            (response:Task[])=>{
+              response.forEach(task=>{
+                this.elements?.push(task);
+              })
+            }
+          )
 
+        }
+        else if(this.user.role=='Product Manager'){
+          this.listService.getAllIssues().subscribe(
+            (response:Issue[])=>{
+              response.forEach(issue=>{
+                this.elements?.push(issue);
+              })
+            }
+          )
+          this.listService.getAllTasks().subscribe(
+            (response:Task[])=>{
+              response.forEach(task=>{
+                this.elements?.push(task);
+              })
+            }
+          )
+
+        }
+        else if(this.user.role=='Worker'){
+          this.listService.getAllTasks().subscribe(
+            (response:Task[])=>{
+              response.forEach(task=>{
+                this.elements?.push(task);
+              })
+            }
+          )
         }
       }
     )

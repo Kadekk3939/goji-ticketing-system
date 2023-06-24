@@ -14,6 +14,7 @@ import pl.polsl.tab.goji.service.TaskService;
 import pl.polsl.tab.goji.service.UserService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/task")
 public class TaskController {
 

@@ -1,5 +1,6 @@
 package pl.polsl.tab.goji.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
@@ -49,6 +50,7 @@ public class User implements UserDetails {
     @ManyToOne
     @JoinColumn(name = "roleId")
     @NotNull(message = "Role must be provided")
+    @JsonBackReference
     private UserRole userRole;
 
 

@@ -1,5 +1,6 @@
 package pl.polsl.tab.goji.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -31,6 +32,7 @@ public class UserRole {
 
     @OneToMany
     @ToString.Exclude
+    @JsonManagedReference
     private Set<User> users = new HashSet<>();
 
     @Override

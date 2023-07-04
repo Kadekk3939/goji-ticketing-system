@@ -5,6 +5,7 @@ import { environment } from "src/environments/environment";
 import { Request } from '../interfaces/request';
 import { Issue } from '../interfaces/issue';
 import { Task } from '../interfaces/task';
+import {User} from "../interfaces/user";
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,9 @@ export class ListService {
 
   public getAllTasks():Observable<Task[]>{
     return this.http.get<Task[]>(`${environment.apiBaseUrl}/issue`);
+  }
+
+  public getAllUsers():Observable<User[]>{
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/user`);
   }
 }

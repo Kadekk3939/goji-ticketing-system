@@ -55,8 +55,8 @@ public class UserService implements UserDetailsService {
                 ? null : userMapper.toReadModel(userRepository.save(user));
     }
 
-    public List<User> getAllUsers(){
-        return userRepository.findAll();
+    public List<UserReadModel> getAllUsers(){
+        return userMapper.map(userRepository.findAll());
     }
 
     public User updateUser(User user){

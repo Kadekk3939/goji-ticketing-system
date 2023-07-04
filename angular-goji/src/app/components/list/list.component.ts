@@ -48,6 +48,10 @@ export class ListComponent implements OnInit {
             (response:User[])=>{
               response.forEach(user=>{
                 this.elements?.push(user);
+                if(this.pageSlice.length<2)
+                {
+                  this.pageSlice?.push(user);
+                }
               })
 
             }
@@ -59,6 +63,10 @@ export class ListComponent implements OnInit {
             (response:Request[])=>{
               response.forEach(request=>{
                 this.elements?.push(request);
+                if(this.pageSlice.length<2)
+                {
+                  this.pageSlice?.push(request);
+                }
               })
 
             }
@@ -67,6 +75,10 @@ export class ListComponent implements OnInit {
             (response:Issue[])=>{
               response.forEach(issue=>{
                 this.elements?.push(issue);
+                if(this.pageSlice.length<2)
+                {
+                  this.pageSlice?.push(issue);
+                }
               })
             }
           )
@@ -74,6 +86,10 @@ export class ListComponent implements OnInit {
             (response:Task[])=>{
               response.forEach(task=>{
                 this.elements?.push(task);
+                if(this.pageSlice.length<2)
+                {
+                  this.pageSlice?.push(task);
+                }
               })
             }
           )
@@ -84,6 +100,10 @@ export class ListComponent implements OnInit {
             (response:Issue[])=>{
               response.forEach(issue=>{
                 this.elements?.push(issue);
+                if(this.pageSlice.length<2)
+                {
+                  this.pageSlice?.push(issue);
+                }
               })
             }
           )
@@ -91,6 +111,10 @@ export class ListComponent implements OnInit {
             (response:Task[])=>{
               response.forEach(task=>{
                 this.elements?.push(task);
+                if(this.pageSlice.length<2)
+                {
+                  this.pageSlice?.push(task);
+                }
               })
             }
           )
@@ -101,6 +125,10 @@ export class ListComponent implements OnInit {
             (response:Task[])=>{
               response.forEach(task=>{
                 this.elements?.push(task);
+                if(this.pageSlice.length<2)
+                {
+                  this.pageSlice?.push(task);
+                }
               })
             }
           )

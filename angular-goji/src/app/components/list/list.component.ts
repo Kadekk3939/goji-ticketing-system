@@ -21,8 +21,8 @@ import { Request } from 'src/app/interfaces/request';
 export class ListComponent implements OnInit {
   public users: User[] | undefined;
   public user:User|undefined;
-  public elements:(Request|Issue|Task)[];
-  public pageSlice: (Request|Issue|Task)[];
+  public elements:(Request|Issue|Task|User)[];
+  public pageSlice: (Request|Issue|Task|User)[];
   constructor(private router: Router,private addDialog: MatDialog,private listService:ListService,
     private app:AppService,private userService:UserService) {
       this.app.refresh();//In case of refresh
@@ -35,14 +35,25 @@ export class ListComponent implements OnInit {
     this.userService.getUserByLogin(this.app.login).subscribe(
       (response:User)=>{
         this.user = response;
-        if(this.user.role=='Admin'||this.user.role=='Account Manager'){
+        if(this.user.role=='Admin')
+        {
+          this.listService.getAllUsers().subscribe(
+            (response:User[])=>{
+              response.forEach(user=>{
+                this.elements?.push(user);
+              })
+
+            }
+          )
+        }
+        else if(this.user.role=='Account Manager'){
 
           this.listService.getAllRequests().subscribe(
             (response:Request[])=>{
               response.forEach(request=>{
                 this.elements?.push(request);
               })
-              
+
             }
           )
           this.listService.getAllIssues().subscribe(
@@ -90,7 +101,7 @@ export class ListComponent implements OnInit {
       }
     )
 
-    
+
   }
 
 
@@ -109,7 +120,7 @@ export class ListComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  getName(obj:Request|Issue|Task):string{
+  getName(obj:Request|Issue|Task|User):string{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -118,6 +129,31 @@ export class ListComponent implements OnInit {
           return (obj as Issue).issueName;
         } else if ('taskName' in obj) {
           return (obj as Task).taskName;
+        }
+        else if ('firstName' in obj) {
+          return (obj as User).firstName;
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return '';
+  }
+
+  getInfo(obj:Request|Issue|Task|User):string{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return (obj as Request).status;
+        } else if ('issueName' in obj) {
+          return (obj as Issue).status;
+        } else if ('taskName' in obj) {
+          return (obj as Task).status;
+        }
+        else if ('firstName' in obj) {
+          return (obj as User).role;
         }
         break;
       }

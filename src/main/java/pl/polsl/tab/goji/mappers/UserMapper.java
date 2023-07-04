@@ -19,7 +19,7 @@ public interface UserMapper {
 
     User toEntity(UserWriteModel userWriteModel);
 
-    //@Mapping(source = "userRole.roleName", target = "role")
+    @Mapping(source = "userRole.roleName", target = "role")
     UserReadModel toReadModel(User user);
 
     void updateUserFromDto(UserWriteModel userWriteModel, @MappingTarget User user);

@@ -11,7 +11,18 @@
                     <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users/Requests/Issues/Tasks</a>
+                  <div *ngIf="user?.role=='Admin'">
+                    <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
+                  </div>
+                  <div *ngIf="user?.role=='Account Manager'">
+                    <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
+                  </div>
+                  <div *ngIf="user?.role=='Product Manager'">
+                    <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
+                  </div>
+                  <div *ngIf="user?.role=='Worker'">
+                    <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+                  </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>

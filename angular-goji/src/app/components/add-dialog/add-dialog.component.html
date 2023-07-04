@@ -1,0 +1,38 @@
+<form [formGroup]="myform" (ngSubmit)="SaveUser()">
+  <h1 mat-dialog-title>{{inputData.title}}</h1>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Firstname</mat-label>
+      <input formControlName="firstName" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Lastname</mat-label>
+      <input formControlName="lastName" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Login</mat-label>
+      <input formControlName="login" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input formControlName="password" type="password" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input formControlName="email" type="email" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role" matInput>
+        <mat-option *ngFor="let role of roles" [value]="role.value">
+          {{role.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary">Save</button>
+    <button (click)="closeAddDialog()"mat-raised-button color="warn">Close</button>
+  <!--  <button mat-raised-button [mat-dialog-close]="closemessage" color="accent">Cancel</button>-->
+  </div>
+</form>

@@ -12,6 +12,7 @@ import { Issue } from 'src/app/interfaces/issue';
 import { Task } from 'src/app/interfaces/task';
 import { UserService } from 'src/app/services/user.service';
 import { Request } from 'src/app/interfaces/request';
+import {AddDialogComponent} from "../add-dialog/add-dialog.component";
 
 @Component({
   selector: 'app-list',
@@ -32,6 +33,12 @@ export class ListComponent implements OnInit {
       this.pageSlice = [];
     }
   ngOnInit() {
+    this.user = this.app.user;
+    this.getData();
+    this.app.refresh();
+  }
+
+  public getData(){
     this.userService.getUserByLogin(this.app.login).subscribe(
       (response:User)=>{
         this.user = response;
@@ -100,22 +107,8 @@ export class ListComponent implements OnInit {
         }
       }
     )
-
-
   }
 
-
-  // public getUsers(): void {
-  //   this.listService.getUsers().subscribe(
-  //     (response: User[]) => {
-  //       this.users = response;
-  //       console.log(this.users);
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   );
-  // }
   public logout(): void {
     this.router.navigateByUrl('/');
   }
@@ -173,39 +166,24 @@ export class ListComponent implements OnInit {
     this.pageSlice = this.elements!.slice(startIndex,endIndex);
   }
 
-  openAddDialog(): void {
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '60%';
-    dialogConfig.height = '70%';
-
-    let dialogRef = this.addDialog.open(Dialog, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(result => {
-    });
-  }
-
-  onClose(){
-
-  }
-}
-
-@Component({
-  selector: 'app-list',
-  templateUrl: 'dialog.html',
-})
-export class Dialog {
-  constructor(
-    public dialogRef: MatDialogRef<Dialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {  }
-
-    onNoClick(){
-      this.dialogRef.close();
+  openAddDialog()
+  {
+    var _addDialog = this.addDialog.open(AddDialogComponent, {
+      width:'40%',
+      enterAnimationDuration:'500ms',
+      exitAnimationDuration:'500ms',
+      data:{
+        title:'Add user'
+      }
+    })
+    _addDialog.afterClosed().subscribe(item=>{
+      this.elements=[];
+      this.getData();
     }
-  hide = true;
+    );
+  }
 }
+
+
 
 

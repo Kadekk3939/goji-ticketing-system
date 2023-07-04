@@ -31,9 +31,11 @@
         </div>
     </nav>
 
-    <button mat-fab color="primary" class="add-button" (click)="openAddDialog()">
+    <div *ngIf="user?.role=='Admin'">
+    <button mat-fab color="primary" class="add-button"  (click)="openAddDialog()">
       <mat-icon>add</mat-icon>
     </button>
+    </div>
 
     <div class="container" id="main-container">
         <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator"></mat-paginator>

@@ -54,12 +54,15 @@
                     </mat-card-actions>
                 </mat-card-header>
                 <mat-card-content>
-                    <p>
-                        Author: ahahah
-                    </p>
-                    <p>Status:{{getInfo(element)}}</p>
-                    <p>Price:dcdcdccdcdcd</p>
-
+                  <div *ngIf="user?.role=='Admin'; else elseBlock">
+                    <p>Login: {{getInfo(element)[0]}}</p>
+                    <p>Email: {{getInfo(element)[1]}}</p>
+                    <p>Role: {{getInfo(element)[2]}}</p>
+                  </div>
+                  <ng-template #elseBlock>
+                    <p>Status: {{getInfo(element)[0]}}</p>
+                    <p>Type: {{getInfo(element)[1]}}</p>
+                  </ng-template>
                 </mat-card-content>
             </mat-card>
         </div>

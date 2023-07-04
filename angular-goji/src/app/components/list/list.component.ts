@@ -131,7 +131,7 @@ export class ListComponent implements OnInit {
           return (obj as Task).taskName;
         }
         else if ('firstName' in obj) {
-          return (obj as User).firstName;
+          return (obj as User).firstName + " " + (obj as User).lastName;
         }
         break;
       }
@@ -142,18 +142,18 @@ export class ListComponent implements OnInit {
     return '';
   }
 
-  getInfo(obj:Request|Issue|Task|User):string{
+  getInfo(obj:Request|Issue|Task|User):string[]{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
-          return (obj as Request).status;
+          return [(obj as Request).status, (obj as Request).type];
         } else if ('issueName' in obj) {
-          return (obj as Issue).status;
+          return [(obj as Issue).status, (obj as Issue).type];
         } else if ('taskName' in obj) {
-          return (obj as Task).status;
+          return [(obj as Task).status, (obj as Task).type];
         }
         else if ('firstName' in obj) {
-          return (obj as User).role;
+          return [(obj as User).login, (obj as User).email, (obj as User).role];
         }
         break;
       }
@@ -161,7 +161,7 @@ export class ListComponent implements OnInit {
         break;
       }
     }
-    return '';
+    return [''];
   }
 
   public OnPageChange(event:PageEvent) {

@@ -42,5 +42,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findUserByLogin(login));
     }
 
+    /*nie umiem zrobić zeby dzialalo ;,,( -> method not allowed
+
+    @PutMapping("/update")
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
+    }*/
 
 }

@@ -19,11 +19,11 @@ export class ListService {
   }
 
   public getAllIssues():Observable<Issue[]>{
-    return this.http.get<Issue[]>(`${environment.apiBaseUrl}/task`);
+    return this.http.get<Issue[]>(`${environment.apiBaseUrl}/issue`);
   }
 
   public getAllTasks():Observable<Task[]>{
-    return this.http.get<Task[]>(`${environment.apiBaseUrl}/issue`);
+    return this.http.get<Task[]>(`${environment.apiBaseUrl}/task`);
   }
 
   public getAllUsers():Observable<User[]>{

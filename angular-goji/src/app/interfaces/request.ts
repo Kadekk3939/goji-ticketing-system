@@ -2,6 +2,7 @@ export interface Request {
     requestId:number;
     requestName:string;
     description:string
+    productId:number;
     result:string;
     status:string;
     type:string;
@@ -9,4 +10,3 @@ export interface Request {
     inProgressDate:Date;
     finalizationDate:Date;
   }
-  

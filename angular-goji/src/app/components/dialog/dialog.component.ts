@@ -4,6 +4,9 @@ import {FormBuilder, NgForm} from "@angular/forms";
 import {User} from "../../interfaces/user";
 import {HttpErrorResponse} from "@angular/common/http";
 import {DialogService} from "../../services/dialog.service";
+import {Request} from "../../interfaces/request";
+import { Task } from 'src/app/interfaces/task';
+import {Issue} from "../../interfaces/issue";
 
 @Component({
   selector: 'app-add-dialog',
@@ -11,7 +14,7 @@ import {DialogService} from "../../services/dialog.service";
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {
-  userRole:any;
+  type:any;
   inputData:any;
   editData:any;
   roles =  [
@@ -26,7 +29,7 @@ export class DialogComponent implements OnInit {
   }
   ngOnInit(): void {
     this.inputData=this.data;
-    this.userRole=this.inputData.userRole;
+    this.type=this.inputData.type;
     if(this.inputData.id!=0)
     {
       this.setDialogData(this.inputData.id);
@@ -34,37 +37,54 @@ export class DialogComponent implements OnInit {
   }
 
   setDialogData(id:any){
-    if(this.userRole=="Admin") {
+    if(this.type=="/users") {
       this.service.getUserByLogin(id).subscribe(user => {
         this.editData = user;
-        this.myform.setValue({
+        this.userForm.setValue({
           firstName: this.editData.firstName, lastName: this.editData.lastName, login: this.editData.login,
-          password: "1", email: this.editData.email, role: this.editData.role
+          password: this.editData.email, email: this.editData.email, role: this.editData.role
         })
       })
     }
   }
 
-  closeAddDialog()
+  closeDialog()
   {
     this.ref.close('Closed using function');
   }
-
-    myform=this.builder.group({
-      firstName:this.builder.control(''),
-      lastName:this.builder.control(''),
-      login:this.builder.control(''),
-      password:this.builder.control(''),
-      email:this.builder.control(''),
-      role:this.builder.control('')
+    userForm = this.builder.group({
+      firstName: this.builder.control(''),
+      lastName: this.builder.control(''),
+      login: this.builder.control(''),
+      password: this.builder.control(''),
+      email: this.builder.control(''),
+      role: this.builder.control('')
     });
+  requestForm = this.builder.group({
+    requestName: this.builder.control(''),
+    description: this.builder.control(''),
+    productId: this.builder.control(0)
+  });
+
+  issueForm = this.builder.group({
+    requestId: this.builder.control(0),
+    issueName: this.builder.control(''),
+    description: this.builder.control('')
+  });
+
+  taskForm = this.builder.group({
+    issueId: this.builder.control(0),
+    taskName: this.builder.control(''),
+    description: this.builder.control('')
+  });
+
 
 
   SaveData(){
-    if(this.userRole=="Admin") {
+    if(this.type=="/users") {
       if(this.inputData.id==0) {
-        this.service.addUser(<User>this.myform.value).subscribe(res => {
-            this.closeAddDialog();
+        this.service.addUser(<User>this.userForm.value).subscribe(res => {
+            this.closeDialog();
           },
           (error: HttpErrorResponse) => {
             alert(error.message);
@@ -72,8 +92,68 @@ export class DialogComponent implements OnInit {
         );
       }
       else {
-        this.service.updateUser(<User>this.myform.value).subscribe(res => {
-            this.closeAddDialog();
+        this.service.updateUser(<User>this.userForm.value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+    }
+    else if(this.type=="/requests") {
+      if(this.inputData.id==0) {
+        this.service.addRequest(<Request>this.requestForm.value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+      else {
+        this.service.updateRequest(<Request>this.requestForm.value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+    }
+    else if(this.type=="/issues") {
+      if(this.inputData.id==0) {
+        this.service.addIssue(<Issue>this.issueForm.value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+      else {
+        this.service.updateIssue(<Issue>this.issueForm.value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+    }
+    else if(this.type=="tasks") {
+      if(this.inputData.id==0) {
+        this.service.addTask(<Task>this.taskForm.value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+      else {
+        this.service.updateTask(<Task>this.taskForm.value).subscribe(res => {
+            this.closeDialog();
           },
           (error: HttpErrorResponse) => {
             alert(error.message);

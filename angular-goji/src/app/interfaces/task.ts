@@ -1,5 +1,6 @@
 export interface Task {
     taskId:number;
+    issueId:number;
     taskName:string;
     description:string
     result:string;
@@ -9,4 +10,3 @@ export interface Task {
     inProgressDate:Date;
     finalizationDate:Date;
   }
-  

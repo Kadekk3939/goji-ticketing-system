@@ -1,5 +1,6 @@
 export interface Issue {
     issueId:number;
+    requestId:number;
     issueName:string;
     description:string
     result:string;
@@ -9,4 +10,3 @@ export interface Issue {
     inProgressDate:Date;
     finalizationDate:Date;
   }
-  

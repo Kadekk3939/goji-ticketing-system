@@ -6,33 +6,48 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="mainmenu">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
-                </li>
-                <li class="nav-item">
-                  <div *ngIf="user?.role=='Admin'">
-                    <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
-                  </div>
-                  <div *ngIf="user?.role=='Account Manager'">
-                    <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
-                  </div>
-                  <div *ngIf="user?.role=='Product Manager'">
-                    <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
-                  </div>
-                  <div *ngIf="user?.role=='Worker'">
-                    <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
-                  </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
-                </li>
-            </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+            </li>
+            <div *ngIf="user?.role=='Admin'">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
+              </li>
+            </div>
+            <div *ngIf="user?.role=='Account Manager'">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+              </li>
+            </div>
+            <div *ngIf="user?.role=='Product Manager'">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+              </li>
+            </div>
+            <div *ngIf="user?.role=='Worker'">
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+              </li>
+            </div>
+            <li class="nav-item">
+              <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
+            </li>
+          </ul>
         </div>
     </nav>
 
-    <div *ngIf="user?.role=='Admin'">
-    <button mat-fab color="primary" class="add-button"  (click)="addData(user?.role)">
+    <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
+    <button mat-fab color="primary" class="add-button"  (click)="addData(type)">
       <mat-icon>add</mat-icon>
     </button>
     </div>
@@ -48,7 +63,7 @@
 
                     <mat-card-actions class="element-card-actions ">
                       <div *ngIf="user?.role=='Admin'">
-                        <button (click)="editData(getId(element), user?.role)" mat-mini-fab color="primary" class="mod-button">
+                        <button (click)="editData(getId(element), type)" mat-mini-fab color="primary" class="mod-button">
           <mat-icon>edit</mat-icon>
         </button>
                       </div>
@@ -65,7 +80,7 @@
                   </div>
                   <ng-template #elseBlock>
                     <p>Status: {{getInfo(element)[0]}}</p>
-                    <p>Type: {{getInfo(element)[1]}}</p>
+                    <p>Opening date: {{getInfo(element)[1]}}</p>
                   </ng-template>
                 </mat-card-content>
             </mat-card>

@@ -32,7 +32,7 @@
     </nav>
 
     <div *ngIf="user?.role=='Admin'">
-    <button mat-fab color="primary" class="add-button"  (click)="openAddDialog()">
+    <button mat-fab color="primary" class="add-button"  (click)="addData(user?.role)">
       <mat-icon>add</mat-icon>
     </button>
     </div>
@@ -47,9 +47,11 @@
 
 
                     <mat-card-actions class="element-card-actions ">
-                        <button mat-mini-fab color="primary" class="mod-button">
+                      <div *ngIf="user?.role=='Admin'">
+                        <button (click)="editData(getId(element), user?.role)" mat-mini-fab color="primary" class="mod-button">
           <mat-icon>edit</mat-icon>
         </button>
+                      </div>
                         <button mat-mini-fab color="primary" class="mod-button">
           <mat-icon>delete</mat-icon>
         </button>

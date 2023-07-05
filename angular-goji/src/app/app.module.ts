@@ -22,7 +22,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatInputModule} from "@angular/material/input";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { AddDialogComponent } from './components/add-dialog/add-dialog.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 import {MatSelectModule} from "@angular/material/select";
 
 
@@ -32,7 +32,7 @@ import {MatSelectModule} from "@angular/material/select";
     LoginComponent,
     UserComponent,
     ListComponent,
-    AddDialogComponent
+    DialogComponent
   ],
   imports: [
     BrowserModule,

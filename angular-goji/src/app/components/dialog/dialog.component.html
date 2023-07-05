@@ -1,4 +1,4 @@
-<form [formGroup]="myform" (ngSubmit)="SaveUser()">
+<form [formGroup]="myform" (ngSubmit)="SaveData()">
   <h1 mat-dialog-title>{{inputData.title}}</h1>
   <div mat-dialog-content>
     <mat-form-field>
@@ -32,7 +32,6 @@
   </div>
   <div mat-dialog-actions>
     <button mat-raised-button color="primary">Save</button>
-    <button (click)="closeAddDialog()"mat-raised-button color="warn">Close</button>
-  <!--  <button mat-raised-button [mat-dialog-close]="closemessage" color="accent">Cancel</button>-->
+    <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
   </div>
 </form>

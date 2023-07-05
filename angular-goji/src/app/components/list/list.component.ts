@@ -12,7 +12,7 @@ import { Issue } from 'src/app/interfaces/issue';
 import { Task } from 'src/app/interfaces/task';
 import { UserService } from 'src/app/services/user.service';
 import { Request } from 'src/app/interfaces/request';
-import {AddDialogComponent} from "../add-dialog/add-dialog.component";
+import {DialogComponent} from "../dialog/dialog.component";
 
 @Component({
   selector: 'app-list',
@@ -24,10 +24,9 @@ export class ListComponent implements OnInit {
   public user:User|undefined;
   public elements:(Request|Issue|Task|User)[];
   public pageSlice: (Request|Issue|Task|User)[];
-  constructor(private router: Router,private addDialog: MatDialog,private listService:ListService,
+  constructor(private router: Router,private dialog: MatDialog,private listService:ListService,
     private app:AppService,private userService:UserService) {
       this.app.refresh();//In case of refresh
-      this.user = this.app.user;
       this.user = this.app.user;
       this.elements = [];
       this.pageSlice = [];
@@ -141,6 +140,28 @@ export class ListComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+  getId(obj:Request|Issue|Task|User):string{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return (obj as Request).requestName;
+        } else if ('issueName' in obj) {
+          return (obj as Issue).issueName;
+        } else if ('taskName' in obj) {
+          return (obj as Task).taskName;
+        }
+        else if ('firstName' in obj) {
+          return (obj as User).login;
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return '';
+  }
+
   getName(obj:Request|Issue|Task|User):string{
     switch (typeof obj) {
       case 'object': {
@@ -194,17 +215,39 @@ export class ListComponent implements OnInit {
     this.pageSlice = this.elements!.slice(startIndex,endIndex);
   }
 
-  openAddDialog()
+  editData(id:string, userRole:any)
   {
-    var _addDialog = this.addDialog.open(AddDialogComponent, {
+    if(userRole=="Admin")
+    {
+      this.openDialog(id,'Edit user', userRole);
+    }
+    else
+      this.openDialog(id,'Edit', userRole);
+  }
+
+  addData(userRole:any)
+  {
+    if(userRole=="Admin") {
+      this.openDialog(0, 'Add user', userRole);
+    }
+    else
+      this.openDialog(0, 'Add', userRole);
+  }
+
+
+  openDialog(id:any, title:any, userRole:any)
+  {
+    var _dialog = this.dialog.open(DialogComponent, {
       width:'40%',
       enterAnimationDuration:'500ms',
       exitAnimationDuration:'500ms',
       data:{
-        title:'Add user'
+        title: title,
+        id: id,
+        userRole: userRole
       }
     })
-    _addDialog.afterClosed().subscribe(item=>{
+    _dialog.afterClosed().subscribe(item=>{
       this.elements=[];
       this.getData();
     }

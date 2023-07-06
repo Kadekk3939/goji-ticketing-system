@@ -59,8 +59,20 @@ public class UserService implements UserDetailsService {
         return userMapper.map(userRepository.findAll());
     }
 
-    public User updateUser(User user){
-        return userRepository.save(user);
+    public UserReadModel updateUser(Long userId,UserWriteModel userWriteModel){
+        Optional<User> user = userRepository.findById(userId);
+        User userToUpdate;
+        User updatedUser = new User();
+        if(user.isPresent()){
+            userToUpdate = user.get();
+            userToUpdate.setUserRole(userRoleRepository.findUserRoleEntityByRoleName(userWriteModel.getRole()));
+            userToUpdate.setLogin(userWriteModel.getLogin());
+            userToUpdate.setFirstName(userWriteModel.getFirstName());
+            userToUpdate.setLastName(userWriteModel.getLastName());
+            userToUpdate.setEmail(userWriteModel.getEmail());
+            updatedUser = userRepository.save(userToUpdate);
+        }
+        return userMapper.toReadModel(updatedUser);
     }
 
     public void deleteUserByUserId(Long userId){

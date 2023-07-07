@@ -30,9 +30,9 @@ public class IssueController {
         return new ResponseEntity<>(issueService.getAllIssues(),HttpStatus.OK);
     }
 
-    @PutMapping("/{requestId}")
-    public ResponseEntity<IssueReadModel> updateIssue(@PathVariable Long requestId, @RequestBody IssueWriteModel issueWriteModel) {
-        IssueReadModel updateIssue = issueService.updateIssue(requestId, issueWriteModel);
+    @PutMapping("/{issueId}")
+    public ResponseEntity<IssueReadModel> updateIssue(@PathVariable Long issueId, @RequestBody IssueWriteModel issueWriteModel) {
+        IssueReadModel updateIssue = issueService.updateIssue(issueId, issueWriteModel);
         return ResponseEntity.ok(updateIssue);
     }
 }

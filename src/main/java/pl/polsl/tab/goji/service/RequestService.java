@@ -39,6 +39,10 @@ public class RequestService {
         return  requestMapper.toReadModel(requestRepository.save(request));
     }
 
+    public void updateRequest(Long requestId,RequestWriteModel requestWriteModel){
+
+    }
+
     public List<RequestReadModel> getAllRequests(){
         return requestMapper.map(requestRepository.findAll());
     }

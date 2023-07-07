@@ -43,6 +43,18 @@ public class IssueService {
 
     }
 
+    public IssueReadModel updateIssue(Long issueId,IssueWriteModel issueWriteModel){
+        Optional<Issue> issue = issueRepository.findIssueByIssueId(issueId);
+        Issue issueToUpdate = new Issue();
+        if(issue.isPresent()){
+            issueToUpdate = issue.get();
+            issueToUpdate.setIssueName(issueWriteModel.getIssueName());
+            issueToUpdate.setDescription(issueWriteModel.getDescription());
+            issueToUpdate = issueRepository.save(issueToUpdate);
+        }
+        return issueMapper.toReadModel(issueToUpdate);
+    }
+
     public List<IssueReadModel> getAllIssues(){
         return issueMapper.map(issueRepository.findAll());
     }

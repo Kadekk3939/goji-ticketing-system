@@ -32,7 +32,7 @@ public class RequestController {
     }
 
     @PutMapping("/{requestId}")
-    public ResponseEntity<RequestReadModel> updateUser(@PathVariable Long requestId, @RequestBody RequestWriteModel requestWriteModel) {
+    public ResponseEntity<RequestReadModel> updateRequest(@PathVariable Long requestId, @RequestBody RequestWriteModel requestWriteModel) {
         RequestReadModel updateRequest = requestService.updateRequest(requestId, requestWriteModel);
         return ResponseEntity.ok(updateRequest);
     }

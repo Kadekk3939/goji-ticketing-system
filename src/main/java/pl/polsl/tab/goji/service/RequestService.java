@@ -39,8 +39,17 @@ public class RequestService {
         return  requestMapper.toReadModel(requestRepository.save(request));
     }
 
-    public void updateRequest(Long requestId,RequestWriteModel requestWriteModel){
+    public RequestReadModel updateRequest(Long requestId,RequestWriteModel requestWriteModel){
+        Optional<Request> request = requestRepository.findRequestByRequestId(requestId);
+        Request requestToUpdate = new Request();
+        if(request.isPresent()){
+            requestToUpdate = request.get();
+            requestToUpdate.setRequestName(requestWriteModel.getRequestName());
+            requestToUpdate.setDescription(requestWriteModel.getDescription());
+            requestToUpdate = requestRepository.save(requestToUpdate);
+        }
 
+        return requestMapper.toReadModel(requestToUpdate);
     }
 
     public List<RequestReadModel> getAllRequests(){

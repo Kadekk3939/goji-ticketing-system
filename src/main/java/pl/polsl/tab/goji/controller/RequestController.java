@@ -4,7 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
+import pl.polsl.tab.goji.model.dto.read.UserReadModel;
 import pl.polsl.tab.goji.model.dto.write.RequestWriteModel;
+import pl.polsl.tab.goji.model.dto.write.UserWriteModel;
 import pl.polsl.tab.goji.model.entity.Request;
 import pl.polsl.tab.goji.service.RequestService;
 
@@ -27,5 +29,11 @@ public class RequestController {
     @GetMapping
     public ResponseEntity<List<RequestReadModel>> getAllRequests(){
         return new ResponseEntity<>(requestService.getAllRequests(),HttpStatus.OK);
+    }
+
+    @PutMapping("/{requestId}")
+    public ResponseEntity<RequestReadModel> updateUser(@PathVariable Long requestId, @RequestBody RequestWriteModel requestWriteModel) {
+        RequestReadModel updateRequest = requestService.updateRequest(requestId, requestWriteModel);
+        return ResponseEntity.ok(updateRequest);
     }
 }

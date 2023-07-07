@@ -14,6 +14,7 @@ import pl.polsl.tab.goji.model.enums.Status;
 import pl.polsl.tab.goji.repository.TaskRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -41,6 +42,18 @@ public class TaskService {
 
 
         return taskMapper.toReadModel(taskRepository.save(task));
+    }
+
+    public TaskReadModel taskUpdate(Long taskId,TaskWriteModel taskWriteModel){
+        Optional<Task> task = taskRepository.findTaskByTaskId(taskId);
+        Task taskToUpdate = new Task();
+        if(task.isPresent()){
+            taskToUpdate = task.get();
+            taskToUpdate.setTaskName(taskWriteModel.getTaskName());
+            taskToUpdate.setDescription(taskWriteModel.getDescription());
+            taskToUpdate = taskRepository.save(taskToUpdate);
+        }
+        return taskMapper.toReadModel(taskToUpdate);
     }
 
     public List<TaskReadModel> getAllTasks(){

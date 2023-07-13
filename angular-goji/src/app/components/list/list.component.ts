@@ -270,9 +270,9 @@ export class ListComponent implements OnInit {
       }
     })
     _dialog.afterClosed().subscribe(item=>{
-      this.elements=[];
-      this.getData();
-    }
+        this.elements=[];
+        this.getData();
+      }
     );
   }
 }

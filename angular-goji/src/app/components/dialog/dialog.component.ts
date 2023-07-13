@@ -17,6 +17,7 @@ export class DialogComponent implements OnInit {
   type:any;
   inputData:any;
   editData:any;
+  id:any;
   roles =  [
     {value: 'Admin', viewValue: 'Admin'},
     {value: 'Account Manager', viewValue: 'Account Manager'},
@@ -36,13 +37,14 @@ export class DialogComponent implements OnInit {
     }
   }
 
-  setDialogData(id:any){
+  setDialogData(login:any){
     if(this.type=="/users") {
-      this.service.getUserByLogin(id).subscribe(user => {
+      this.service.getUserByLogin(login).subscribe(user => {
         this.editData = user;
+        this.id = this.editData.userId;
         this.userForm.setValue({
           firstName: this.editData.firstName, lastName: this.editData.lastName, login: this.editData.login,
-          password: this.editData.email, email: this.editData.email, role: this.editData.role
+          email: this.editData.email, role: this.editData.role
         })
       })
     }
@@ -56,7 +58,6 @@ export class DialogComponent implements OnInit {
       firstName: this.builder.control(''),
       lastName: this.builder.control(''),
       login: this.builder.control(''),
-      password: this.builder.control(''),
       email: this.builder.control(''),
       role: this.builder.control('')
     });
@@ -92,13 +93,15 @@ export class DialogComponent implements OnInit {
         );
       }
       else {
-        this.service.updateUser(<User>this.userForm.value).subscribe(res => {
-            this.closeDialog();
-          },
-          (error: HttpErrorResponse) => {
-            alert(error.message);
-          }
-        );
+       if(this.id != undefined) {
+         this.service.updateUser(this.id, <User>this.userForm.value).subscribe(res => {
+             this.closeDialog();
+           },
+           (error: HttpErrorResponse) => {
+             alert(error.message);
+           }
+         );
+       }
       }
     }
     else if(this.type=="/requests") {

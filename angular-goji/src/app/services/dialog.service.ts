@@ -34,8 +34,8 @@ export class DialogService {
     return this.http.get<User>(`${environment.apiBaseUrl}/user/login/${id}`);
   }
 
-  public updateUser(user:User): Observable<User> {
-    return this.http.put<User>(`${environment.apiBaseUrl}/user/update`, user);
+  public updateUser(id:string, user:User): Observable<User> {
+    return this.http.put<User>(`${environment.apiBaseUrl}/user/${id}`, user);
   }
 
   public updateRequest(request:Request): Observable<Request> {

@@ -25,6 +25,10 @@ export class ListComponent implements OnInit {
   public user:User|undefined;
   public elements:(Request|Issue|Task|User)[];
   public pageSlice: (Request|Issue|Task|User)[];
+
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator | undefined;
+
   constructor(private router: Router,private dialog: MatDialog,private listService:ListService,
     private app:AppService,private userService:UserService) {
       this.app.refresh();//In case of refresh
@@ -54,12 +58,15 @@ export class ListComponent implements OnInit {
             (response:User[])=>{
               response.forEach(user=>{
                 this.elements?.push(user);
-                if(this.pageSlice.length<2)
-                {
-                  this.pageSlice?.push(user);
-                }
               })
-
+              // @ts-ignore
+              const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
+              // @ts-ignore
+              let endIndex = startIndex+this.paginator.pageSize;
+              if(endIndex>this.elements!.length){
+                endIndex=this.elements!.length;
+              }
+              this.pageSlice = this.elements!.slice(startIndex,endIndex);
             }
           )
         }
@@ -73,11 +80,15 @@ export class ListComponent implements OnInit {
               (response: Request[]) => {
                 response.forEach(request => {
                   this.elements?.push(request);
-                  if (this.pageSlice.length < 2) {
-                    this.pageSlice?.push(request);
-                  }
                 })
-
+                // @ts-ignore
+                const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
+                // @ts-ignore
+                let endIndex = startIndex+this.paginator.pageSize;
+                if(endIndex>this.elements!.length){
+                  endIndex=this.elements!.length;
+                }
+                this.pageSlice = this.elements!.slice(startIndex,endIndex);
               }
             )
           }
@@ -86,10 +97,15 @@ export class ListComponent implements OnInit {
               (response: Issue[]) => {
                 response.forEach(issue => {
                   this.elements?.push(issue);
-                  if (this.pageSlice.length < 2) {
-                    this.pageSlice?.push(issue);
-                  }
                 })
+                // @ts-ignore
+                const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
+                // @ts-ignore
+                let endIndex = startIndex+this.paginator.pageSize;
+                if(endIndex>this.elements!.length){
+                  endIndex=this.elements!.length;
+                }
+                this.pageSlice = this.elements!.slice(startIndex,endIndex);
               }
             )
           }
@@ -98,10 +114,15 @@ export class ListComponent implements OnInit {
               (response: Task[]) => {
                 response.forEach(task => {
                   this.elements?.push(task);
-                  if (this.pageSlice.length < 2) {
-                    this.pageSlice?.push(task);
-                  }
                 })
+                // @ts-ignore
+                const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
+                // @ts-ignore
+                let endIndex = startIndex+this.paginator.pageSize;
+                if(endIndex>this.elements!.length){
+                  endIndex=this.elements!.length;
+                }
+                this.pageSlice = this.elements!.slice(startIndex,endIndex);
               }
             )
           }
@@ -117,10 +138,15 @@ export class ListComponent implements OnInit {
               (response: Issue[]) => {
                 response.forEach(issue => {
                   this.elements?.push(issue);
-                  if (this.pageSlice.length < 2) {
-                    this.pageSlice?.push(issue);
-                  }
                 })
+                // @ts-ignore
+                const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
+                // @ts-ignore
+                let endIndex = startIndex+this.paginator.pageSize;
+                if(endIndex>this.elements!.length){
+                  endIndex=this.elements!.length;
+                }
+                this.pageSlice = this.elements!.slice(startIndex,endIndex);
               }
             )
           }
@@ -129,10 +155,15 @@ export class ListComponent implements OnInit {
               (response: Task[]) => {
                 response.forEach(task => {
                   this.elements?.push(task);
-                  if (this.pageSlice.length < 2) {
-                    this.pageSlice?.push(task);
-                  }
                 })
+                // @ts-ignore
+                const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
+                // @ts-ignore
+                let endIndex = startIndex+this.paginator.pageSize;
+                if(endIndex>this.elements!.length){
+                  endIndex=this.elements!.length;
+                }
+                this.pageSlice = this.elements!.slice(startIndex,endIndex);
               }
             )
           }
@@ -146,11 +177,15 @@ export class ListComponent implements OnInit {
             (response:Task[])=>{
               response.forEach(task=>{
                 this.elements?.push(task);
-                if(this.pageSlice.length<2)
-                {
-                  this.pageSlice?.push(task);
-                }
               })
+              // @ts-ignore
+              const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
+              // @ts-ignore
+              let endIndex = startIndex+this.paginator.pageSize;
+              if(endIndex>this.elements!.length){
+                endIndex=this.elements!.length;
+              }
+              this.pageSlice = this.elements!.slice(startIndex,endIndex);
             }
           )
         }
@@ -272,6 +307,7 @@ export class ListComponent implements OnInit {
     _dialog.afterClosed().subscribe(item=>{
         this.elements=[];
         this.getData();
+        this.paginator?.lastPage()
       }
     );
   }

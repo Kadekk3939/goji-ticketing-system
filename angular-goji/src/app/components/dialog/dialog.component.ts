@@ -44,7 +44,7 @@ export class DialogComponent implements OnInit {
         this.id = this.editData.userId;
         this.userForm.setValue({
           firstName: this.editData.firstName, lastName: this.editData.lastName, login: this.editData.login,
-          email: this.editData.email, role: this.editData.role
+          password: this.editData.password, email: this.editData.email, role: this.editData.role
         })
       })
     }
@@ -58,6 +58,7 @@ export class DialogComponent implements OnInit {
       firstName: this.builder.control(''),
       lastName: this.builder.control(''),
       login: this.builder.control(''),
+      password: this.builder.control(''),
       email: this.builder.control(''),
       role: this.builder.control('')
     });

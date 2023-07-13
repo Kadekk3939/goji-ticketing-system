@@ -14,6 +14,12 @@
           <mat-label>Login</mat-label>
           <input formControlName="login" matInput>
         </mat-form-field>
+      <div *ngIf="this.inputData.id==0">
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input formControlName="password" type="password" matInput>
+        </mat-form-field>
+      </div>
         <mat-form-field>
           <mat-label>Email</mat-label>
           <input formControlName="email" type="email" matInput>

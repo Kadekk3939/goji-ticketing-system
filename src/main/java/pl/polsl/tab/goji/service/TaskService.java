@@ -60,4 +60,13 @@ public class TaskService {
         return taskMapper.map(taskRepository.findAll());
     }
 
+    public TaskReadModel getTaskReadModelById(Long taskId){
+        Optional<Task> task = taskRepository.findTaskByTaskId(taskId);
+        TaskReadModel taskReadModel = new TaskReadModel();
+        if(task.isPresent()){
+            taskReadModel = taskMapper.toReadModel(task.get());
+        }
+        return taskReadModel;
+    }
+
 }

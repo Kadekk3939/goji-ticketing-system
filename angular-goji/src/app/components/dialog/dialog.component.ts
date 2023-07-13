@@ -17,7 +17,6 @@ export class DialogComponent implements OnInit {
   type:any;
   inputData:any;
   editData:any;
-  id:any;
   roles =  [
     {value: 'Admin', viewValue: 'Admin'},
     {value: 'Account Manager', viewValue: 'Account Manager'},
@@ -37,11 +36,10 @@ export class DialogComponent implements OnInit {
     }
   }
 
-  setDialogData(login:any){
+  setDialogData(id:any){
     if(this.type=="/users") {
-      this.service.getUserByLogin(login).subscribe(user => {
+      this.service.getUserById(id).subscribe(user => {
         this.editData = user;
-        this.id = this.editData.userId;
         this.userForm.setValue({
           firstName: this.editData.firstName, lastName: this.editData.lastName, login: this.editData.login,
           password: this.editData.password, email: this.editData.email, role: this.editData.role
@@ -94,8 +92,8 @@ export class DialogComponent implements OnInit {
         );
       }
       else {
-       if(this.id != undefined) {
-         this.service.updateUser(this.id, <User>this.userForm.value).subscribe(res => {
+       if(this.inputData.id!=undefined) {
+         this.service.updateUser(this.inputData.id, <User>this.userForm.value).subscribe(res => {
              this.closeDialog();
            },
            (error: HttpErrorResponse) => {

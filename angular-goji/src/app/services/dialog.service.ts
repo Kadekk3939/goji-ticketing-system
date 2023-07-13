@@ -30,8 +30,8 @@ export class DialogService {
     return this.http.post<Task>(`${environment.apiBaseUrl}/task`, task);
   }
 
-  public getUserByLogin(id:string):Observable<User>{
-    return this.http.get<User>(`${environment.apiBaseUrl}/user/login/${id}`);
+  public getUserById(id:string):Observable<User>{
+    return this.http.get<User>(`${environment.apiBaseUrl}/user/${id}`);
   }
 
   public updateUser(id:string, user:User): Observable<User> {

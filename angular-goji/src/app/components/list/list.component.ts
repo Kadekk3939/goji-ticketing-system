@@ -162,18 +162,18 @@ export class ListComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  getId(obj:Request|Issue|Task|User):string{
+  getId(obj:Request|Issue|Task|User):number{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
-          return (obj as Request).requestName;
+          return (obj as Request).requestId;
         } else if ('issueName' in obj) {
-          return (obj as Issue).issueName;
+          return (obj as Issue).issueId;
         } else if ('taskName' in obj) {
-          return (obj as Task).taskName;
+          return (obj as Task).taskId;
         }
         else if ('firstName' in obj) {
-          return (obj as User).login;
+          return (obj as User).userId;
         }
         break;
       }
@@ -181,7 +181,7 @@ export class ListComponent implements OnInit {
         break;
       }
     }
-    return '';
+    return -1;
   }
 
   getName(obj:Request|Issue|Task|User):string{
@@ -237,7 +237,7 @@ export class ListComponent implements OnInit {
     this.pageSlice = this.elements!.slice(startIndex,endIndex);
   }
 
-  editData(id:string, type:any)
+  editData(id:any, type:any)
   {
     if(type=="/users")
     {

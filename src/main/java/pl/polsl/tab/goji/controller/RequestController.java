@@ -36,4 +36,10 @@ public class RequestController {
         RequestReadModel updateRequest = requestService.updateRequest(requestId, requestWriteModel);
         return ResponseEntity.ok(updateRequest);
     }
+
+    @GetMapping("/{requestId}")
+    public ResponseEntity<RequestReadModel> getRequestById(@PathVariable Long requestId) {
+        RequestReadModel request = requestService.getRequestReadModelById(requestId);
+        return ResponseEntity.ok(request);
+    }
 }

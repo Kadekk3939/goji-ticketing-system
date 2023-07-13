@@ -61,4 +61,13 @@ public class RequestService {
         return request.orElse(null);
     }
 
+    public RequestReadModel getRequestReadModelById(Long id){
+        Optional<Request> request = requestRepository.findRequestByRequestId(id);
+        RequestReadModel requestReadModel = new RequestReadModel();
+        if(request.isPresent()){
+            requestReadModel=requestMapper.toReadModel(request.get());
+        }
+        return requestReadModel;
+    }
+
 }

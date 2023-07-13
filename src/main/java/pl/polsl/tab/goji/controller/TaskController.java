@@ -42,4 +42,10 @@ public class TaskController {
         TaskReadModel updatedTask = taskService.taskUpdate(taskId, taskWriteModel);
         return ResponseEntity.ok(updatedTask);
     }
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<TaskReadModel> getTaskById(@PathVariable Long taskId) {
+        TaskReadModel taskReadModel = taskService.getTaskReadModelById(taskId);
+        return ResponseEntity.ok(taskReadModel);
+    }
 }

@@ -63,4 +63,13 @@ public class IssueService {
         Optional<Issue> issue = issueRepository.findIssueByIssueId(id);
         return issue.orElse(null);
     }
+
+    public IssueReadModel getIssueReadModelById(Long id){
+        Optional<Issue> issue = issueRepository.findIssueByIssueId(id);
+        IssueReadModel issueReadModel = new IssueReadModel();
+        if(issue.isPresent()){
+            issueReadModel = issueMapper.toReadModel(issue.get());
+        }
+        return issueReadModel;
+    }
 }

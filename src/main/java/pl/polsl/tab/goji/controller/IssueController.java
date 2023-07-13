@@ -35,4 +35,10 @@ public class IssueController {
         IssueReadModel updateIssue = issueService.updateIssue(issueId, issueWriteModel);
         return ResponseEntity.ok(updateIssue);
     }
+
+    @GetMapping("/{issueId}")
+    public ResponseEntity<IssueReadModel> getIssueById(@PathVariable Long issueId) {
+        IssueReadModel issueReadModel = issueService.getIssueReadModelById(issueId);
+        return ResponseEntity.ok(issueReadModel);
+    }
 }

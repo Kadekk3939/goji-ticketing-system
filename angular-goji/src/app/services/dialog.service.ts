@@ -38,16 +38,28 @@ export class DialogService {
     return this.http.put<User>(`${environment.apiBaseUrl}/user/${id}`, user);
   }
 
-  public updateRequest(request:Request): Observable<Request> {
-    return this.http.put<Request>(`${environment.apiBaseUrl}/request/update`, request);
+  public getRequestById(requestId:string):Observable<Request>{
+    return this.http.get<Request>(`${environment.apiBaseUrl}/request/${requestId}`);
   }
 
-  public updateIssue(issue:Issue): Observable<Issue> {
-    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/update`, issue);
+  public updateRequest(requestId:string, request:Request): Observable<Request> {
+    return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}`, request);
   }
 
-  public updateTask(task:Task): Observable<Task> {
-    return this.http.put<Task>(`${environment.apiBaseUrl}/task/update`, task);
+  public getIssueById(issueId:string):Observable<Issue>{
+    return this.http.get<Issue>(`${environment.apiBaseUrl}/issue/${issueId}`);
+  }
+
+  public updateIssue(issueId:string, issue:Issue): Observable<Issue> {
+    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}`, issue);
+  }
+
+  public getTaskById(taskId:string):Observable<Task>{
+    return this.http.get<Task>(`${environment.apiBaseUrl}/task/${taskId}`);
+  }
+
+  public updateTask(taskId:string, task:Task): Observable<Task> {
+    return this.http.put<Task>(`${environment.apiBaseUrl}/task/${taskId}`, task);
   }
 
 }

@@ -46,6 +46,33 @@ export class DialogComponent implements OnInit {
         })
       })
     }
+    else if(this.type=="/requests") {
+      this.service.getRequestById(id).subscribe(request => {
+        this.editData = request;
+        this.requestForm.setValue({
+          requestName: this.editData.requestName, description: this.editData.description,
+          productId: this.requestForm.value.productId !== undefined ? this.requestForm.value.productId : 0
+        })
+      })
+    }
+    else if(this.type=="/issues") {
+      this.service.getIssueById(id).subscribe(issue => {
+        this.editData = issue;
+        this.issueForm.setValue({
+          requestId: this.issueForm.value.requestId !== undefined ? this.issueForm.value.requestId : 0,
+          issueName: this.editData.issueName, description: this.editData.description
+        })
+      })
+    }
+    else if(this.type=="/tasks") {
+      this.service.getTaskById(id).subscribe(task => {
+        this.editData = task;
+        this.taskForm.setValue({
+          issueId: this.taskForm.value.issueId!== undefined ? this.taskForm.value.issueId : 0,
+          taskName: this.editData.taskName, description: this.editData.description
+        })
+      })
+    }
   }
 
   closeDialog()
@@ -114,13 +141,15 @@ export class DialogComponent implements OnInit {
         );
       }
       else {
-        this.service.updateRequest(<Request>this.requestForm.value).subscribe(res => {
-            this.closeDialog();
-          },
-          (error: HttpErrorResponse) => {
-            alert(error.message);
-          }
-        );
+        if(this.inputData.id!=undefined) {
+          this.service.updateRequest(this.inputData.id, <Request>this.requestForm.value).subscribe(res => {
+              this.closeDialog();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
       }
     }
     else if(this.type=="/issues") {
@@ -134,13 +163,15 @@ export class DialogComponent implements OnInit {
         );
       }
       else {
-        this.service.updateIssue(<Issue>this.issueForm.value).subscribe(res => {
-            this.closeDialog();
-          },
-          (error: HttpErrorResponse) => {
-            alert(error.message);
-          }
-        );
+        if(this.inputData.id!=undefined) {
+          this.service.updateIssue(this.inputData.id, <Issue>this.issueForm.value).subscribe(res => {
+              this.closeDialog();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
       }
     }
     else if(this.type=="tasks") {
@@ -154,13 +185,15 @@ export class DialogComponent implements OnInit {
         );
       }
       else {
-        this.service.updateTask(<Task>this.taskForm.value).subscribe(res => {
-            this.closeDialog();
-          },
-          (error: HttpErrorResponse) => {
-            alert(error.message);
-          }
-        );
+        if(this.inputData.id!=undefined) {
+          this.service.updateTask(this.inputData.id, <Task>this.taskForm.value).subscribe(res => {
+              this.closeDialog();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
       }
     }
   }

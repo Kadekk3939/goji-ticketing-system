@@ -1,90 +1,100 @@
 <body class="mat-typography">
-
-    <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
-        <a class="navbar-brand" href="#"><img src="../../../assets/goji.png" class="d-inline-block" alt="Goji"> </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mainmenu">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
-            </li>
-            <div *ngIf="user?.role=='Admin'">
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
-              </li>
-            </div>
-            <div *ngIf="user?.role=='Account Manager'">
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
-              </li>
-            </div>
-            <div *ngIf="user?.role=='Product Manager'">
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
-              </li>
-            </div>
-            <div *ngIf="user?.role=='Worker'">
-              <li class="nav-item">
-                <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
-              </li>
-            </div>
-            <li class="nav-item">
-              <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
-            </li>
-          </ul>
-        </div>
-    </nav>
-
-    <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
-    <button mat-fab color="primary" class="add-button"  (click)="addData(type)">
-      <mat-icon>add</mat-icon>
+  <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
+    <a class="navbar-brand" href="#"><img src="../../../assets/goji.png" class="d-inline-block" alt="Goji"> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
+      <span class="navbar-toggler-icon"></span>
     </button>
-    </div>
-
-    <div class="container" id="main-container">
-        <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator"></mat-paginator>
-        <div *ngFor="let element of pageSlice">
-            <mat-card class="element-card mat-elevation-z8">
-                <mat-card-header>
-                    <mat-card-title>{{ getName(element) }}</mat-card-title>
-                    <mat-card-actions class="element-card-actions ">
-<!--                      <div *ngIf="user?.role=='Admin'">-->
-                        <button (click)="editData(getId(element), type)" mat-mini-fab color="primary" class="mod-button">
-                          <mat-icon>edit</mat-icon>
-                        </button>
-<!--                      </div>-->
-                      <button mat-mini-fab color="primary" class="mod-button">
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </mat-card-actions>
-                </mat-card-header>
-                <mat-card-content>
-                  <div *ngIf="user?.role=='Admin'; else elseBlock">
-                    <p>Login: {{getInfo(element)[0]}}</p>
-                    <p>Email: {{getInfo(element)[1]}}</p>
-                    <p>Role: {{getInfo(element)[2]}}</p>
-                  </div>
-                  <ng-template #elseBlock>
-                    <p>Status: {{getInfo(element)[0]}}</p>
-                    <p>Opening date: {{getInfo(element)[1]}}</p>
-                  </ng-template>
-                </mat-card-content>
-            </mat-card>
+    <div class="collapse navbar-collapse" id="mainmenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+        </li>
+        <div *ngIf="user?.role=='Admin'">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
+          </li>
         </div>
-
-
+        <div *ngIf="user?.role=='Account Manager'">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+          </li>
+        </div>
+        <div *ngIf="user?.role=='Product Manager'">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+          </li>
+        </div>
+        <div *ngIf="user?.role=='Worker'">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+          </li>
+        </div>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
+        </li>
+      </ul>
     </div>
+  </nav>
 
+  <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
+  <button mat-fab color="primary" class="add-button"  (click)="addData(type)">
+    <mat-icon>add</mat-icon>
+  </button>
+  </div>
 
+  <div class="container" id="main-container">
+      <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator"></mat-paginator>
+    <div *ngFor="let element of pageSlice">
+      <mat-card class="element-card mat-elevation-z8">
+        <mat-card-header>
+            <mat-card-title>{{ getName(element) }}</mat-card-title>
+            <mat-card-actions class="element-card-actions ">
+              <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
+                <button (click)="editData(getId(element), type)" mat-icon-button color="primary" class="mod-button">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <button mat-icon-button color="primary" class="mod-button">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+            </mat-card-actions>
+        </mat-card-header>
+        <mat-card-content>
+          <div *ngIf="user?.role=='Admin'; else elseBlock">
+            <p>Login: {{getInfo(element)[0]}}</p>
+            <p>Email: {{getInfo(element)[1]}}</p>
+            <p>Role: {{getInfo(element)[2]}}</p>
+          </div>
+          <ng-template #elseBlock>
+            <p>Status: {{getInfo(element)[0]}}</p>
+            <p>Opening date: {{getInfo(element)[1]}}</p>
+          </ng-template>
+        </mat-card-content>
+
+        <mat-card-actions class="element-card-actions ">
+          <div *ngIf="((user?.role=='Account Manager'&&type=='/requests')||(user?.role=='Product Manager'&&type=='/issues')||(user?.role=='Worker'&&type=='/tasks'))">
+            <div *ngIf="getDate(element)!=null; else elseDateBlock">
+              <button mat-flat-button color="accent" class="mod-button">
+                Finish
+              </button>
+            </div>
+            <ng-template #elseDateBlock>
+              <button mat-flat-button color="accent" class="bottom-right">
+                Start
+              </button>
+            </ng-template>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
 </body>

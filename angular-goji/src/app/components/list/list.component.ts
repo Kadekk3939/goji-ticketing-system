@@ -241,6 +241,25 @@ export class ListComponent implements OnInit {
     return '';
   }
 
+  getDate(obj:Request|Issue|Task|User):Date{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return (obj as Request).inProgressDate;
+        } else if ('issueName' in obj) {
+          return (obj as Issue).inProgressDate;
+        } else if ('taskName' in obj) {
+          return (obj as Task).inProgressDate;
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return new Date();
+  }
+
   getInfo(obj:Request|Issue|Task|User):string[]{
     switch (typeof obj) {
       case 'object': {

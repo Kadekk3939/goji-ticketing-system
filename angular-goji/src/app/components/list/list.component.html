@@ -52,7 +52,25 @@
   </div>
 
   <div class="container" id="main-container">
-      <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator"></mat-paginator>
+    <mat-form-field class="form-field">
+      <mat-label>Sort</mat-label>
+      <mat-select>
+        <mat-option>
+          fff
+        </mat-option>
+        <mat-option>
+          fffffffaaiai
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input matInput type="text" [(ngModel)]="value">
+      <mat-label>Search</mat-label>
+      <button *ngIf="value" matSuffix mat-icon-button aria-label="Search" (click)="value=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator"></mat-paginator>
     <div *ngFor="let element of pageSlice">
       <mat-card class="element-card mat-elevation-z8">
         <mat-card-header>
@@ -88,7 +106,7 @@
               </button>
             </div>
             <ng-template #elseDateBlock>
-              <button mat-flat-button color="accent" class="bottom-right">
+              <button mat-flat-button color="accent" class="mod-button">
                 Start
               </button>
             </ng-template>

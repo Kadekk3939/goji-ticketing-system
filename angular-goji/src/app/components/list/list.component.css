@@ -55,7 +55,6 @@ img {
 
 .paginator {
     max-width: 50svw;
-    margin-top: 10svh;
     margin-left: 10px;
     bottom: 0;
 }
@@ -64,6 +63,8 @@ img {
     margin-left: auto;
     bottom: 0;
 }
-.bottom-right{
-  margin: 0px 5px ;
+.form-field {
+  max-width: 50svw;
+  margin-left: 10px;
+  bottom: 0;
 }

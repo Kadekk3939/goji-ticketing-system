@@ -20,6 +20,7 @@ import {DialogComponent} from "../dialog/dialog.component";
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+  value = '';
   public type:string | undefined;
   public users: User[] | undefined;
   public user:User|undefined;

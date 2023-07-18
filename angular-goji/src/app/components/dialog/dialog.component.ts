@@ -174,7 +174,7 @@ export class DialogComponent implements OnInit {
         }
       }
     }
-    else if(this.type=="tasks") {
+    else if(this.type=="/tasks") {
       if(this.inputData.id==0) {
         this.service.addTask(<Task>this.taskForm.value).subscribe(res => {
             this.closeDialog();

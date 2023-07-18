@@ -56,20 +56,17 @@
         <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator"></mat-paginator>
         <div *ngFor="let element of pageSlice">
             <mat-card class="element-card mat-elevation-z8">
-
                 <mat-card-header>
                     <mat-card-title>{{ getName(element) }}</mat-card-title>
-
-
                     <mat-card-actions class="element-card-actions ">
 <!--                      <div *ngIf="user?.role=='Admin'">-->
                         <button (click)="editData(getId(element), type)" mat-mini-fab color="primary" class="mod-button">
-          <mat-icon>edit</mat-icon>
-        </button>
+                          <mat-icon>edit</mat-icon>
+                        </button>
 <!--                      </div>-->
-                        <button mat-mini-fab color="primary" class="mod-button">
-          <mat-icon>delete</mat-icon>
-        </button>
+                      <button mat-mini-fab color="primary" class="mod-button">
+                        <mat-icon>delete</mat-icon>
+                      </button>
                     </mat-card-actions>
                 </mat-card-header>
                 <mat-card-content>

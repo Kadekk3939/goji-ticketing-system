@@ -9,35 +9,18 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
         </li>
-        <div *ngIf="user?.role=='Admin'">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
-          </li>
-        </div>
-        <div *ngIf="user?.role=='Account Manager'">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
-          </li>
-        </div>
-        <div *ngIf="user?.role=='Product Manager'">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
-          </li>
-        </div>
-        <div *ngIf="user?.role=='Worker'">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
-          </li>
-        </div>
+        <li class="nav-item" *ngIf="user?.role=='Admin'">
+          <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
+        </li>
+        <li class="nav-item" *ngIf="user?.role=='Account Manager'">
+          <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
+        </li>
+        <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager'">
+          <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
+        </li>
+        <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager' || user?.role=='Worker'">
+          <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
         </li>
@@ -55,12 +38,8 @@
     <mat-form-field class="form-field">
       <mat-label>Sort</mat-label>
       <mat-select>
-        <mat-option>
-          fff
-        </mat-option>
-        <mat-option>
-          fffffffaaiai
-        </mat-option>
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption">{{sortOption}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field class="form-field">

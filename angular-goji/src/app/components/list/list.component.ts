@@ -21,6 +21,10 @@ import {DialogComponent} from "../dialog/dialog.component";
 })
 export class ListComponent implements OnInit {
   value = '';
+  sortOptions = [
+    'Ascending',
+    'Descending'
+  ]
   public type:string | undefined;
   public users: User[] | undefined;
   public user:User|undefined;

@@ -28,6 +28,7 @@ export class ListComponent implements OnInit {
   public users: User[] | undefined;
   public user:User|undefined;
   public elements:(Request|Issue|Task|User)[];
+  public originalElements:(Request|Issue|Task|User)[];
   public pageSlice: (Request|Issue|Task|User)[];
 
   @ViewChild(MatPaginator)
@@ -39,6 +40,7 @@ export class ListComponent implements OnInit {
       this.user = this.app.user;
 
       this.elements = [];
+      this.originalElements =[];
       this.pageSlice = [];
       this.type=router.url;
     this.control.valueChanges.subscribe(s => {
@@ -47,7 +49,7 @@ export class ListComponent implements OnInit {
     }
   ngOnInit() {
     this.getData();
-    this.app.refresh();
+
   }
 
   public getData(){
@@ -198,6 +200,7 @@ export class ListComponent implements OnInit {
         }
       }
     )
+    this.originalElements=this.elements;
   }
 
   public logout(): void {
@@ -411,6 +414,21 @@ export class ListComponent implements OnInit {
     }
   }
 
+  onSearch() {
+    alert(this.value)
+    this.elements = this.originalElements.filter((element) =>
+      this.getName(element).includes(this.value.toLowerCase())
+    );
+    this.paginator?.lastPage()
+    this.paginator?.firstPage()
+  }
+
+
+  clearSearch() {
+    this.value = '';
+    this.onSearch();
+  }
+
   public OnPageChange(event:PageEvent) {
     const startIndex = event.pageIndex*event.pageSize;
     let endIndex = startIndex+event.pageSize;
@@ -442,6 +460,7 @@ export class ListComponent implements OnInit {
 
   openDialog(id:any, title:any, type:any)
   {
+    this.value='';
     var _dialog = this.dialog.open(DialogComponent, {
       width:'40%',
       enterAnimationDuration:'500ms',

@@ -58,9 +58,9 @@
         </mat-form-field>
       </ng-template>
       <mat-form-field class="search">
-        <input matInput type="text" [(ngModel)]="value">
+        <input matInput type="text" [(ngModel)]="value" (ngModelChange)="onSearch()">
         <mat-label>Search</mat-label>
-        <button *ngIf="value" matSuffix mat-icon-button aria-label="Search" (click)="value=''">
+        <button *ngIf="value" matSuffix mat-icon-button aria-label="Search" (click)="clearSearch()">
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>

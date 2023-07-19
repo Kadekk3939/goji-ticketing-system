@@ -6,6 +6,7 @@ body {
     background-size: cover;
     -o-background-size: cover;
     min-height: 100%;
+
 }
 
 header {
@@ -24,7 +25,6 @@ h1 {
     text-transform: uppercase;
     text-align: center;
 }
-
 img {
     width: 40px;
     height: 30px;
@@ -40,9 +40,9 @@ img {
 }
 
 .element-card {
-    max-width: 50svw;
-    max-height: 50svh;
-    margin: 10px;
+  max-width: 50svw;
+  max-height: 50svh;
+  margin: 10px;
 }
 
 .element-card-actions {
@@ -63,8 +63,30 @@ img {
     margin-left: auto;
     bottom: 0;
 }
-.form-field {
-  max-width: 50svw;
+.field-container {
+  display: flex;
+  justify-content: space-between;
+}
+.other-container {
+  display: flex;
+  justify-content: space-between;
+}
+.list {
+  flex: 1;
+}
+.filters{
+  color: white;
+  max-width: 20svw;
+}
+.sort {
+  max-width: 20svw;
   margin-left: 10px;
   bottom: 0;
 }
+.search {
+  flex: 1;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+

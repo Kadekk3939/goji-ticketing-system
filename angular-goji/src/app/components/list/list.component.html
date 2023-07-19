@@ -35,63 +35,86 @@
   </div>
 
   <div class="container" id="main-container">
-    <mat-form-field class="form-field">
-      <mat-label>Sort</mat-label>
-      <mat-select>
-        <mat-option>None</mat-option>
-        <mat-option *ngFor="let sortOption of sortOptions" [value]="sortOption">{{sortOption}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="form-field">
-      <input matInput type="text" [(ngModel)]="value">
-      <mat-label>Search</mat-label>
-      <button *ngIf="value" matSuffix mat-icon-button aria-label="Search" (click)="value=''">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
-    <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator"></mat-paginator>
-    <div *ngFor="let element of pageSlice">
-      <mat-card class="element-card mat-elevation-z8">
-        <mat-card-header>
-            <mat-card-title>{{ getName(element) }}</mat-card-title>
-            <mat-card-actions class="element-card-actions ">
-              <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
-                <button (click)="editData(getId(element), type)" mat-icon-button color="primary" class="mod-button">
-                  <mat-icon>edit</mat-icon>
-                </button>
+    <div class="field-container">
+      <mat-form-field class="sort" *ngIf="user?.role!='Admin'; else elseUserBlock">
+        <mat-label>Sort by</mat-label>
+        <mat-select [(value)]="selected" (selectionChange)="onSortOptionSelected()">
+          <mat-option>None</mat-option>
+          <mat-option value="opendown">Latest opened</mat-option>
+          <mat-option value="openup">Earliest opened</mat-option>
+          <mat-option value="startdown">Latest started</mat-option>
+          <mat-option value="startup">Earliest started</mat-option>
+          <mat-option value="finishdown">Latest finished</mat-option>
+          <mat-option value="finishup">Earliest finished</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-template #elseUserBlock>
+        <mat-form-field class="form-field">
+          <mat-label>Sort</mat-label>
+          <mat-select [(value)]="selected" (selectionChange)="onSortUserOptionSelected()">
+            <mat-option value="asc">A to Z</mat-option>
+            <mat-option value="desc">Z to A</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-template>
+      <mat-form-field class="search">
+        <input matInput type="text" [(ngModel)]="value">
+        <mat-label>Search</mat-label>
+        <button *ngIf="value" matSuffix mat-icon-button aria-label="Search" (click)="value=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="other-container">
+      <div class="list">
+        <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator"></mat-paginator>
+        <div *ngFor="let element of pageSlice">
+          <mat-card class="element-card mat-elevation-z8">
+            <mat-card-header>
+                <mat-card-title>{{ getName(element) }}</mat-card-title>
+                <mat-card-actions class="element-card-actions ">
+                  <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
+                    <button (click)="editData(getId(element), type)" mat-icon-button color="primary" class="mod-button">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </div>
+                  <button mat-icon-button color="primary" class="mod-button">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                </mat-card-actions>
+            </mat-card-header>
+            <mat-card-content>
+              <div *ngIf="user?.role=='Admin'; else elseBlock">
+                <p>Login: {{getInfo(element)[0]}}</p>
+                <p>Email: {{getInfo(element)[1]}}</p>
+                <p>Role: {{getInfo(element)[2]}}</p>
               </div>
-              <button mat-icon-button color="primary" class="mod-button">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-            </mat-card-actions>
-        </mat-card-header>
-        <mat-card-content>
-          <div *ngIf="user?.role=='Admin'; else elseBlock">
-            <p>Login: {{getInfo(element)[0]}}</p>
-            <p>Email: {{getInfo(element)[1]}}</p>
-            <p>Role: {{getInfo(element)[2]}}</p>
-          </div>
-          <ng-template #elseBlock>
-            <p>Status: {{getInfo(element)[0]}}</p>
-            <p>Opening date: {{getInfo(element)[1]}}</p>
-          </ng-template>
-        </mat-card-content>
+              <ng-template #elseBlock>
+                <p>Status: {{getInfo(element)[0]}}</p>
+                <p>Opening date: {{getInfo(element)[1]}}</p>
+              </ng-template>
+            </mat-card-content>
 
-        <mat-card-actions class="element-card-actions ">
-          <div *ngIf="((user?.role=='Account Manager'&&type=='/requests')||(user?.role=='Product Manager'&&type=='/issues')||(user?.role=='Worker'&&type=='/tasks'))">
-            <div *ngIf="getDate(element)!=null; else elseDateBlock">
-              <button mat-flat-button color="accent" class="mod-button">
-                Finish
-              </button>
-            </div>
-            <ng-template #elseDateBlock>
-              <button mat-flat-button color="accent" class="mod-button">
-                Start
-              </button>
-            </ng-template>
-          </div>
-        </mat-card-actions>
-      </mat-card>
+            <mat-card-actions class="element-card-actions ">
+              <div *ngIf="((user?.role=='Account Manager'&&type=='/requests')||(user?.role=='Product Manager'&&type=='/issues')||(user?.role=='Worker'&&type=='/tasks'))">
+                <div *ngIf="getProgressDate(element)!=null; else elseDateBlock">
+                  <button mat-flat-button color="accent" class="mod-button">
+                    Finish
+                  </button>
+                </div>
+                <ng-template #elseDateBlock>
+                  <button mat-flat-button color="accent" class="mod-button">
+                    Start
+                  </button>
+                </ng-template>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+      <div class="filters">
+        there will be filters panel
+      </div>
     </div>
   </div>
 </body>

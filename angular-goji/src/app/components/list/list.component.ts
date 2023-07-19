@@ -13,6 +13,7 @@ import { Task } from 'src/app/interfaces/task';
 import { UserService } from 'src/app/services/user.service';
 import { Request } from 'src/app/interfaces/request';
 import {DialogComponent} from "../dialog/dialog.component";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-list',
@@ -20,11 +21,9 @@ import {DialogComponent} from "../dialog/dialog.component";
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+  control = new FormControl("steak-0");
   value = '';
-  sortOptions = [
-    'Ascending',
-    'Descending'
-  ]
+  selected = '';
   public type:string | undefined;
   public users: User[] | undefined;
   public user:User|undefined;
@@ -42,6 +41,9 @@ export class ListComponent implements OnInit {
       this.elements = [];
       this.pageSlice = [];
       this.type=router.url;
+    this.control.valueChanges.subscribe(s => {
+      console.log(`The selected value is ${s}`);
+    });
     }
   ngOnInit() {
     this.getData();
@@ -245,8 +247,25 @@ export class ListComponent implements OnInit {
     }
     return '';
   }
-
-  getDate(obj:Request|Issue|Task|User):Date{
+  getOpenDate(obj:Request|Issue|Task|User):Date{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return (obj as Request).openDate;
+        } else if ('issueName' in obj) {
+          return (obj as Issue).openDate;
+        } else if ('taskName' in obj) {
+          return (obj as Task).openDate;
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return new Date();
+  }
+  getProgressDate(obj:Request|Issue|Task|User):Date{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -255,6 +274,25 @@ export class ListComponent implements OnInit {
           return (obj as Issue).inProgressDate;
         } else if ('taskName' in obj) {
           return (obj as Task).inProgressDate;
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return new Date();
+  }
+
+  getFinishDate(obj:Request|Issue|Task|User):Date{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return (obj as Request).finalizationDate;
+        } else if ('issueName' in obj) {
+          return (obj as Issue).finalizationDate;
+        } else if ('taskName' in obj) {
+          return (obj as Task).finalizationDate;
         }
         break;
       }
@@ -285,6 +323,92 @@ export class ListComponent implements OnInit {
       }
     }
     return [''];
+  }
+
+  onSortOptionSelected() {
+    // Sort the array based on the selected option
+    switch (this.selected) {
+      case 'opendown':
+        this.elements.sort((a, b) => new Date(this.getOpenDate(b)).getTime() - new Date(this.getOpenDate(a)).getTime());
+        this.paginator?.lastPage()
+        this.paginator?.firstPage()
+        break;
+      case 'openup':
+        this.elements.sort((a, b) => new Date(this.getOpenDate(a)).getTime() - new Date(this.getOpenDate(b)).getTime());
+        this.paginator?.lastPage()
+        this.paginator?.firstPage()
+        break;
+      case 'startdown':
+        this.elements.sort((a, b) => new Date(this.getProgressDate(b)).getTime() - new Date(this.getProgressDate(a)).getTime());
+        this.paginator?.lastPage()
+        this.paginator?.firstPage()
+        break;
+      case 'startup':
+        this.elements.sort((a, b) => new Date(this.getProgressDate(a)).getTime() - new Date(this.getProgressDate(b)).getTime());
+        this.paginator?.lastPage()
+        this.paginator?.firstPage()
+        break;
+      case 'finishdown':
+        this.elements.sort((a, b) => new Date(this.getFinishDate(b)).getTime() - new Date(this.getFinishDate(a)).getTime());
+        this.paginator?.lastPage()
+        this.paginator?.firstPage()
+        break;
+      case 'finishup':
+        this.elements.sort((a, b) => new Date(this.getFinishDate(a)).getTime() - new Date(this.getFinishDate(b)).getTime());
+        this.paginator?.lastPage()
+        this.paginator?.firstPage()
+        break;
+      default:
+        this.elements=[];
+        this.getData()
+        this.paginator?.lastPage()
+        this.paginator?.firstPage()
+        break;
+    }
+  }
+
+  onSortUserOptionSelected() {
+    // Sort the array based on the selected option
+    switch (this.selected) {
+      case 'asc':
+        this.elements.sort((a, b) => {
+        const nameA = this.getName(a).toLowerCase(); // Convert to lowercase for case-insensitive sorting
+        const nameB = this.getName(b).toLowerCase();
+
+        if (nameA < nameB) {
+          return -1; // a comes before b
+        } else if (nameA > nameB) {
+          return 1; // a comes after b
+        } else {
+          return 0; // names are equal
+        }
+      });
+        this.paginator?.lastPage()
+        this.paginator?.firstPage()
+        break;
+      case 'desc':
+        this.elements.sort((a, b) => {
+          const nameA = this.getName(a).toLowerCase(); // Convert to lowercase for case-insensitive sorting
+          const nameB = this.getName(b).toLowerCase();
+
+          if (nameA < nameB) {
+            return 1; // a comes before b
+          } else if (nameA > nameB) {
+            return -1; // a comes after b
+          } else {
+            return 0; // names are equal
+          }
+        });
+        this.paginator?.lastPage()
+        this.paginator?.firstPage()
+        break;
+      default:
+        this.elements=[];
+        this.getData()
+        this.paginator?.lastPage()
+        this.paginator?.firstPage()
+        break;
+    }
   }
 
   public OnPageChange(event:PageEvent) {

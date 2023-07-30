@@ -67,7 +67,7 @@
     </div>
     <div class="other-container">
       <div class="list">
-        <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator"></mat-paginator>
+        <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator" ></mat-paginator>
         <div *ngFor="let element of pageSlice">
           <mat-card class="element-card mat-elevation-z8">
             <mat-card-header>

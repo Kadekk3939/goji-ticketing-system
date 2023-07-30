@@ -31,8 +31,7 @@ export class ListComponent implements OnInit {
   public originalElements:(Request|Issue|Task|User)[];
   public pageSlice: (Request|Issue|Task|User)[];
 
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator | undefined;
+  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
   constructor(private router: Router,private dialog: MatDialog,private listService:ListService,
     private app:AppService,private userService:UserService) {
@@ -68,14 +67,7 @@ export class ListComponent implements OnInit {
               response.forEach(user=>{
                 this.elements?.push(user);
               })
-              // @ts-ignore
-              const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
-              // @ts-ignore
-              let endIndex = startIndex+this.paginator.pageSize;
-              if(endIndex>this.elements!.length){
-                endIndex=this.elements!.length;
-              }
-              this.pageSlice = this.elements!.slice(startIndex,endIndex);
+              this.pageSlice = this.elements!.slice(0,2);
             }
           )
         }
@@ -90,14 +82,7 @@ export class ListComponent implements OnInit {
                 response.forEach(request => {
                   this.elements?.push(request);
                 })
-                // @ts-ignore
-                const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
-                // @ts-ignore
-                let endIndex = startIndex+this.paginator.pageSize;
-                if(endIndex>this.elements!.length){
-                  endIndex=this.elements!.length;
-                }
-                this.pageSlice = this.elements!.slice(startIndex,endIndex);
+               this.pageSlice = this.elements!.slice(0,2);
               }
             )
           }
@@ -107,14 +92,7 @@ export class ListComponent implements OnInit {
                 response.forEach(issue => {
                   this.elements?.push(issue);
                 })
-                // @ts-ignore
-                const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
-                // @ts-ignore
-                let endIndex = startIndex+this.paginator.pageSize;
-                if(endIndex>this.elements!.length){
-                  endIndex=this.elements!.length;
-                }
-                this.pageSlice = this.elements!.slice(startIndex,endIndex);
+                this.pageSlice = this.elements!.slice(0,2);
               }
             )
           }
@@ -124,14 +102,7 @@ export class ListComponent implements OnInit {
                 response.forEach(task => {
                   this.elements?.push(task);
                 })
-                // @ts-ignore
-                const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
-                // @ts-ignore
-                let endIndex = startIndex+this.paginator.pageSize;
-                if(endIndex>this.elements!.length){
-                  endIndex=this.elements!.length;
-                }
-                this.pageSlice = this.elements!.slice(startIndex,endIndex);
+                this.pageSlice = this.elements!.slice(0,2);
               }
             )
           }
@@ -148,14 +119,7 @@ export class ListComponent implements OnInit {
                 response.forEach(issue => {
                   this.elements?.push(issue);
                 })
-                // @ts-ignore
-                const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
-                // @ts-ignore
-                let endIndex = startIndex+this.paginator.pageSize;
-                if(endIndex>this.elements!.length){
-                  endIndex=this.elements!.length;
-                }
-                this.pageSlice = this.elements!.slice(startIndex,endIndex);
+                this.pageSlice = this.elements!.slice(0,2);
               }
             )
           }
@@ -165,14 +129,7 @@ export class ListComponent implements OnInit {
                 response.forEach(task => {
                   this.elements?.push(task);
                 })
-                // @ts-ignore
-                const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
-                // @ts-ignore
-                let endIndex = startIndex+this.paginator.pageSize;
-                if(endIndex>this.elements!.length){
-                  endIndex=this.elements!.length;
-                }
-                this.pageSlice = this.elements!.slice(startIndex,endIndex);
+               this.pageSlice = this.elements!.slice(0,2);
               }
             )
           }
@@ -187,14 +144,7 @@ export class ListComponent implements OnInit {
               response.forEach(task=>{
                 this.elements?.push(task);
               })
-              // @ts-ignore
-              const startIndex = this.paginator.pageIndex*this.paginator.pageSize;
-              // @ts-ignore
-              let endIndex = startIndex+this.paginator.pageSize;
-              if(endIndex>this.elements!.length){
-                endIndex=this.elements!.length;
-              }
-              this.pageSlice = this.elements!.slice(startIndex,endIndex);
+              this.pageSlice = this.elements!.slice(0,2);
             }
           )
         }
@@ -415,12 +365,18 @@ export class ListComponent implements OnInit {
   }
 
   onSearch() {
-    alert(this.value)
     this.elements = this.originalElements.filter((element) =>
       this.getName(element).includes(this.value.toLowerCase())
     );
-    this.paginator?.lastPage()
-    this.paginator?.firstPage()
+    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
+    {
+      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
+      let endIndex = startIndex+this.paginator?.pageSize;
+      if(endIndex>this.elements!.length){
+        endIndex=this.elements!.length;
+      }
+      this.pageSlice = this.elements!.slice(startIndex,endIndex);
+    }
   }
 
 

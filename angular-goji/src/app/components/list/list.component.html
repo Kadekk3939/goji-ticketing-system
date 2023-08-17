@@ -1,4 +1,4 @@
-<body class="mat-typography">
+<body class="mat-typography" xmlns:list-style-type="http://www.w3.org/1999/xhtml">
   <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
     <a class="navbar-brand" href="#"><img src="../../../assets/goji.png" class="d-inline-block" alt="Goji"> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
@@ -113,7 +113,22 @@
         </div>
       </div>
       <div class="filters">
-        there will be filters panel
+<!--        there will be filters panel-->
+        <mat-card class="element-card mat-elevation-z8">
+          <mat-card-header>
+            <mat-card-title>Filter</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Status</p>
+            <div class="container ul_checkbox">
+              <ul>
+                <li *ngFor="let chbxArr of statusArray">
+                  <input type="checkbox" (change)="onStutusCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
+                </li>
+              </ul>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </div>

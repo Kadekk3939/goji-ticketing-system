@@ -75,7 +75,7 @@ img {
   flex: 1;
 }
 .filters{
-  color: white;
+  color: black;
   max-width: 20svw;
 }
 .sort {
@@ -89,4 +89,6 @@ img {
   margin-right: 10px;
 }
 
-
+.ul_checkbox ul{
+  list-style-type:none;
+}

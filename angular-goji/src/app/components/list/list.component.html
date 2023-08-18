@@ -119,14 +119,26 @@
             <mat-card-title>Filter</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <p>Status</p>
-            <div class="container ul_checkbox">
-              <ul>
-                <li *ngFor="let chbxArr of statusArray">
-                  <input type="checkbox" (change)="onStutusCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
-                </li>
-              </ul>
-            </div>
+            <ng-template [ngIf]="user?.role!='Admin'" [ngIfElse]="isAdmin" >
+              <p>Status</p>
+              <div class="container ul_checkbox">
+                <ul>
+                  <li *ngFor="let chbxArr of statusArray">
+                    <input type="checkbox" (change)="onStutusCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
+                  </li>
+                </ul>
+              </div>
+            </ng-template>
+            <ng-template #isAdmin>
+              <p>Role</p>
+              <div class="container ul_checkbox">
+                <ul>
+                  <li *ngFor="let chbxArr of rolesArray">
+                    <input type="checkbox" (change)="onStutusCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
+                  </li>
+                </ul>
+              </div>
+            </ng-template>
           </mat-card-content>
         </mat-card>
       </div>

@@ -39,6 +39,42 @@ public class RequestService {
         return  requestMapper.toReadModel(requestRepository.save(request));
     }
 
+    public RequestReadModel setRequestStatusClose(Long requestId){
+        Optional<Request> request = requestRepository.findRequestByRequestId(requestId);
+        Request requestToUpdate = new Request();
+        if(request.isPresent()){
+
+            requestToUpdate = request.get();
+            requestToUpdate.setStatus(Status.CLOSED);
+            requestToUpdate = requestRepository.save(requestToUpdate);
+        }
+        return requestMapper.toReadModel(requestToUpdate);
+    }
+
+    public RequestReadModel setRequestStatusOpen(Long requestId){
+        Optional<Request> request = requestRepository.findRequestByRequestId(requestId);
+        Request requestToUpdate = new Request();
+        if(request.isPresent()){
+
+            requestToUpdate = request.get();
+            requestToUpdate.setStatus(Status.OPEN);
+            requestToUpdate = requestRepository.save(requestToUpdate);
+        }
+        return requestMapper.toReadModel(requestToUpdate);
+    }
+
+    public RequestReadModel setRequestStatusInProgress(Long requestId){
+        Optional<Request> request = requestRepository.findRequestByRequestId(requestId);
+        Request requestToUpdate = new Request();
+        if(request.isPresent()){
+
+            requestToUpdate = request.get();
+            requestToUpdate.setStatus(Status.IN_PROGRESS);
+            requestToUpdate = requestRepository.save(requestToUpdate);
+        }
+        return requestMapper.toReadModel(requestToUpdate);
+    }
+
     public RequestReadModel updateRequest(Long requestId,RequestWriteModel requestWriteModel){
         Optional<Request> request = requestRepository.findRequestByRequestId(requestId);
         Request requestToUpdate = new Request();

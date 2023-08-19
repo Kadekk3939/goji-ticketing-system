@@ -42,4 +42,22 @@ public class RequestController {
         RequestReadModel request = requestService.getRequestReadModelById(requestId);
         return ResponseEntity.ok(request);
     }
+
+    @PutMapping("/{requestId}/close")
+    public ResponseEntity<RequestReadModel> setRequestStatusClosed(@PathVariable Long requestId) {
+        RequestReadModel request = requestService.setRequestStatusClose(requestId);
+        return ResponseEntity.ok(request);
+    }
+
+    @PutMapping("/{requestId}/open")
+    public ResponseEntity<RequestReadModel> setRequestStatusOpen(@PathVariable Long requestId) {
+        RequestReadModel request = requestService.setRequestStatusOpen(requestId);
+        return ResponseEntity.ok(request);
+    }
+
+    @PutMapping("/{requestId}/inProgress")
+    public ResponseEntity<RequestReadModel> setRequestStatusInProgress(@PathVariable Long requestId) {
+        RequestReadModel request = requestService.setRequestStatusInProgress(requestId);
+        return ResponseEntity.ok(request);
+    }
 }

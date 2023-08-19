@@ -110,7 +110,6 @@ export class DialogComponent implements OnInit {
   SaveData(){
     if(this.type=="/users") {
       if(this.inputData.id==0) {
-        console.log(<User>this.userForm.value)
         this.service.addUser(<User>this.userForm.value).subscribe(res => {
             this.closeDialog();
           },

@@ -41,4 +41,22 @@ public class IssueController {
         IssueReadModel issueReadModel = issueService.getIssueReadModelById(issueId);
         return ResponseEntity.ok(issueReadModel);
     }
+
+    @GetMapping("/{issueId}/close")
+    public ResponseEntity<IssueReadModel> setIssueStatusClosed(@PathVariable Long issueId) {
+        IssueReadModel issueReadModel = issueService.setIssueStatusClosed(issueId);
+        return ResponseEntity.ok(issueReadModel);
+    }
+
+    @GetMapping("/{issueId}/open")
+    public ResponseEntity<IssueReadModel> setIssueStatusOpen(@PathVariable Long issueId) {
+        IssueReadModel issueReadModel = issueService.setIssueStatusOpen(issueId);
+        return ResponseEntity.ok(issueReadModel);
+    }
+
+    @GetMapping("/{issueId}/inProgress")
+    public ResponseEntity<IssueReadModel> setIssueStatusInProgress(@PathVariable Long issueId) {
+        IssueReadModel issueReadModel = issueService.setIssueStatusInProgress(issueId);
+        return ResponseEntity.ok(issueReadModel);
+    }
 }

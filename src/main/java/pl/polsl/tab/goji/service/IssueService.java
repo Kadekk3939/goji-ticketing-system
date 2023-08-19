@@ -55,6 +55,39 @@ public class IssueService {
         return issueMapper.toReadModel(issueToUpdate);
     }
 
+    public IssueReadModel setIssueStatusClosed(Long issueId){
+        Optional<Issue> issue = issueRepository.findIssueByIssueId(issueId);
+        Issue issueToUpdate = new Issue();
+        if(issue.isPresent()){
+            issueToUpdate = issue.get();
+            issueToUpdate.setStatus(Status.CLOSED);
+            issueToUpdate = issueRepository.save(issueToUpdate);
+        }
+        return issueMapper.toReadModel(issueToUpdate);
+    }
+
+    public IssueReadModel setIssueStatusOpen(Long issueId){
+        Optional<Issue> issue = issueRepository.findIssueByIssueId(issueId);
+        Issue issueToUpdate = new Issue();
+        if(issue.isPresent()){
+            issueToUpdate = issue.get();
+            issueToUpdate.setStatus(Status.OPEN);
+            issueToUpdate = issueRepository.save(issueToUpdate);
+        }
+        return issueMapper.toReadModel(issueToUpdate);
+    }
+
+    public IssueReadModel setIssueStatusInProgress(Long issueId){
+        Optional<Issue> issue = issueRepository.findIssueByIssueId(issueId);
+        Issue issueToUpdate = new Issue();
+        if(issue.isPresent()){
+            issueToUpdate = issue.get();
+            issueToUpdate.setStatus(Status.IN_PROGRESS);
+            issueToUpdate = issueRepository.save(issueToUpdate);
+        }
+        return issueMapper.toReadModel(issueToUpdate);
+    }
+
     public List<IssueReadModel> getAllIssues(){
         return issueMapper.map(issueRepository.findAll());
     }

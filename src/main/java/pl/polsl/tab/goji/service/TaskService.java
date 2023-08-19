@@ -56,6 +56,39 @@ public class TaskService {
         return taskMapper.toReadModel(taskToUpdate);
     }
 
+    public TaskReadModel setTaskStatusClosed(Long taskId){
+        Optional<Task> task = taskRepository.findTaskByTaskId(taskId);
+        Task taskToUpdate = new Task();
+        if(task.isPresent()){
+            taskToUpdate = task.get();
+            taskToUpdate.setStatus(Status.CLOSED);
+            taskToUpdate = taskRepository.save(taskToUpdate);
+        }
+        return taskMapper.toReadModel(taskToUpdate);
+    }
+
+    public TaskReadModel setTaskStatusOpen(Long taskId){
+        Optional<Task> task = taskRepository.findTaskByTaskId(taskId);
+        Task taskToUpdate = new Task();
+        if(task.isPresent()){
+            taskToUpdate = task.get();
+            taskToUpdate.setStatus(Status.OPEN);
+            taskToUpdate = taskRepository.save(taskToUpdate);
+        }
+        return taskMapper.toReadModel(taskToUpdate);
+    }
+
+    public TaskReadModel setTaskStatusInProgress(Long taskId){
+        Optional<Task> task = taskRepository.findTaskByTaskId(taskId);
+        Task taskToUpdate = new Task();
+        if(task.isPresent()){
+            taskToUpdate = task.get();
+            taskToUpdate.setStatus(Status.IN_PROGRESS);
+            taskToUpdate = taskRepository.save(taskToUpdate);
+        }
+        return taskMapper.toReadModel(taskToUpdate);
+    }
+
     public List<TaskReadModel> getAllTasks(){
         return taskMapper.map(taskRepository.findAll());
     }

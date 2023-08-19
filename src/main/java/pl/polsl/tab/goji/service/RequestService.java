@@ -39,7 +39,7 @@ public class RequestService {
         return  requestMapper.toReadModel(requestRepository.save(request));
     }
 
-    public RequestReadModel setRequestStatusClose(Long requestId){
+    public RequestReadModel setRequestStatusClosed(Long requestId){
         Optional<Request> request = requestRepository.findRequestByRequestId(requestId);
         Request requestToUpdate = new Request();
         if(request.isPresent()){

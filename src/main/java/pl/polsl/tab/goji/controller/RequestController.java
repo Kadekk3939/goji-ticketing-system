@@ -45,7 +45,7 @@ public class RequestController {
 
     @PutMapping("/{requestId}/close")
     public ResponseEntity<RequestReadModel> setRequestStatusClosed(@PathVariable Long requestId) {
-        RequestReadModel request = requestService.setRequestStatusClose(requestId);
+        RequestReadModel request = requestService.setRequestStatusClosed(requestId);
         return ResponseEntity.ok(request);
     }
 

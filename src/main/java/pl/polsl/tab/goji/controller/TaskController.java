@@ -48,4 +48,22 @@ public class TaskController {
         TaskReadModel taskReadModel = taskService.getTaskReadModelById(taskId);
         return ResponseEntity.ok(taskReadModel);
     }
+
+    @PutMapping("/{taskId}/close")
+    public ResponseEntity<TaskReadModel> setTaskStatusClosed(@PathVariable Long taskId) {
+        TaskReadModel taskReadModel = taskService.setTaskStatusClosed(taskId);
+        return ResponseEntity.ok(taskReadModel);
+    }
+
+    @PutMapping("/{taskId}/open")
+    public ResponseEntity<TaskReadModel> setTaskStatusOpen(@PathVariable Long taskId) {
+        TaskReadModel taskReadModel = taskService.setTaskStatusOpen(taskId);
+        return ResponseEntity.ok(taskReadModel);
+    }
+
+    @PutMapping("/{taskId}/inProgress")
+    public ResponseEntity<TaskReadModel> getTaskStatusInProgress(@PathVariable Long taskId) {
+        TaskReadModel taskReadModel = taskService.setTaskStatusInProgress(taskId);
+        return ResponseEntity.ok(taskReadModel);
+    }
 }

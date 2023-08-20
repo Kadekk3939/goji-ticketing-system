@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class RequestReadModel {
 
     private Long requestId;
+    private Long productId;
     private String requestName;
     private String description;
     private String result;

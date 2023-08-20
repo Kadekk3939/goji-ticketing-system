@@ -50,17 +50,17 @@ export class DialogComponent implements OnInit {
     this.requestForm = this.fb.group({
       requestName: ['', Validators.required],
       description: ['', Validators.required],
-      productId: [0, Validators.required]
+      productId: ['', Validators.required]
     });
 
     this.issueForm = this.fb.group({
-      requestId: [0, Validators.required],
+      requestId: ['', Validators.required],
       issueName: ['', Validators.required],
       description: ['', Validators.required]
     });
 
     this.taskForm = this.fb.group({
-      issueId: [0, Validators.required],
+      issueId: ['', Validators.required],
       taskName: ['', Validators.required],
       description: ['', Validators.required]
     });

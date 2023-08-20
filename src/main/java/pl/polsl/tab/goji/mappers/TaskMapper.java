@@ -19,7 +19,7 @@ public interface TaskMapper {
 
     Task toEntity(TaskWriteModel taskWriteModel);
 
-    @Mapping(source = "issue.issueId" ,target = "parentIssueId")
+    @Mapping(source = "issue.issueId" ,target = "issueId")
     TaskReadModel toReadModel(Task task);
 
     List<TaskReadModel> map(List<Task> donations);

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class IssueReadModel {
 
     private Long issueId;
-    private Long parentRequestId;
+    private Long requestId;
     private String issueName;
     private String description;
     private String result;

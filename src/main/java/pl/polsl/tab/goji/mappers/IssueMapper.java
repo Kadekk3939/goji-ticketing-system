@@ -19,7 +19,7 @@ public interface IssueMapper {
     @Mapping(target = "issueId",ignore = true)
     Issue toEntity(IssueWriteModel issueWriteModel);
 
-    @Mapping(source = "request.requestId" ,target = "parentRequestId")
+    @Mapping(source = "request.requestId" ,target = "requestId")
     IssueReadModel toReadModel(Issue issue);
 
     List<IssueReadModel>map(List<Issue> issues);

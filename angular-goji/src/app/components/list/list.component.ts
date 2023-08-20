@@ -377,6 +377,7 @@ export class ListComponent implements OnInit {
       }
       this.pageSlice = this.elements!.slice(startIndex,endIndex);
     }
+    this.paginator?.firstPage()
   }
 
 
@@ -428,11 +429,11 @@ export class ListComponent implements OnInit {
       }
     })
     _dialog.afterClosed().subscribe(item=>{
+      if(item!==undefined) {
         this.elements=[];
         this.getData();
-        this.paginator?.lastPage()
       }
-    );
+    });
   }
 }
 

@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {FormBuilder, NgForm} from "@angular/forms";
+import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
 import {User} from "../../interfaces/user";
 import {HttpErrorResponse} from "@angular/common/http";
 import {DialogService} from "../../services/dialog.service";
@@ -24,8 +24,41 @@ export class DialogComponent implements OnInit {
     {value: 'Worker', viewValue: 'Worker'},
   ];
   public user:User|undefined;
-  constructor(@Inject(MAT_DIALOG_DATA) public data:any, private ref:MatDialogRef<DialogComponent>, private builder:FormBuilder,
+
+  userForm: FormGroup;
+  requestForm: FormGroup;
+  issueForm: FormGroup;
+  taskForm: FormGroup;
+  constructor(@Inject(MAT_DIALOG_DATA) public data:any,
+              private ref:MatDialogRef<DialogComponent>,
+              private fb:FormBuilder,
               private service:DialogService) {
+    this.userForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      login: ['', Validators.required],
+      password: ['', Validators.required],
+      email: ['', Validators.required],
+      role: ['', Validators.required]
+    });
+
+    this.requestForm = this.fb.group({
+      requestName: ['', Validators.required],
+      description: ['', Validators.required],
+      productId: [0, Validators.required]
+    });
+
+    this.issueForm = this.fb.group({
+      requestId: [0, Validators.required],
+      issueName: ['', Validators.required],
+      description: ['', Validators.required]
+    });
+
+    this.taskForm = this.fb.group({
+      issueId: [0, Validators.required],
+      taskName: ['', Validators.required],
+      description: ['', Validators.required]
+    });
   }
   ngOnInit(): void {
     this.inputData=this.data;
@@ -75,37 +108,13 @@ export class DialogComponent implements OnInit {
     }
   }
 
-  closeDialog()
-  {
+  closeDialog() {
     this.ref.close('Closed using function');
   }
-    userForm = this.builder.group({
-      firstName: this.builder.control(''),
-      lastName: this.builder.control(''),
-      login: this.builder.control(''),
-      password: this.builder.control(''),
-      email: this.builder.control(''),
-      role: this.builder.control('')
-    });
-  requestForm = this.builder.group({
-    requestName: this.builder.control(''),
-    description: this.builder.control(''),
-    productId: this.builder.control(0)
-  });
 
-  issueForm = this.builder.group({
-    requestId: this.builder.control(0),
-    issueName: this.builder.control(''),
-    description: this.builder.control('')
-  });
-
-  taskForm = this.builder.group({
-    issueId: this.builder.control(0),
-    taskName: this.builder.control(''),
-    description: this.builder.control('')
-  });
-
-
+  isFormValid(formGroup: FormGroup): boolean {
+    return formGroup.valid;
+  }
 
   SaveData(){
     if(this.type=="/users") {

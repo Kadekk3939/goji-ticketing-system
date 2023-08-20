@@ -4,9 +4,11 @@ import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
 import {User} from "../../interfaces/user";
 import {HttpErrorResponse} from "@angular/common/http";
 import {DialogService} from "../../services/dialog.service";
+import {Product} from "../../interfaces/product";
 import {Request} from "../../interfaces/request";
 import { Task } from 'src/app/interfaces/task';
 import {Issue} from "../../interfaces/issue";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-add-dialog',
@@ -14,6 +16,9 @@ import {Issue} from "../../interfaces/issue";
   styleUrls: ['./dialog.component.css']
 })
 export class DialogComponent implements OnInit {
+  issues$: Observable<Issue[]> | undefined;
+  requests$: Observable<Request[]> | undefined;
+  products$: Observable<Product[]> | undefined;
   type:any;
   inputData:any;
   editData:any;
@@ -67,6 +72,9 @@ export class DialogComponent implements OnInit {
     {
       this.setDialogData(this.inputData.id);
     }
+    this.issues$ = this.service.getAllIssues();
+    this.requests$ = this.service.getAllRequests();
+    this.products$ = this.service.getAllProducts();
   }
 
   setDialogData(id:any){
@@ -83,8 +91,9 @@ export class DialogComponent implements OnInit {
       this.service.getRequestById(id).subscribe(request => {
         this.editData = request;
         this.requestForm.setValue({
-          requestName: this.editData.requestName, description: this.editData.description,
-          productId: this.requestForm.value.productId !== undefined ? this.requestForm.value.productId : 0
+          requestName: this.editData.requestName,
+          description: this.editData.description,
+          productId: this.editData.productId
         })
       })
     }
@@ -92,8 +101,9 @@ export class DialogComponent implements OnInit {
       this.service.getIssueById(id).subscribe(issue => {
         this.editData = issue;
         this.issueForm.setValue({
-          requestId: this.issueForm.value.requestId !== undefined ? this.issueForm.value.requestId : 0,
-          issueName: this.editData.issueName, description: this.editData.description
+          requestId: this.editData.requestId,
+          issueName: this.editData.issueName,
+          description: this.editData.description
         })
       })
     }
@@ -101,8 +111,9 @@ export class DialogComponent implements OnInit {
       this.service.getTaskById(id).subscribe(task => {
         this.editData = task;
         this.taskForm.setValue({
-          issueId: this.taskForm.value.issueId!== undefined ? this.taskForm.value.issueId : 0,
-          taskName: this.editData.taskName, description: this.editData.description
+          issueId: this.editData.issueId,
+          taskName: this.editData.taskName,
+          description: this.editData.description
         })
       })
     }

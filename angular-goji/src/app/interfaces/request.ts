@@ -1,7 +1,7 @@
 export interface Request {
     requestId:number;
     requestName:string;
-    description:string
+    description:string;
     productId:number;
     result:string;
     status:string;

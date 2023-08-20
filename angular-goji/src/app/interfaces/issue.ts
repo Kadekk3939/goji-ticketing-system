@@ -2,7 +2,7 @@ export interface Issue {
     issueId:number;
     requestId:number;
     issueName:string;
-    description:string
+    description:string;
     result:string;
     status:string;
     type:string;

@@ -51,10 +51,14 @@
       <mat-label>Description</mat-label>
       <input formControlName="description" matInput>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Product ID</mat-label>
-      <input formControlName="productId" matInput>
-    </mat-form-field>
+      <mat-form-field *ngIf="products$ | async as products" [hidden]="inputData.id">
+        <mat-label>Product ID</mat-label>
+        <mat-select formControlName="productId" matInput>
+          <mat-option *ngFor="let product of products" [value]="product.productId">
+            {{product.productName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
   </div>
 
     <div mat-dialog-actions>
@@ -75,9 +79,13 @@
         <mat-label>Description</mat-label>
         <input formControlName="description" matInput>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="requests$ | async as requests" [hidden]="inputData.id">
         <mat-label>Request ID</mat-label>
-        <input formControlName="requestId" matInput>
+        <mat-select formControlName="requestId" matInput>
+          <mat-option *ngFor="let request of requests" [value]="request.requestId">
+            {{request.requestName}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
 
@@ -99,9 +107,13 @@
         <mat-label>Description</mat-label>
         <input formControlName="description" matInput>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field *ngIf="issues$ | async as issues" [hidden]="inputData.id">
         <mat-label>Issue ID</mat-label>
-        <input formControlName="issueId" matInput>
+        <mat-select formControlName="issueId" matInput>
+          <mat-option *ngFor="let issue of issues" [value]="issue.issueId">
+            {{issue.issueName}}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
 

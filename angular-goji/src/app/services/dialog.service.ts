@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {Request} from "../interfaces/request";
 import {Task} from "../interfaces/task";
 import {Issue} from "../interfaces/issue";
+import {Product} from "../interfaces/product";
 
 @Injectable({
   providedIn: 'root'
@@ -62,4 +63,15 @@ export class DialogService {
     return this.http.put<Task>(`${environment.apiBaseUrl}/task/${taskId}`, task);
   }
 
+  public getAllRequests():Observable<Request[]>{
+    return this.http.get<Request[]>(`${environment.apiBaseUrl}/request`);
+  }
+
+  public getAllIssues():Observable<Issue[]>{
+    return this.http.get<Issue[]>(`${environment.apiBaseUrl}/issue`);
+  }
+
+  public getAllProducts():Observable<Product[]>{
+    return this.http.get<Product[]>(`${environment.apiBaseUrl}/product`);
+  }
 }

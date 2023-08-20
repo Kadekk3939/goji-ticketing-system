@@ -34,18 +34,18 @@ export class StatusService {
   }
 
   public setIssueStatusInProgress(issueId:string): Observable<Issue> {
-    return this.http.put<Issue>(`${environment.apiBaseUrl}/task/${issueId}/inProgress`, null);
+    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/inProgress`, null);
   }
 
   public setRequestStatusClosed(requestId:string): Observable<Request> {
-    return this.http.put<Request>(`${environment.apiBaseUrl}/task/${requestId}/close`,null);
+    return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/close`,null);
   }
 
   public setRequestStatusOpen(requestId:string): Observable<Request> {
-    return this.http.put<Request>(`${environment.apiBaseUrl}/task/${requestId}/open`, null);
+    return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/open`, null);
   }
 
   public setRequestStatusInProgress(requestId:string): Observable<Request> {
-    return this.http.put<Request>(`${environment.apiBaseUrl}/task/${requestId}/inProgress`, null);
+    return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/inProgress`, null);
   }
 }

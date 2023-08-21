@@ -439,7 +439,7 @@ export class ListComponent implements OnInit {
 
   tempArray: any = [];
   newArray: any = [];
-  onStutusCheckboxChange(event: any){
+  onFilterCheckboxChange(event: any){
     if(event.target.checked){
       this.tempArray = this.originalElements.filter((e: any)=> e.status == event.target.value || e.role == event.target.value);
       this.elements = [];
@@ -471,6 +471,23 @@ export class ListComponent implements OnInit {
         endIndex=this.elements!.length;
       }
       this.pageSlice = this.elements!.slice(startIndex,endIndex);
+    }
+  }
+
+  onFilterDateChange(event: any, mode: string){
+
+    switch (mode) {
+      case 'open': {console.log('Open date: ', event.value.toISOString());
+        console.log('Request open date: ', (this.elements[0] as Request).openDate);
+        if(event.value.toISOString().valueOf() == (this.elements[0] as Request).openDate.valueOf()){
+          console.log('sa rownne');
+        }else{console.log('nie sa rowne');}
+        break;}
+      case 'inProgress': {console.log('In Progress date: ', event.value);
+        break;}
+      case 'close': {console.log('Close date: ', event.value);
+        break;}
+      default: break;
     }
   }
 }

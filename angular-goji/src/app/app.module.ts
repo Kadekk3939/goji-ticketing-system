@@ -24,6 +24,8 @@ import {MatInputModule} from "@angular/material/input";
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { DialogComponent } from './components/dialog/dialog.component';
 import {MatSelectModule} from "@angular/material/select";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -34,27 +36,29 @@ import {MatSelectModule} from "@angular/material/select";
     ListComponent,
     DialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatSlideToggleModule,
-    FormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatPaginatorModule,
-    MatTableModule,
-    MatCardModule,
-    MatDialogModule,
-    MatToolbarModule,
-    MatGridListModule,
-    MatFormFieldModule,
-    MatRadioModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatSelectModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatSlideToggleModule,
+        FormsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatCardModule,
+        MatDialogModule,
+        MatToolbarModule,
+        MatGridListModule,
+        MatFormFieldModule,
+        MatRadioModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+    ],
   providers: [],
   bootstrap: [AppComponent],
   exports: [

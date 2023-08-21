@@ -41,7 +41,7 @@ img {
 
 .element-card {
   max-width: 50svw;
-  max-height: 50svh;
+  max-height: 100svh;
   margin: 10px;
 }
 

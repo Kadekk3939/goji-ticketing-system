@@ -146,12 +146,12 @@
                 <mat-datepicker #ipdPicker></mat-datepicker>
               </mat-form-field>
 
-              <p>Close date</p>
+              <p>Finalization date</p>
               <mat-form-field>
                 <mat-label>Choose a date</mat-label>
-                <input matInput [matDatepicker]="cdPicker" (dateChange)="onFilterDateChange($event, 'close')">
-                <mat-datepicker-toggle matIconSuffix [for]="cdPicker"></mat-datepicker-toggle>
-                <mat-datepicker #cdPicker></mat-datepicker>
+                <input matInput [matDatepicker]="fdPicker" (dateChange)="onFilterDateChange($event, 'finalization')">
+                <mat-datepicker-toggle matIconSuffix [for]="fdPicker"></mat-datepicker-toggle>
+                <mat-datepicker #fdPicker></mat-datepicker>
               </mat-form-field>
             </ng-template>
             <ng-template #isAdmin>

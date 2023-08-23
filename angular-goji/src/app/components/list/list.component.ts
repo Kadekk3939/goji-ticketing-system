@@ -476,18 +476,31 @@ export class ListComponent implements OnInit {
 
   onFilterDateChange(event: any, mode: string){
 
+    const pick = new Date(new Date(event.value.toISOString()).getTime()).setUTCHours(24,0,0,0);
     switch (mode) {
-      case 'open': {console.log('Open date: ', event.value.toISOString());
-        console.log('Request open date: ', (this.elements[0] as Request).openDate);
-        if(event.value.toISOString().valueOf() == (this.elements[0] as Request).openDate.valueOf()){
-          console.log('sa rownne');
-        }else{console.log('nie sa rowne');}
+      case 'open': {
+        this.elements = this.originalElements.filter((e: any) =>
+          new Date(new Date(new Date(e.openDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
-      case 'inProgress': {console.log('In Progress date: ', event.value);
+      case 'inProgress': {
+        this.elements = this.originalElements.filter((e: any) =>
+          new Date(new Date(new Date(e.inProgressDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
-      case 'close': {console.log('Close date: ', event.value);
+      case 'finalization': {
+        this.elements = this.originalElements.filter((e: any) =>
+          new Date(new Date(new Date(e.finalizationDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
       default: break;
+    }
+
+    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
+    {
+      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
+      let endIndex = startIndex+this.paginator?.pageSize;
+      if(endIndex>this.elements!.length){
+        endIndex=this.elements!.length;
+      }
+      this.pageSlice = this.elements!.slice(startIndex,endIndex);
     }
   }
 }

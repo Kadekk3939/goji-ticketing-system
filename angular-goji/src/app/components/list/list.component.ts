@@ -30,6 +30,8 @@ export class ListComponent implements OnInit {
   public elements:(Request|Issue|Task|User)[];
   public originalElements:(Request|Issue|Task|User)[];
   public pageSlice: (Request|Issue|Task|User)[];
+  public statusArray: any[] = [{id:1, name: 'OPEN'}, {id:2, name: 'CLOSED'}, {id:3, name: 'IN_PROGRESS'}];
+  public rolesArray: any[] = [{id:1, name: 'Admin'}, {id:2, name: 'Account Manager'}, {id:3, name: 'Product Manager'}, {id:4, name: 'Worker'}];
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
@@ -434,6 +436,73 @@ export class ListComponent implements OnInit {
         this.getData();
       }
     });
+  }
+
+  tempArray: any = [];
+  newArray: any = [];
+  onFilterCheckboxChange(event: any){
+    if(event.target.checked){
+      this.tempArray = this.originalElements.filter((e: any)=> e.status == event.target.value || e.role == event.target.value);
+      this.elements = [];
+      this.newArray.push(this.tempArray);
+      for(let i = 0; i < this.newArray.length; i++){
+        for(let j = 0; j < this.newArray[i].length; j++){
+          var obj = this.newArray[i][j];
+          this.elements.push(obj);
+        }
+      }
+    }else{
+      this.tempArray = this.elements.filter((e: any)=> e.status != event.target.value && e.role != event.target.value);
+      this.newArray = [];
+      this.elements = [];
+      this.newArray.push(this.tempArray);
+      for(let i = 0; i < this.newArray.length; i++){
+        for(let j = 0; j < this.newArray[i].length; j++){
+          var obj = this.newArray[i][j];
+          this.elements.push(obj);
+        }
+      }
+    }
+
+    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
+    {
+      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
+      let endIndex = startIndex+this.paginator?.pageSize;
+      if(endIndex>this.elements!.length){
+        endIndex=this.elements!.length;
+      }
+      this.pageSlice = this.elements!.slice(startIndex,endIndex);
+    }
+  }
+
+  onFilterDateChange(event: any, mode: string){
+
+    const pick = new Date(new Date(event.value.toISOString()).getTime()).setUTCHours(24,0,0,0);
+    switch (mode) {
+      case 'open': {
+        this.elements = this.originalElements.filter((e: any) =>
+          new Date(new Date(new Date(e.openDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
+        break;}
+      case 'inProgress': {
+        this.elements = this.originalElements.filter((e: any) =>
+          new Date(new Date(new Date(e.inProgressDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
+        break;}
+      case 'finalization': {
+        this.elements = this.originalElements.filter((e: any) =>
+          new Date(new Date(new Date(e.finalizationDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
+        break;}
+      default: break;
+    }
+
+    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
+    {
+      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
+      let endIndex = startIndex+this.paginator?.pageSize;
+      if(endIndex>this.elements!.length){
+        endIndex=this.elements!.length;
+      }
+      this.pageSlice = this.elements!.slice(startIndex,endIndex);
+    }
   }
 }
 

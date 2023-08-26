@@ -20,9 +20,13 @@ export class LoginComponent {
   login() {
     localStorage.clear()
     this.app.authenticate(this.credentials, () => {
-      this.router.navigateByUrl('/user');
+      if(this.app.getAuthenticated()){
+        this.router.navigateByUrl('/user');
+      }
+      else{
+        this.isWarningVisible = true;
+      }
     });
-    this.isWarningVisible = true;
     return false;
   }
 }

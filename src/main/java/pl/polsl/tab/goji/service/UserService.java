@@ -86,7 +86,13 @@ public class UserService implements UserDetailsService {
 
     public UserReadModel findUserByLogin(String login){
         Optional<User> user = userRepository.findUserByLogin(login);
-        return user.<UserReadModel>map(userMapper::toReadModel).orElse(null);
+        if(user.isPresent()){
+            return user.<UserReadModel>map(userMapper::toReadModel).orElse(null);
+        }
+        else{
+            return null;
+        }
+
     }
 
     public User findUserByEmail(String email){

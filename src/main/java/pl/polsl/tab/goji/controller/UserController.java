@@ -11,7 +11,7 @@ import pl.polsl.tab.goji.service.UserService;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RequestMapping("/user")
 public class UserController {
 
@@ -38,8 +38,15 @@ public class UserController {
     }
 
     @GetMapping("/login/{login}")
-    public ResponseEntity<UserReadModel> getUserByLogin(@PathVariable String login){
-        return ResponseEntity.ok(userService.findUserByLogin(login));
+    public ResponseEntity<?> getUserByLogin(@PathVariable String login){
+        UserReadModel user = userService.findUserByLogin(login);
+        if(user!=null){
+            return ResponseEntity.ok(user);
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No such user");
+        }
+
     }
 
     @PutMapping("/{userId}")

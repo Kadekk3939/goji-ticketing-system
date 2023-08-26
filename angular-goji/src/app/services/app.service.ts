@@ -60,15 +60,19 @@ export class AppService {
     localStorage.clear()
     localStorage.setItem('login', credentials.login);
     localStorage.setItem('password', credentials.password);
-    this.http.get(`${environment.apiBaseUrl}/user/login/${credentials.login}`, { headers: this.headers }).subscribe(response => {
-      if (response) {
-        this.authenticated = true;
-      } else {
-        this.authenticated = false;
+    this.http.get(`${environment.apiBaseUrl}/user/login/${credentials.login}`, { headers: this.headers }).subscribe
+    (response => {
+        if (response) {
+          this.authenticated = true;
+        } else {
+          this.authenticated = false;
+        }
+        callback && callback(); // Calling the callback
+      },
+      (error: HttpErrorResponse) => {
+        this.authenticated = false; // Set authenticated to false on error
+        callback && callback(); // Calling the callback even in case of error
       }
-      return callback && callback();
-    });
-
+    );
   }
-
 }

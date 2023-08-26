@@ -1,210 +1,228 @@
 <body class="mat-typography" xmlns:list-style-type="http://www.w3.org/1999/xhtml">
-  <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
-    <a class="navbar-brand" href="#"><img src="../../../assets/goji.png" class="d-inline-block" alt="Goji"> </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="mainmenu">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
-        </li>
-        <li class="nav-item" *ngIf="user?.role=='Admin'">
-          <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
-        </li>
-        <li class="nav-item" *ngIf="user?.role=='Account Manager'">
-          <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
-        </li>
-        <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager'">
-          <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
-        </li>
-        <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager' || user?.role=='Worker'">
-          <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
-  <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
-  <button mat-fab color="primary" class="add-button"  (click)="addData(type)">
-    <mat-icon>add</mat-icon>
-  </button>
-  </div>
-
-  <div class="container" id="main-container">
-    <div class="field-container">
-      <mat-form-field class="sort" *ngIf="user?.role!='Admin'; else elseUserBlock">
-        <mat-label>Sort by</mat-label>
-        <mat-select [(value)]="selected" (selectionChange)="onSortOptionSelected()">
-          <mat-option>None</mat-option>
-          <mat-option value="opendown">Latest opened</mat-option>
-          <mat-option value="openup">Earliest opened</mat-option>
-          <mat-option value="startdown">Latest started</mat-option>
-          <mat-option value="startup">Earliest started</mat-option>
-          <mat-option value="finishdown">Latest finished</mat-option>
-          <mat-option value="finishup">Earliest finished</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <ng-template #elseUserBlock>
-        <mat-form-field class="form-field">
-          <mat-label>Sort</mat-label>
-          <mat-select [(value)]="selected" (selectionChange)="onSortUserOptionSelected()">
-            <mat-option value="asc">A to Z</mat-option>
-            <mat-option value="desc">Z to A</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </ng-template>
-      <mat-form-field class="search">
-        <input matInput type="text" [(ngModel)]="value" (ngModelChange)="onSearch()">
-        <mat-label>Search</mat-label>
-        <button *ngIf="value" matSuffix mat-icon-button aria-label="Search" (click)="clearSearch()">
-          <mat-icon>close</mat-icon>
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
+        <a class="navbar-brand" href="#"><img src="../../../assets/goji.png" class="d-inline-block" alt="Goji"> </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
+            <span class="navbar-toggler-icon"></span>
         </button>
-      </mat-form-field>
-    </div>
-    <div class="other-container">
-      <div class="list">
-        <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator" ></mat-paginator>
-        <div *ngFor="let element of pageSlice">
-          <mat-card class="element-card mat-elevation-z8">
-            <mat-card-header>
-                <mat-card-title>{{ getName(element) }}</mat-card-title>
-                <mat-card-actions class="element-card-actions ">
-                  <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
-                    <button (click)="editData(getId(element), type)" mat-icon-button color="primary" class="mod-button">
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  </div>
-                  <button mat-icon-button color="primary" class="mod-button">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                </mat-card-actions>
-            </mat-card-header>
-            <mat-card-content>
-              <div *ngIf="user?.role=='Admin'; else elseBlock">
-                <p>Login: {{getInfo(element)[0]}}</p>
-                <p>Email: {{getInfo(element)[1]}}</p>
-                <p>Role: {{getInfo(element)[2]}}</p>
-              </div>
-              <ng-template #elseBlock>
-                <p>Status: {{getInfo(element)[0]}}</p>
-                <p>Opening date: {{getInfo(element)[1]}}</p>
-              </ng-template>
-            </mat-card-content>
-
-            <mat-card-actions class="element-card-actions ">
-              <div *ngIf="((user?.role=='Account Manager'&&type=='/requests')||(user?.role=='Product Manager'&&type=='/issues')||(user?.role=='Worker'&&type=='/tasks'))">
-                <div *ngIf="getProgressDate(element)!=null; else elseDateBlock">
-                  <button mat-flat-button color="accent" class="mod-button">
-                    Finish
-                  </button>
-                </div>
-                <ng-template #elseDateBlock>
-                  <button mat-flat-button color="accent" class="mod-button">
-                    Start
-                  </button>
-                </ng-template>
-              </div>
-            </mat-card-actions>
-          </mat-card>
+        <div class="collapse navbar-collapse" id="mainmenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Admin'">
+                    <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager'">
+                    <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager'">
+                    <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager' || user?.role=='Worker'">
+                    <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log
+                        out</a>
+                </li>
+            </ul>
         </div>
-      </div>
-      <div class="filters">
-<!--        there will be filters panel-->
-        <mat-card class="element-card mat-elevation-z8">
-          <mat-card-header>
-            <mat-card-title>Filter</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <ng-template [ngIf]="user?.role!='Admin'" [ngIfElse]="isAdmin" >
-              <mat-accordion>
+    </nav>
 
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Status
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <div class="container ul_checkbox">
-                    <ul>
-                      <li *ngFor="let chbxArr of statusArray">
-                        <input type="checkbox" (change)="onFilterCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
-                      </li>
-                    </ul>
-                  </div>
-                </mat-expansion-panel>
-
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Open date
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <mat-form-field>
-                    <mat-label>Choose a date</mat-label>
-                    <input matInput [matDatepicker]="odPicker" (dateChange)="onFilterDateChange($event, 'open')">
-                    <mat-datepicker-toggle matIconSuffix [for]="odPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #odPicker></mat-datepicker>
-                  </mat-form-field>
-                </mat-expansion-panel>
-
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      In progress date
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <mat-form-field>
-                    <mat-label>Choose a date</mat-label>
-                    <input matInput [matDatepicker]="ipdPicker" (dateChange)="onFilterDateChange($event, 'inProgress')">
-                    <mat-datepicker-toggle matIconSuffix [for]="ipdPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #ipdPicker></mat-datepicker>
-                  </mat-form-field>
-                </mat-expansion-panel>
-
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Finalization date
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <mat-form-field>
-                    <mat-label>Choose a date</mat-label>
-                    <input matInput [matDatepicker]="fdPicker" (dateChange)="onFilterDateChange($event, 'finalization')">
-                    <mat-datepicker-toggle matIconSuffix [for]="fdPicker"></mat-datepicker-toggle>
-                    <mat-datepicker #fdPicker></mat-datepicker>
-                  </mat-form-field>
-                </mat-expansion-panel>
-
-              </mat-accordion>
-            </ng-template>
-
-            <ng-template #isAdmin>
-
-              <mat-accordion>
-                <mat-expansion-panel>
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      Role
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <div class="container ul_checkbox">
-                    <ul>
-                      <li *ngFor="let chbxArr of rolesArray">
-                        <input type="checkbox" (change)="onFilterCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
-                      </li>
-                    </ul>
-                  </div>
-                </mat-expansion-panel>
-              </mat-accordion>
-
-            </ng-template>
-          </mat-card-content>
-        </mat-card>
-      </div>
+    <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
+        <button mat-fab color="primary" class="add-button" (click)="addData(type)">
+            <mat-icon>add</mat-icon>
+        </button>
     </div>
-  </div>
+
+    <div class="container" id="main-container">
+        <div class="field-container">
+            <mat-form-field class="sort" *ngIf="user?.role!='Admin'; else elseUserBlock">
+                <mat-label>Sort by</mat-label>
+                <mat-select [(value)]="selected" (selectionChange)="onSortOptionSelected()">
+                    <mat-option>None</mat-option>
+                    <mat-option value="opendown">Latest opened</mat-option>
+                    <mat-option value="openup">Earliest opened</mat-option>
+                    <mat-option value="startdown">Latest started</mat-option>
+                    <mat-option value="startup">Earliest started</mat-option>
+                    <mat-option value="finishdown">Latest finished</mat-option>
+                    <mat-option value="finishup">Earliest finished</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <ng-template #elseUserBlock>
+                <mat-form-field class="form-field">
+                    <mat-label>Sort</mat-label>
+                    <mat-select [(value)]="selected" (selectionChange)="onSortUserOptionSelected()">
+                        <mat-option value="asc">A to Z</mat-option>
+                        <mat-option value="desc">Z to A</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </ng-template>
+            <mat-form-field class="search">
+                <input matInput type="text" [(ngModel)]="value" (ngModelChange)="onSearch()">
+                <mat-label>Search</mat-label>
+                <button *ngIf="value" matSuffix mat-icon-button aria-label="Search" (click)="clearSearch()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div class="other-container">
+            <div class="list">
+                <mat-paginator [length]="this.elements!.length" [pageSize]="2" [pageSizeOptions]="[1,2,4]" (page)="OnPageChange($event)" class="paginator"></mat-paginator>
+                <div *ngFor="let element of pageSlice">
+                    <mat-card class="element-card mat-elevation-z8">
+                        <mat-card-header>
+                            <mat-card-title>{{ getName(element) }}</mat-card-title>
+                            <mat-card-actions class="element-card-actions ">
+                                <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
+                                    <button (click)="editData(getId(element), type)" mat-icon-button color="primary" class="mod-button">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                </div>
+                                <div *ngIf="(type=='/requests')">
+                                    <button [routerLink]="['/request', getId(element)]" mat-icon-button color="primary" class="mod-button">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </div>
+                                <div *ngIf="(type=='/issues')">
+                                    <button [routerLink]="['/issue', getId(element)]" mat-icon-button color="primary" class="mod-button">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </div>
+                                <div *ngIf="(type=='/users')">
+                                    <button [routerLink]="['/user', getId(element)]" mat-icon-button color="primary" class="mod-button">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </div>
+                                <div *ngIf="(type=='/tasks')">
+                                    <button [routerLink]="['/task', getId(element)]" mat-icon-button color="primary" class="mod-button">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </div>
+                            </mat-card-actions>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div *ngIf="user?.role=='Admin'; else elseBlock">
+                                <p>Login: {{getInfo(element)[0]}}</p>
+                                <p>Email: {{getInfo(element)[1]}}</p>
+                                <p>Role: {{getInfo(element)[2]}}</p>
+                            </div>
+                            <ng-template #elseBlock>
+                                <p>Status: {{getInfo(element)[0]}}</p>
+                                <p>Opening date: {{getInfo(element)[1]}}</p>
+                            </ng-template>
+                        </mat-card-content>
+
+                        <mat-card-actions class="element-card-actions ">
+                            <div *ngIf="((user?.role=='Account Manager'&&type=='/requests')||(user?.role=='Product Manager'&&type=='/issues')||(user?.role=='Worker'&&type=='/tasks'))">
+                                <div *ngIf="getProgressDate(element)!=null; else elseDateBlock">
+                                    <button mat-flat-button color="accent" class="mod-button">
+                                        Finish
+                                    </button>
+                                </div>
+                                <ng-template #elseDateBlock>
+                                    <button mat-flat-button color="accent" class="mod-button">
+                                        Start
+                                    </button>
+                                </ng-template>
+                            </div>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="filters">
+                <!--        there will be filters panel-->
+                <mat-card class="element-card mat-elevation-z8">
+                    <mat-card-header>
+                        <mat-card-title>Filter</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <ng-template [ngIf]="user?.role!='Admin'" [ngIfElse]="isAdmin">
+                            <mat-accordion>
+
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Status
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="container ul_checkbox">
+                                        <ul>
+                                            <li *ngFor="let chbxArr of statusArray">
+                                                <input type="checkbox" (change)="onFilterCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Open date
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <mat-form-field>
+                                        <mat-label>Choose a date</mat-label>
+                                        <input matInput [matDatepicker]="odPicker" (dateChange)="onFilterDateChange($event, 'open')">
+                                        <mat-datepicker-toggle matIconSuffix [for]="odPicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #odPicker></mat-datepicker>
+                                    </mat-form-field>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            In progress date
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <mat-form-field>
+                                        <mat-label>Choose a date</mat-label>
+                                        <input matInput [matDatepicker]="ipdPicker" (dateChange)="onFilterDateChange($event, 'inProgress')">
+                                        <mat-datepicker-toggle matIconSuffix [for]="ipdPicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #ipdPicker></mat-datepicker>
+                                    </mat-form-field>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Finalization date
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <mat-form-field>
+                                        <mat-label>Choose a date</mat-label>
+                                        <input matInput [matDatepicker]="fdPicker" (dateChange)="onFilterDateChange($event, 'finalization')">
+                                        <mat-datepicker-toggle matIconSuffix [for]="fdPicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #fdPicker></mat-datepicker>
+                                    </mat-form-field>
+                                </mat-expansion-panel>
+
+                            </mat-accordion>
+                        </ng-template>
+
+                        <ng-template #isAdmin>
+
+                            <mat-accordion>
+                                <mat-expansion-panel>
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            Role
+                                        </mat-panel-title>
+                                    </mat-expansion-panel-header>
+                                    <div class="container ul_checkbox">
+                                        <ul>
+                                            <li *ngFor="let chbxArr of rolesArray">
+                                                <input type="checkbox" (change)="onFilterCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+
+                        </ng-template>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
 </body>

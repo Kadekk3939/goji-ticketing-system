@@ -1,0 +1,31 @@
+<body class="mat-typography" xmlns:list-style-type="http://www.w3.org/1999/xhtml">
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
+        <a class="navbar-brand" href="#"><img src="../../../assets/goji.png" class="d-inline-block" alt="Goji"> </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainmenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Admin'">
+                    <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager'">
+                    <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager'">
+                    <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager' || user?.role=='Worker'">
+                    <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log
+                        out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</body>

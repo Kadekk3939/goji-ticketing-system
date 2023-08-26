@@ -69,10 +69,6 @@ export class AppService {
           localStorage.setItem('password', credentials.password);
         }
       }),
-      catchError(() => {
-        this.authenticated = false;
-        return of(false); // Return an observable with `false` value
-      })
     );
   }
 }

@@ -10,6 +10,7 @@ import pl.polsl.tab.goji.model.entity.Request;
 import pl.polsl.tab.goji.model.enums.Status;
 import pl.polsl.tab.goji.repository.RequestRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -46,6 +47,7 @@ public class RequestService {
 
             requestToUpdate = request.get();
             requestToUpdate.setStatus(Status.CLOSED);
+            requestToUpdate.setFinalizationDate(LocalDateTime.now());
             requestToUpdate = requestRepository.save(requestToUpdate);
         }
         return requestMapper.toReadModel(requestToUpdate);
@@ -58,6 +60,7 @@ public class RequestService {
 
             requestToUpdate = request.get();
             requestToUpdate.setStatus(Status.OPEN);
+            requestToUpdate.setOpenDate(LocalDateTime.now());
             requestToUpdate = requestRepository.save(requestToUpdate);
         }
         return requestMapper.toReadModel(requestToUpdate);
@@ -70,6 +73,7 @@ public class RequestService {
 
             requestToUpdate = request.get();
             requestToUpdate.setStatus(Status.IN_PROGRESS);
+            requestToUpdate.setInProgressDate(LocalDateTime.now());
             requestToUpdate = requestRepository.save(requestToUpdate);
         }
         return requestMapper.toReadModel(requestToUpdate);

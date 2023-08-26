@@ -12,6 +12,7 @@ import pl.polsl.tab.goji.model.entity.Request;
 import pl.polsl.tab.goji.model.enums.Status;
 import pl.polsl.tab.goji.repository.IssueRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -61,6 +62,7 @@ public class IssueService {
         if(issue.isPresent()){
             issueToUpdate = issue.get();
             issueToUpdate.setStatus(Status.CLOSED);
+            issueToUpdate.setFinalizationDate(LocalDateTime.now());
             issueToUpdate = issueRepository.save(issueToUpdate);
         }
         return issueMapper.toReadModel(issueToUpdate);
@@ -72,6 +74,7 @@ public class IssueService {
         if(issue.isPresent()){
             issueToUpdate = issue.get();
             issueToUpdate.setStatus(Status.OPEN);
+            issueToUpdate.setOpenDate(LocalDateTime.now());
             issueToUpdate = issueRepository.save(issueToUpdate);
         }
         return issueMapper.toReadModel(issueToUpdate);
@@ -83,6 +86,7 @@ public class IssueService {
         if(issue.isPresent()){
             issueToUpdate = issue.get();
             issueToUpdate.setStatus(Status.IN_PROGRESS);
+            issueToUpdate.setInProgressDate(LocalDateTime.now());
             issueToUpdate = issueRepository.save(issueToUpdate);
         }
         return issueMapper.toReadModel(issueToUpdate);

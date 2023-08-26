@@ -13,6 +13,7 @@ import pl.polsl.tab.goji.model.entity.User;
 import pl.polsl.tab.goji.model.enums.Status;
 import pl.polsl.tab.goji.repository.TaskRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -39,8 +40,6 @@ public class TaskService {
         issue.setTasks(tasks);
         task.setIssue(issue);
         task.setStatus(Status.OPEN);
-
-
         return taskMapper.toReadModel(taskRepository.save(task));
     }
 
@@ -62,6 +61,7 @@ public class TaskService {
         if(task.isPresent()){
             taskToUpdate = task.get();
             taskToUpdate.setStatus(Status.CLOSED);
+            taskToUpdate.setFinalizationDate(LocalDateTime.now());
             taskToUpdate = taskRepository.save(taskToUpdate);
         }
         return taskMapper.toReadModel(taskToUpdate);
@@ -73,6 +73,7 @@ public class TaskService {
         if(task.isPresent()){
             taskToUpdate = task.get();
             taskToUpdate.setStatus(Status.OPEN);
+            taskToUpdate.setOpenDate(LocalDateTime.now());
             taskToUpdate = taskRepository.save(taskToUpdate);
         }
         return taskMapper.toReadModel(taskToUpdate);
@@ -84,6 +85,7 @@ public class TaskService {
         if(task.isPresent()){
             taskToUpdate = task.get();
             taskToUpdate.setStatus(Status.IN_PROGRESS);
+            taskToUpdate.setInProgressDate(LocalDateTime.now());
             taskToUpdate = taskRepository.save(taskToUpdate);
         }
         return taskMapper.toReadModel(taskToUpdate);

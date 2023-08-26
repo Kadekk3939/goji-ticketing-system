@@ -13,6 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 export class LoginComponent {
   credentials = { login: '', password: '' };
   authenticatied: boolean = false
+  isWarningVisible = false;
   constructor(private router: Router,private app:AppService,private userService:UserService) {
   }
 
@@ -21,6 +22,7 @@ export class LoginComponent {
     this.app.authenticate(this.credentials, () => {
       this.router.navigateByUrl('/user');
     });
+    this.isWarningVisible = true;
     return false;
   }
 }

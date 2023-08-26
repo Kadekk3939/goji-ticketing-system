@@ -126,10 +126,6 @@ public class UserService implements UserDetailsService {
         return user.get();
     }
 
-    public boolean checkEmail(String email){
-        return true;
-    }
-
     public boolean checkIfUserExist(UserWriteModel userWriteModel){
         return userRepository.findUserByLogin(userWriteModel.getLogin()).isPresent();
     }

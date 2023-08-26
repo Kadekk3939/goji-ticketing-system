@@ -7,6 +7,7 @@ import pl.polsl.tab.goji.model.dto.read.UserReadModel;
 import pl.polsl.tab.goji.model.dto.write.UserWriteModel;
 import pl.polsl.tab.goji.model.entity.User;
 import pl.polsl.tab.goji.service.UserService;
+import pl.polsl.tab.goji.utility.EmailValidator;
 
 import java.util.List;
 
@@ -29,17 +30,17 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> addUser(@RequestBody UserWriteModel userWriteModel) {
-        UserReadModel user = userService.addUser(userWriteModel);
-        int erroId=0;
-        if(!userService.checkEmail(userWriteModel.getEmail())){
-            erroId+=1;
+        int errorId=0;
+        if(!EmailValidator.checkEmail(userWriteModel.getEmail())){
+            errorId+=1;
         }
         if(userService.checkIfUserExist(userWriteModel)){
-            erroId+=2;
+            errorId+=2;
         }
-        if(erroId>0){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(erroId);
+        if(errorId>0){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorId);
         }
+        UserReadModel user = userService.addUser(userWriteModel);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

@@ -32,7 +32,8 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <p id="warning" [hidden]="!isLoginWarningVisible">❗ User with such login already exist</p>
+            <p id="loginWarning" [hidden]="!isLoginWarningVisible">❗ User with such login already exist</p>
+            <p id="emailWwarning" [hidden]="!isEmailWarningVisible">❗ Check if email is corect</p>
         </div>
         <div mat-dialog-actions>
             <button mat-raised-button color="primary" [disabled]="!isFormValid(userForm)">Save</button>

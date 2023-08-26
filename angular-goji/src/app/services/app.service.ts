@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { UserService } from './user.service';
 import { User } from '../interfaces/user';
 import { environment } from 'src/environments/environment';
-import { catchError, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -61,14 +60,15 @@ export class AppService {
     localStorage.clear()
     localStorage.setItem('login', credentials.login);
     localStorage.setItem('password', credentials.password);
-    this.http.get(`${environment.apiBaseUrl}/user/login/${credentials.login}`, { headers: this.headers }).pipe(
-      tap(response => {
-        this.authenticated = !!response; // Convert response to a boolean
-        if (this.authenticated) {
-          localStorage.setItem('login', credentials.login);
-          localStorage.setItem('password', credentials.password);
-        }
-      }),
-    );
+    this.http.get(`${environment.apiBaseUrl}/user/login/${credentials.login}`, { headers: this.headers }).subscribe(response => {
+      if (response) {
+        this.authenticated = true;
+      } else {
+        this.authenticated = false;
+      }
+      return callback && callback();
+    });
+
   }
+
 }

@@ -38,10 +38,7 @@ public class UserService implements UserDetailsService {
     public UserReadModel addUser(UserWriteModel userWriteModel) {
         User user = userMapper.toEntity(userWriteModel);
         user.setPassword(encoder.encode(userWriteModel.getPassword()));
-
-
         Optional<UserRole> role = userRoleRepository.findUserRoleByRoleName(userWriteModel.getRole());
-
         role.ifPresent(user::setUserRole);
         UserRole userRole;
         if(role.isPresent()){
@@ -127,5 +124,13 @@ public class UserService implements UserDetailsService {
         }
 
         return user.get();
+    }
+
+    public boolean checkEmail(String email){
+        return true;
+    }
+
+    public boolean checkIfUserExist(UserWriteModel userWriteModel){
+        return userRepository.findUserByLogin(userWriteModel.getLogin()).isPresent();
     }
 }

@@ -15,7 +15,7 @@ export class DialogService {
 
   constructor(private http:HttpClient) { }
 
-  public addUser(user:User): Observable<User>{
+  public addUser(user:User): Observable<any>{
     return this.http.post<User>(`${environment.apiBaseUrl}/user`, user);
   }
 

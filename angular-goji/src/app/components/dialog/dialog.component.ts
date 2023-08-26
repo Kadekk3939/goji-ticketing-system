@@ -19,6 +19,7 @@ export class DialogComponent implements OnInit {
   issues$: Observable<Issue[]> | undefined;
   requests$: Observable<Request[]> | undefined;
   products$: Observable<Product[]> | undefined;
+  isLoginWarningVisible=false
   type:any;
   inputData:any;
   editData:any;
@@ -134,7 +135,15 @@ export class DialogComponent implements OnInit {
             this.closeDialog();
           },
           (error: HttpErrorResponse) => {
+            if (error.status === 409) {
+              // Object not found, handle the error message
+              let errorId = error.error;
+              if(errorId=='2'){
+                this.isLoginWarningVisible=true
+              }
+            } else {
             alert(error.message);
+            }
           }
         );
       }

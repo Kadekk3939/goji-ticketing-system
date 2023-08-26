@@ -28,8 +28,19 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserReadModel> addUser(@RequestBody UserWriteModel userWriteModel) {
-        return new ResponseEntity<>(userService.addUser(userWriteModel), HttpStatus.OK);
+    public ResponseEntity<?> addUser(@RequestBody UserWriteModel userWriteModel) {
+        UserReadModel user = userService.addUser(userWriteModel);
+        int erroId=0;
+        if(!userService.checkEmail(userWriteModel.getEmail())){
+            erroId+=1;
+        }
+        if(userService.checkIfUserExist(userWriteModel)){
+            erroId+=2;
+        }
+        if(erroId>0){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(erroId);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

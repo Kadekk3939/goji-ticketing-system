@@ -116,12 +116,12 @@
                         <mat-card-actions class="element-card-actions ">
                             <div *ngIf="((user?.role=='Account Manager'&&type=='/requests')||(user?.role=='Product Manager'&&type=='/issues')||(user?.role=='Worker'&&type=='/tasks'))">
                                 <div *ngIf="getProgressDate(element)!=null; else elseDateBlock">
-                                    <button mat-flat-button color="accent" class="mod-button">
+                                    <button mat-flat-button color="accent" class="mod-button" (click)="setClosed(element)">
                                         Finish
                                     </button>
                                 </div>
                                 <ng-template #elseDateBlock>
-                                    <button mat-flat-button color="accent" class="mod-button">
+                                    <button mat-flat-button color="accent" class="mod-button" (click)="setInProgress(element)">
                                         Start
                                     </button>
                                 </ng-template>

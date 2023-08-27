@@ -14,6 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Request } from 'src/app/interfaces/request';
 import {DialogComponent} from "../dialog/dialog.component";
 import {FormControl} from "@angular/forms";
+import {StatusService} from "../../services/status.service";
 
 @Component({
   selector: 'app-list',
@@ -35,8 +36,12 @@ export class ListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
-  constructor(private router: Router,private dialog: MatDialog,private listService:ListService,
-    private app:AppService,private userService:UserService) {
+  constructor(private router: Router,
+              private dialog: MatDialog,
+              private listService:ListService,
+              private app:AppService,
+              private userService:UserService,
+              private statusService:StatusService) {
       this.app.refresh();//In case of refresh
       this.user = this.app.user;
 
@@ -436,6 +441,84 @@ export class ListComponent implements OnInit {
         this.getData();
       }
     });
+  }
+
+  setInProgress(obj:Request|Issue|Task|User) {
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          this.statusService.setRequestStatusInProgress(obj.requestId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('issueName' in obj) {
+          this.statusService.setIssueStatusInProgress(obj.issueId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('taskName' in obj) {
+          this.statusService.setTaskStatusInProgress(obj.taskId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
+  setClosed(obj:Request|Issue|Task|User) {
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          this.statusService.setRequestStatusClosed(obj.requestId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('issueName' in obj) {
+          this.statusService.setIssueStatusClosed(obj.issueId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('taskName' in obj) {
+          this.statusService.setTaskStatusClosed(obj.taskId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   }
 
   tempArray: any = [];

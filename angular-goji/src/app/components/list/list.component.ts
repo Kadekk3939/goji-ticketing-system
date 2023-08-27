@@ -263,15 +263,34 @@ export class ListComponent implements OnInit {
     return new Date();
   }
 
+  getStatus(obj:Request|Issue|Task|User):string{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return (obj as Request).status;
+        } else if ('issueName' in obj) {
+          return (obj as Issue).status;
+        } else if ('taskName' in obj) {
+          return (obj as Task).status;
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return '';
+  }
+
   getInfo(obj:Request|Issue|Task|User):string[]{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
-          return [(obj as Request).status, (obj as Request).openDate.toString().slice(0,10)];
+          return [(obj as Request).status, (obj as Request).openDate.toString().slice(0,10), ((obj as Request).inProgressDate||'undefined').toString().slice(0,10), ((obj as Request).finalizationDate||'undefined').toString().slice(0,10)];
         } else if ('issueName' in obj) {
-          return [(obj as Issue).status, (obj as Issue).openDate.toString().slice(0,10)];
+          return [(obj as Issue).status, (obj as Issue).openDate.toString().slice(0,10), ((obj as Issue).inProgressDate||'undefined').toString().slice(0,10), ((obj as Issue).finalizationDate||'undefined').toString().slice(0,10)];
         } else if ('taskName' in obj) {
-          return [(obj as Task).status, (obj as Task).openDate.toString().slice(0,10)];
+          return [(obj as Task).status, (obj as Task).openDate.toString().slice(0,10), ((obj as Task).inProgressDate||'undefined').toString().slice(0,10), ((obj as Task).finalizationDate||'undefined').toString().slice(0,10)];
         }
         else if ('firstName' in obj) {
           return [(obj as User).login, (obj as User).email, (obj as User).role];
@@ -505,6 +524,45 @@ export class ListComponent implements OnInit {
           );
         } else if ('taskName' in obj) {
           this.statusService.setTaskStatusClosed(obj.taskId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
+  setOpen(obj:Request|Issue|Task|User) {
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          this.statusService.setRequestStatusOpen(obj.requestId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('issueName' in obj) {
+          this.statusService.setIssueStatusOpen(obj.issueId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('taskName' in obj) {
+          this.statusService.setTaskStatusOpen(obj.taskId.toString()).subscribe(res => {
               this.elements=[];
               this.getData();
             },

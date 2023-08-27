@@ -110,21 +110,28 @@
                             <ng-template #elseBlock>
                                 <p>Status: {{getInfo(element)[0]}}</p>
                                 <p>Opening date: {{getInfo(element)[1]}}</p>
+                                <p>In progress date: {{getInfo(element)[2]}}</p>
+                                <p>Closing date: {{getInfo(element)[3]}}</p>
                             </ng-template>
                         </mat-card-content>
 
                         <mat-card-actions class="element-card-actions ">
                             <div *ngIf="((user?.role=='Account Manager'&&type=='/requests')||(user?.role=='Product Manager'&&type=='/issues')||(user?.role=='Worker'&&type=='/tasks'))">
-                                <div *ngIf="getProgressDate(element)!=null; else elseDateBlock">
-                                    <button mat-flat-button color="accent" class="mod-button" (click)="setClosed(element)">
-                                        Finish
-                                    </button>
-                                </div>
-                                <ng-template #elseDateBlock>
-                                    <button mat-flat-button color="accent" class="mod-button" (click)="setInProgress(element)">
-                                        Start
-                                    </button>
-                                </ng-template>
+                              <div *ngIf="getStatus(element)=='OPEN'">
+                                <button mat-flat-button color="accent" class="mod-button" (click)="setInProgress(element)">
+                                  Start
+                                </button>
+                              </div>
+                              <div *ngIf="getStatus(element)=='IN_PROGRESS'">
+                                <button mat-flat-button color="accent" class="mod-button" (click)="setClosed(element)">
+                                  Finish
+                                </button>
+                              </div>
+                              <div *ngIf="getStatus(element)=='CLOSED'">
+                                <button mat-flat-button color="accent" class="mod-button" (click)="setOpen(element)">
+                                  Reopen
+                                </button>
+                              </div>
                             </div>
                         </mat-card-actions>
                     </mat-card>

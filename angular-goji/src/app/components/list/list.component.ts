@@ -286,11 +286,11 @@ export class ListComponent implements OnInit {
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
-          return [(obj as Request).status, (obj as Request).openDate.toString().slice(0,10), ((obj as Request).inProgressDate||'undefined').toString().slice(0,10), ((obj as Request).finalizationDate||'undefined').toString().slice(0,10)];
+          return [(obj as Request).openDate.toString().slice(0,10), ((obj as Request).inProgressDate||'undefined').toString().slice(0,10), ((obj as Request).finalizationDate||'undefined').toString().slice(0,10)];
         } else if ('issueName' in obj) {
-          return [(obj as Issue).status, (obj as Issue).openDate.toString().slice(0,10), ((obj as Issue).inProgressDate||'undefined').toString().slice(0,10), ((obj as Issue).finalizationDate||'undefined').toString().slice(0,10)];
+          return [(obj as Issue).openDate.toString().slice(0,10), ((obj as Issue).inProgressDate||'undefined').toString().slice(0,10), ((obj as Issue).finalizationDate||'undefined').toString().slice(0,10)];
         } else if ('taskName' in obj) {
-          return [(obj as Task).status, (obj as Task).openDate.toString().slice(0,10), ((obj as Task).inProgressDate||'undefined').toString().slice(0,10), ((obj as Task).finalizationDate||'undefined').toString().slice(0,10)];
+          return [(obj as Task).openDate.toString().slice(0,10), ((obj as Task).inProgressDate||'undefined').toString().slice(0,10), ((obj as Task).finalizationDate||'undefined').toString().slice(0,10)];
         }
         else if ('firstName' in obj) {
           return [(obj as User).login, (obj as User).email, (obj as User).role];

@@ -108,10 +108,10 @@
                                 <p>Role: {{getInfo(element)[2]}}</p>
                             </div>
                             <ng-template #elseBlock>
-                                <p>Status: {{getInfo(element)[0]}}</p>
-                                <p>Opening date: {{getInfo(element)[1]}}</p>
-                                <p>In progress date: {{getInfo(element)[2]}}</p>
-                                <p>Closing date: {{getInfo(element)[3]}}</p>
+                                <p>Status: {{getStatus(element)}}</p>
+                                <p>Opening date: {{getInfo(element)[0]}}</p>
+                                <p>In progress date: {{getInfo(element)[1]}}</p>
+                                <p>Closing date: {{getInfo(element)[2]}}</p>
                             </ng-template>
                         </mat-card-content>
 

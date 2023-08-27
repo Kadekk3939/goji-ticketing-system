@@ -26,15 +26,15 @@ export class StatusService {
   }
 
   public setIssueStatusClosed(issueId:string): Observable<Issue> {
-    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/close`,null);
+    return this.http.get<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/close`);
   }
 
   public setIssueStatusOpen(issueId:string): Observable<Issue> {
-    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/open`, null);
+    return this.http.get<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/open`);
   }
 
   public setIssueStatusInProgress(issueId:string): Observable<Issue> {
-    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/inProgress`, null);
+    return this.http.get<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/inProgress`);
   }
 
   public setRequestStatusClosed(requestId:string): Observable<Request> {

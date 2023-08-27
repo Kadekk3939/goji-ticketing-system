@@ -8,6 +8,8 @@ import { AppService } from 'src/app/services/app.service';
 import { UserService } from 'src/app/services/user.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { Observable, forkJoin, of } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import {DialogComponent} from "../dialog/dialog.component";
 
 @Component({
   selector: 'app-specific',
@@ -21,9 +23,10 @@ export class SpecificComponent implements OnInit{
   public user:User|undefined;
   element: (User|Issue|Task|Request|null);
   public info:String[];
+  value = '';
 
   constructor(private route: ActivatedRoute,private router: Router,private app:AppService,private userService:UserService,
-    private dialogService:DialogService){
+    private dialogService:DialogService,private dialog: MatDialog){
     this.app.refresh();//In case of refresh
     this.user = this.app.user;
     this.info=[];
@@ -104,5 +107,59 @@ export class SpecificComponent implements OnInit{
 
   public logout(): void {
     this.router.navigateByUrl('/');
+  }
+
+  editData(id:any, type:any)
+  {
+    if(type=="user")
+    {
+      this.openDialog(id,'Edit user', type);
+    }
+    else{
+      this.openDialog(id,'Edit', type);
+    }
+  }
+
+  openDialog(id:any, title:any, type:any)
+  {
+    this.value='';
+    console.log(id+' '+title+' '+type)
+    var _dialog = this.dialog.open(DialogComponent, {
+      width:'40%',
+      enterAnimationDuration:'500ms',
+      exitAnimationDuration:'500ms',
+      data:{
+        title: title,
+        id: id,
+        type: '/'+type+'s'
+      }
+    })
+    _dialog.afterClosed().subscribe(item=>{
+      if(item!==undefined) {
+        this.ngOnInit();
+      }
+    });
+  }
+
+  getId(obj:Request|Issue|Task|User):number{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return (obj as Request).requestId;
+        } else if ('issueName' in obj) {
+          return (obj as Issue).issueId;
+        } else if ('taskName' in obj) {
+          return (obj as Task).taskId;
+        }
+        else if ('firstName' in obj) {
+          return (obj as User).userId;
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return -1;
   }
 }

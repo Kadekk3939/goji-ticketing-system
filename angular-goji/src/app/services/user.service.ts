@@ -15,4 +15,7 @@ export class UserService {
   public getUserByLogin(login: string):Observable<User>{
     return this.http.get<User>(`${environment.apiBaseUrl}/user/login/${login}`);
   }
+  public getUserById(id: string):Observable<User>{
+    return this.http.get<User>(`${environment.apiBaseUrl}/user/${id}`);
+  }
 }

@@ -28,4 +28,42 @@
             </ul>
         </div>
     </nav>
+    <div *ngIf="type=='user'">
+        <div class="card-container mat-elevation-z3">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>User Information</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p><strong>User ID:</strong> {{info![0] }}</p>
+                    <p><strong>First Name:</strong> {{info![1] }}</p>
+                    <p><strong>Last Name:</strong> {{info![2] }}</p>
+                    <p><strong>Login:</strong> {{info![3] }}</p>
+                    <p><strong>Email:</strong> {{info![4] }}</p>
+                    <p><strong>Role:</strong> {{info![5] }}</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+    <div *ngIf="type=='issue' || type=='request' || type=='task'">
+        <div class="card-container mat-elevation-z3">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>Information</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p><strong>ID:</strong> {{info![0] }}</p>
+                    <p><strong>Name:</strong> {{info![1] }}</p>
+                    <p><strong>Description:</strong> {{info![2] }}</p>
+                    <p><strong>Result:</strong> {{info![3] }}</p>
+                    <p><strong>Status:</strong> {{info![4] }}</p>
+                    <p><strong>Type:</strong> {{info![5] }}</p>
+                    <p><strong>Open Date:</strong> {{info![6] }}</p>
+                    <p><strong>In Progress Date:</strong> {{info![7] }}</p>
+                    <p><strong>Clossed DAte:</strong> {{info![8] }}</p>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
 </body>

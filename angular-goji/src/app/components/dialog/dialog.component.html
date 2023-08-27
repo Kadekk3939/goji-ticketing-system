@@ -54,7 +54,7 @@
                 <input formControlName="description" matInput>
             </mat-form-field>
             <mat-form-field *ngIf="products$ | async as products" [hidden]="inputData.id">
-                <mat-label>Product ID</mat-label>
+                <mat-label>Product</mat-label>
                 <mat-select formControlName="productId" matInput>
                     <mat-option *ngFor="let product of products" [value]="product.productId">
                         {{product.productName}}
@@ -82,7 +82,7 @@
                 <input formControlName="description" matInput>
             </mat-form-field>
             <mat-form-field *ngIf="requests$ | async as requests" [hidden]="inputData.id">
-                <mat-label>Request ID</mat-label>
+                <mat-label>Request</mat-label>
                 <mat-select formControlName="requestId" matInput>
                     <mat-option *ngFor="let request of requests" [value]="request.requestId">
                         {{request.requestName}}
@@ -110,7 +110,7 @@
                 <input formControlName="description" matInput>
             </mat-form-field>
             <mat-form-field *ngIf="issues$ | async as issues" [hidden]="inputData.id">
-                <mat-label>Issue ID</mat-label>
+                <mat-label>Issue</mat-label>
                 <mat-select formControlName="issueId" matInput>
                     <mat-option *ngFor="let issue of issues" [value]="issue.issueId">
                         {{issue.issueName}}

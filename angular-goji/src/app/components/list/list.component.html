@@ -123,7 +123,7 @@
                                 </button>
                               </div>
                               <div *ngIf="getStatus(element)=='IN_PROGRESS'">
-                                <button mat-flat-button color="accent" class="mod-button" (click)="openFinishDialog(getId(element))">
+                                <button mat-flat-button color="accent" class="mod-button" (click)="openFinishDialog(getId(element), element)">
                                   Finish
                                 </button>
                               </div>

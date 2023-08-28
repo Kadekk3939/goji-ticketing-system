@@ -165,6 +165,28 @@ export class ListComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+  getObjType(obj:Request|Issue|Task|User):string{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return 'request';
+        } else if ('issueName' in obj) {
+          return 'issue';
+        } else if ('taskName' in obj) {
+          return 'task';
+        }
+        else if ('firstName' in obj) {
+          return 'user';
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return '';
+  }
+
   getId(obj:Request|Issue|Task|User):number{
     switch (typeof obj) {
       case 'object': {
@@ -463,14 +485,15 @@ export class ListComponent implements OnInit {
     });
   }
 
-  openFinishDialog(id:any)
+  openFinishDialog(id:any, obj:Request|Issue|Task|User)
   {
     var _dialog = this.dialog.open(FinishDialogComponent, {
       width:'40%',
       enterAnimationDuration:'500ms',
       exitAnimationDuration:'500ms',
       data:{
-        id: id
+        id: id,
+        objectType: this.getObjType(obj)
       }
     })
     _dialog.afterClosed().subscribe(item=>{

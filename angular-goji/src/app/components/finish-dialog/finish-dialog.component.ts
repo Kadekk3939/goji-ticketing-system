@@ -12,7 +12,7 @@ import {Request} from "../../interfaces/request";
 })
 export class FinishDialogComponent implements OnInit{
   inputData:any;
-  finishData:any;
+  objType:string = '';
   finishForm: FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data:any,
@@ -26,6 +26,7 @@ export class FinishDialogComponent implements OnInit{
 
   ngOnInit(): void {
     this.inputData=this.data;
+    this.objType=this.data.objectType;
   }
 
   isFormValid(formGroup: FormGroup): boolean {

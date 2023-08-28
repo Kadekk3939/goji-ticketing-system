@@ -463,12 +463,15 @@ export class ListComponent implements OnInit {
     });
   }
 
-  openFinishDialog()
+  openFinishDialog(id:any)
   {
     var _dialog = this.dialog.open(FinishDialogComponent, {
       width:'40%',
       enterAnimationDuration:'500ms',
-      exitAnimationDuration:'500ms'
+      exitAnimationDuration:'500ms',
+      data:{
+        id: id
+      }
     })
     _dialog.afterClosed().subscribe(item=>{
       if(item!==undefined) {

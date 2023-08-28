@@ -42,19 +42,19 @@ public class IssueController {
         return ResponseEntity.ok(issueReadModel);
     }
 
-    @GetMapping("/{issueId}/close")
+    @PutMapping("/{issueId}/close")
     public ResponseEntity<IssueReadModel> setIssueStatusClosed(@PathVariable Long issueId,@RequestBody String result) {
         IssueReadModel issueReadModel = issueService.setIssueStatusClosed(issueId,result);
         return ResponseEntity.ok(issueReadModel);
     }
 
-    @GetMapping("/{issueId}/open")
+    @PutMapping("/{issueId}/open")
     public ResponseEntity<IssueReadModel> setIssueStatusOpen(@PathVariable Long issueId) {
         IssueReadModel issueReadModel = issueService.setIssueStatusOpen(issueId);
         return ResponseEntity.ok(issueReadModel);
     }
 
-    @GetMapping("/{issueId}/inProgress")
+    @PutMapping("/{issueId}/inProgress")
     public ResponseEntity<IssueReadModel> setIssueStatusInProgress(@PathVariable Long issueId) {
         IssueReadModel issueReadModel = issueService.setIssueStatusInProgress(issueId);
         return ResponseEntity.ok(issueReadModel);

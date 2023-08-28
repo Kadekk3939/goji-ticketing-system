@@ -13,6 +13,7 @@ import { Task } from 'src/app/interfaces/task';
 import { UserService } from 'src/app/services/user.service';
 import { Request } from 'src/app/interfaces/request';
 import {DialogComponent} from "../dialog/dialog.component";
+import {FinishDialogComponent} from "../finish-dialog/finish-dialog.component";
 import {FormControl} from "@angular/forms";
 import {StatusService} from "../../services/status.service";
 
@@ -162,6 +163,28 @@ export class ListComponent implements OnInit {
 
   public logout(): void {
     this.router.navigateByUrl('/');
+  }
+
+  getObjType(obj:Request|Issue|Task|User):string{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return 'request';
+        } else if ('issueName' in obj) {
+          return 'issue';
+        } else if ('taskName' in obj) {
+          return 'task';
+        }
+        else if ('firstName' in obj) {
+          return 'user';
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return '';
   }
 
   getId(obj:Request|Issue|Task|User):number{
@@ -452,6 +475,25 @@ export class ListComponent implements OnInit {
         title: title,
         id: id,
         type: type
+      }
+    })
+    _dialog.afterClosed().subscribe(item=>{
+      if(item!==undefined) {
+        this.elements=[];
+        this.getData();
+      }
+    });
+  }
+
+  openFinishDialog(id:any, obj:Request|Issue|Task|User)
+  {
+    var _dialog = this.dialog.open(FinishDialogComponent, {
+      width:'40%',
+      enterAnimationDuration:'500ms',
+      exitAnimationDuration:'500ms',
+      data:{
+        id: id,
+        objectType: this.getObjType(obj)
       }
     })
     _dialog.afterClosed().subscribe(item=>{

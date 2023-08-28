@@ -28,6 +28,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { SpecificComponent } from './components/specific/specific.component';
+import { FinishDialogComponent } from './components/finish-dialog/finish-dialog.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { SpecificComponent } from './components/specific/specific.component';
     UserComponent,
     ListComponent,
     DialogComponent,
-    SpecificComponent
+    SpecificComponent,
+    FinishDialogComponent
   ],
   imports: [
     BrowserModule,

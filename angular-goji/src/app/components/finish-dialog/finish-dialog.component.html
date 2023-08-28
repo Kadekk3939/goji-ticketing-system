@@ -1,0 +1,13 @@
+<form [formGroup]="finishForm" (ngSubmit)="saveData()">
+  <h1 mat-dialog-title>Finish {{objType}}</h1>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Result</mat-label>
+      <textarea formControlName="result" matInput></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" [disabled]="!isFormValid(finishForm)">Save</button>
+    <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
+  </div>
+</form>

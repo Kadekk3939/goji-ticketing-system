@@ -12,6 +12,7 @@ import pl.polsl.tab.goji.model.entity.Task;
 import pl.polsl.tab.goji.model.entity.User;
 import pl.polsl.tab.goji.model.enums.Status;
 import pl.polsl.tab.goji.repository.TaskRepository;
+import pl.polsl.tab.goji.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,12 +26,14 @@ public class TaskService {
     private final TaskMapper taskMapper;
     private final TaskRepository taskRepository;
     private final IssueService issueService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public TaskService(TaskMapper taskMapper,TaskRepository taskRepository,IssueService issueService){
+    public TaskService(TaskMapper taskMapper,TaskRepository taskRepository,IssueService issueService,UserRepository userRepository){
         this.taskMapper = taskMapper;
         this.taskRepository = taskRepository;
         this.issueService = issueService;
+        this.userRepository = userRepository;
     }
 
     public TaskReadModel addTask(TaskWriteModel taskWriteModel){
@@ -87,12 +90,13 @@ public class TaskService {
         return taskMapper.toReadModel(taskToUpdate);
     }
 
-    public TaskReadModel setTaskStatusInProgress(Long taskId){
+    public TaskReadModel setTaskStatusInProgress(Long taskId,String userLogin){
         Optional<Task> task = taskRepository.findTaskByTaskId(taskId);
         Task taskToUpdate = new Task();
         if(task.isPresent()){
             taskToUpdate = task.get();
             taskToUpdate.setStatus(Status.IN_PROGRESS);
+            taskToUpdate.setResponsiblePerson(userRepository.findUserByLogin(userLogin).get());
             taskToUpdate.setInProgressDate(LocalDateTime.now());
             taskToUpdate = taskRepository.save(taskToUpdate);
         }

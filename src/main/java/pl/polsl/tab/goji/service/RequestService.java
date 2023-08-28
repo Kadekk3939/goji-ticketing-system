@@ -9,6 +9,7 @@ import pl.polsl.tab.goji.model.entity.Product;
 import pl.polsl.tab.goji.model.entity.Request;
 import pl.polsl.tab.goji.model.enums.Status;
 import pl.polsl.tab.goji.repository.RequestRepository;
+import pl.polsl.tab.goji.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,12 +21,14 @@ public class RequestService {
     private final RequestMapper requestMapper;
     private final RequestRepository requestRepository;
     private final ProductService productService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public RequestService(RequestRepository requestRepository,RequestMapper requestMapper, ProductService productService){
+    public RequestService(RequestRepository requestRepository,RequestMapper requestMapper, ProductService productService,UserRepository userRepository){
         this.productService = productService;
         this.requestMapper = requestMapper;
         this.requestRepository = requestRepository;
+        this.userRepository = userRepository;
     }
 
     public RequestReadModel addRequest(RequestWriteModel requestWriteModel){
@@ -72,13 +75,14 @@ public class RequestService {
         return requestMapper.toReadModel(requestToUpdate);
     }
 
-    public RequestReadModel setRequestStatusInProgress(Long requestId){
+    public RequestReadModel setRequestStatusInProgress(Long requestId,String userLogin){
         Optional<Request> request = requestRepository.findRequestByRequestId(requestId);
         Request requestToUpdate = new Request();
         if(request.isPresent()){
 
             requestToUpdate = request.get();
             requestToUpdate.setStatus(Status.IN_PROGRESS);
+            requestToUpdate.setResponsiblePerson(userRepository.findUserByLogin(userLogin).get());
             requestToUpdate.setInProgressDate(LocalDateTime.now());
             requestToUpdate = requestRepository.save(requestToUpdate);
         }

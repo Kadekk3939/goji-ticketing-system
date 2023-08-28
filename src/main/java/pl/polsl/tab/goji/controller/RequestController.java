@@ -56,8 +56,8 @@ public class RequestController {
     }
 
     @PutMapping("/{requestId}/inProgress")
-    public ResponseEntity<RequestReadModel> setRequestStatusInProgress(@PathVariable Long requestId) {
-        RequestReadModel request = requestService.setRequestStatusInProgress(requestId);
+    public ResponseEntity<RequestReadModel> setRequestStatusInProgress(@PathVariable Long requestId,@RequestBody String userLogin) {
+        RequestReadModel request = requestService.setRequestStatusInProgress(requestId,userLogin);
         return ResponseEntity.ok(request);
     }
 }

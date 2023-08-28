@@ -55,8 +55,8 @@ public class IssueController {
     }
 
     @PutMapping("/{issueId}/inProgress")
-    public ResponseEntity<IssueReadModel> setIssueStatusInProgress(@PathVariable Long issueId) {
-        IssueReadModel issueReadModel = issueService.setIssueStatusInProgress(issueId);
+    public ResponseEntity<IssueReadModel> setIssueStatusInProgress(@PathVariable Long issueId,@RequestBody String userLogin) {
+        IssueReadModel issueReadModel = issueService.setIssueStatusInProgress(issueId,userLogin);
         return ResponseEntity.ok(issueReadModel);
     }
 }

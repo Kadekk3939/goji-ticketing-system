@@ -62,8 +62,8 @@ public class TaskController {
     }
 
     @PutMapping("/{taskId}/inProgress")
-    public ResponseEntity<TaskReadModel> setTaskStatusInProgress(@PathVariable Long taskId) {
-        TaskReadModel taskReadModel = taskService.setTaskStatusInProgress(taskId);
+    public ResponseEntity<TaskReadModel> setTaskStatusInProgress(@PathVariable Long taskId,@RequestBody String userLogin) {
+        TaskReadModel taskReadModel = taskService.setTaskStatusInProgress(taskId,userLogin);
         return ResponseEntity.ok(taskReadModel);
     }
 }

@@ -11,6 +11,7 @@ import pl.polsl.tab.goji.model.entity.Product;
 import pl.polsl.tab.goji.model.entity.Request;
 import pl.polsl.tab.goji.model.enums.Status;
 import pl.polsl.tab.goji.repository.IssueRepository;
+import pl.polsl.tab.goji.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,12 +23,14 @@ public class IssueService {
     private final IssueMapper issueMapper;
     private final IssueRepository issueRepository;
     private final RequestService requestService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public IssueService(IssueMapper issueMapper,IssueRepository issueRepository,RequestService requestService){
+    public IssueService(IssueMapper issueMapper, IssueRepository issueRepository, RequestService requestService, UserRepository userRepository){
         this.issueMapper = issueMapper;
         this.issueRepository = issueRepository;
         this.requestService = requestService;
+        this.userRepository = userRepository;
     }
 
     public IssueReadModel addIssue(IssueWriteModel issueWriteModel){
@@ -86,12 +89,13 @@ public class IssueService {
         return issueMapper.toReadModel(issueToUpdate);
     }
 
-    public IssueReadModel setIssueStatusInProgress(Long issueId){
+    public IssueReadModel setIssueStatusInProgress(Long issueId,String userLogin){
         Optional<Issue> issue = issueRepository.findIssueByIssueId(issueId);
         Issue issueToUpdate = new Issue();
         if(issue.isPresent()){
             issueToUpdate = issue.get();
             issueToUpdate.setStatus(Status.IN_PROGRESS);
+            issueToUpdate.setResponsiblePerson(userRepository.findUserByLogin(userLogin).get());
             issueToUpdate.setInProgressDate(LocalDateTime.now());
             issueToUpdate = issueRepository.save(issueToUpdate);
         }

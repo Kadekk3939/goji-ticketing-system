@@ -51,7 +51,7 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Description</mat-label>
-                <input formControlName="description" matInput>
+                <textarea formControlName="description" matInput></textarea>
             </mat-form-field>
             <mat-form-field *ngIf="products$ | async as products" [hidden]="inputData.id">
                 <mat-label>Product</mat-label>
@@ -79,7 +79,7 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Description</mat-label>
-                <input formControlName="description" matInput>
+                <textarea formControlName="description" matInput></textarea>
             </mat-form-field>
             <mat-form-field *ngIf="requests$ | async as requests" [hidden]="inputData.id">
                 <mat-label>Request</mat-label>
@@ -107,7 +107,7 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Description</mat-label>
-                <input formControlName="description" matInput>
+                <textarea formControlName="description" matInput></textarea>
             </mat-form-field>
             <mat-form-field *ngIf="issues$ | async as issues" [hidden]="inputData.id">
                 <mat-label>Issue</mat-label>

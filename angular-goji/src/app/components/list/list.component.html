@@ -123,7 +123,7 @@
                                 </button>
                               </div>
                               <div *ngIf="getStatus(element)=='IN_PROGRESS'">
-                                <button mat-flat-button color="accent" class="mod-button" (click)="setClosed(element)">
+                                <button mat-flat-button color="accent" class="mod-button" (click)="openFinishDialog()">
                                   Finish
                                 </button>
                               </div>
@@ -138,7 +138,6 @@
                 </div>
             </div>
             <div class="filters">
-                <!--        there will be filters panel-->
                 <mat-card class="element-card mat-elevation-z8">
                     <mat-card-header>
                         <mat-card-title>Filter</mat-card-title>

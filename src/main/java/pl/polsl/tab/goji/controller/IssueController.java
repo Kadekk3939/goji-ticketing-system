@@ -43,8 +43,8 @@ public class IssueController {
     }
 
     @GetMapping("/{issueId}/close")
-    public ResponseEntity<IssueReadModel> setIssueStatusClosed(@PathVariable Long issueId) {
-        IssueReadModel issueReadModel = issueService.setIssueStatusClosed(issueId);
+    public ResponseEntity<IssueReadModel> setIssueStatusClosed(@PathVariable Long issueId,@RequestBody String result) {
+        IssueReadModel issueReadModel = issueService.setIssueStatusClosed(issueId,result);
         return ResponseEntity.ok(issueReadModel);
     }
 

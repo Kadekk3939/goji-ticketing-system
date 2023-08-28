@@ -56,12 +56,18 @@ public class IssueService {
         return issueMapper.toReadModel(issueToUpdate);
     }
 
-    public IssueReadModel setIssueStatusClosed(Long issueId){
+    public IssueReadModel setIssueStatusClosed(Long issueId,String result){
         Optional<Issue> issue = issueRepository.findIssueByIssueId(issueId);
         Issue issueToUpdate = new Issue();
         if(issue.isPresent()){
             issueToUpdate = issue.get();
             issueToUpdate.setStatus(Status.CLOSED);
+            if (result == null || result.isEmpty()) {
+                issueToUpdate.setResult("Not given");
+            } else {
+                System.out.println(result);
+                issueToUpdate.setResult(result);
+            }
             issueToUpdate.setFinalizationDate(LocalDateTime.now());
             issueToUpdate = issueRepository.save(issueToUpdate);
         }

@@ -50,8 +50,8 @@ public class TaskController {
     }
 
     @PutMapping("/{taskId}/close")
-    public ResponseEntity<TaskReadModel> setTaskStatusClosed(@PathVariable Long taskId) {
-        TaskReadModel taskReadModel = taskService.setTaskStatusClosed(taskId);
+    public ResponseEntity<TaskReadModel> setTaskStatusClosed(@PathVariable Long taskId,@RequestBody String result) {
+        TaskReadModel taskReadModel = taskService.setTaskStatusClosed(taskId,result);
         return ResponseEntity.ok(taskReadModel);
     }
 

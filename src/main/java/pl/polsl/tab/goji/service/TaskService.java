@@ -15,6 +15,7 @@ import pl.polsl.tab.goji.repository.TaskRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -55,12 +56,19 @@ public class TaskService {
         return taskMapper.toReadModel(taskToUpdate);
     }
 
-    public TaskReadModel setTaskStatusClosed(Long taskId){
+    public TaskReadModel setTaskStatusClosed(Long taskId,String result){
         Optional<Task> task = taskRepository.findTaskByTaskId(taskId);
         Task taskToUpdate = new Task();
         if(task.isPresent()){
             taskToUpdate = task.get();
             taskToUpdate.setStatus(Status.CLOSED);
+
+            if (result == null || result.isEmpty()) {
+                taskToUpdate.setResult("Not given");
+            } else {
+                System.out.println(result);
+                taskToUpdate.setResult(result);
+            }
             taskToUpdate.setFinalizationDate(LocalDateTime.now());
             taskToUpdate = taskRepository.save(taskToUpdate);
         }

@@ -40,13 +40,19 @@ public class RequestService {
         return  requestMapper.toReadModel(requestRepository.save(request));
     }
 
-    public RequestReadModel setRequestStatusClosed(Long requestId){
+    public RequestReadModel setRequestStatusClosed(Long requestId,String result){
         Optional<Request> request = requestRepository.findRequestByRequestId(requestId);
         Request requestToUpdate = new Request();
         if(request.isPresent()){
 
             requestToUpdate = request.get();
             requestToUpdate.setStatus(Status.CLOSED);
+            if (result == null || result.isEmpty()) {
+                requestToUpdate.setResult("Not given");
+            } else {
+                System.out.println(result);
+                requestToUpdate.setResult(result);
+            }
             requestToUpdate.setFinalizationDate(LocalDateTime.now());
             requestToUpdate = requestRepository.save(requestToUpdate);
         }

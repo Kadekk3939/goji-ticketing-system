@@ -13,6 +13,7 @@ import {DialogComponent} from "../dialog/dialog.component";
 import { Product } from 'src/app/interfaces/product';
 import { Client } from 'src/app/interfaces/client';
 import { SpecificService } from 'src/app/services/specific.service';
+import { ListService } from 'src/app/services/list.service';
 
 @Component({
   selector: 'app-specific',
@@ -31,7 +32,7 @@ export class SpecificComponent implements OnInit{
   value = '';
 
   constructor(private route: ActivatedRoute,private router: Router,private app:AppService,private userService:UserService,
-    private dialogService:DialogService,private dialog: MatDialog,private specificService:SpecificService){
+    private dialogService:DialogService,private dialog: MatDialog,private specificService:SpecificService,private generalService:DialogService){
     this.app.refresh();//In case of refresh
     this.user = this.app.user;
     this.info=[];
@@ -41,7 +42,7 @@ export class SpecificComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe(async params => {
       this.elementId = params['id'];
       const route = this.router.url;
       this.type = route.split('/')[1];
@@ -60,11 +61,64 @@ export class SpecificComponent implements OnInit{
         } else {
           this.subElements = [];
         }
-        console.log(this.subElements);
         this.info = this.getInfo();
       });
+      this.parentElement=await this.getParentElement()
     });
   }
+
+public getParentElementInfo():string[]{
+  if(this.parentElement!=null && this.element!=null){
+    switch (typeof this.element) {
+      case 'object': {
+        if ('requestName' in this.element) {
+          return [(this.parentElement as Product).productName,
+            (this.parentElement as Product).description,(this.parentElement as Product).version,(this.parentElement as Product).productId.toString()];
+        } else if ('issueName' in this.element) {
+          return [(this.parentElement as Request).requestName,
+            (this.parentElement as Request).description,(this.parentElement as Request).status,(this.parentElement as Request).requestId.toString()];
+        }
+        else if ('taskName' in this.element) {
+          return [(this.parentElement as Issue).issueName, (this.parentElement as Issue).description, (this.parentElement as Issue).status, 
+            (this.parentElement as Issue).issueId.toString()];
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+  return [''];
+}
+
+public async getParentElement(): Promise<Issue | Request | Product | Client | null> {
+  if (this.type == "issue") {
+    try {
+      const parentElement = await this.generalService.getRequestById((this.element as Issue).requestId.toString()).toPromise();
+      console.log(parentElement as Request)
+      return parentElement as Request;
+    } catch (error) {
+      return null;
+    }
+  } else if (this.type == "request") {
+    try {
+      const parentElement = await this.generalService.getProductById((this.element as Request).productId.toString()).toPromise();
+      return parentElement as Product;
+    } catch (error) {
+      return null;
+    }
+  } else if (this.type == "task") {
+    try {
+      const parentElement = await this.generalService.getIssueById((this.element as Task).issueId.toString()).toPromise();
+      return parentElement as Issue;
+    } catch (error) {
+      return null;
+    }
+  } else {
+    return null; // Handle unknown types or return null
+  }
+}
 
 public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
   if(this.element!=null){

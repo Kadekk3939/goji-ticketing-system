@@ -35,6 +35,10 @@ export class DialogService {
     return this.http.get<User>(`${environment.apiBaseUrl}/user/${id}`);
   }
 
+  public getProductById(id:string):Observable<Product>{
+    return this.http.get<Product>(`${environment.apiBaseUrl}/product/${id}`);
+  }
+
   public updateUser(id:string, user:User): Observable<User> {
     return this.http.put<User>(`${environment.apiBaseUrl}/user/${id}`, user);
   }

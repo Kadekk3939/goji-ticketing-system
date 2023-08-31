@@ -62,4 +62,13 @@ public class ProductService {
         List<Request> requests = requestRepository.findAllRequestsFromProduct(id);
         return requestMapper.map(requests);
     }
+
+    public ProductReadModel getProductDto(Long id){
+        Optional<Product> product = productRepository.findProductByProductId(id);
+        Product productToReturn = null;
+        if(product.isPresent()){
+            productToReturn=product.get();
+        }
+        return productMapper.toReadModel(productToReturn);
+    }
 }

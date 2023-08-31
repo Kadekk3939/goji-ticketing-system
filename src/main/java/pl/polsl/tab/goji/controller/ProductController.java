@@ -37,4 +37,9 @@ public class ProductController {
     public ResponseEntity<List<RequestReadModel>> getSubRequests(@PathVariable Long productId){
         return ResponseEntity.ok(productService.getSubRequests(productId));
     }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductReadModel> getProduct(@PathVariable Long productId){
+        return  ResponseEntity.ok(productService.getProductDto(productId));
+    }
 }

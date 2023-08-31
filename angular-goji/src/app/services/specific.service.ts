@@ -30,4 +30,8 @@ export class SpecificService {
   public getSubProductFromClient(clientId:string):Observable<Product[]>{
     return this.http.get<Product[]>(`${environment.apiBaseUrl}/client/${clientId}/products`);
   }
+
+  public getParentRequestFromIssue(issueId:string):Observable<Request>{
+    return this.http.get<Request>(`${environment.apiBaseUrl}/issue/${issueId}/request`)
+  }
 }

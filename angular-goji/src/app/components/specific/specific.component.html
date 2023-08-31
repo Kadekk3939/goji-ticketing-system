@@ -69,6 +69,17 @@
                 </mat-card-content>
             </mat-card>
         </div>
+        <div *ngIf="type=='issue'||type=='task'">
+            <div class="card-container-sub  mat-elevation-z3">
+                <mat-card>
+                    <mat-card-content class="subElement">
+                        <p><strong>Name:</strong> {{getParentElementInfo()![0] }}</p>
+                        <p><strong>Description:</strong> {{getParentElementInfo()![1]}}</p>
+                        <p><strong>Status:</strong> {{getParentElementInfo()![2] }}</p>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
         <div *ngIf="type=='issue' || type=='request'">
             <div *ngFor="let obj of subElements" class="subElements">
                 <div class="card-container-sub  mat-elevation-z3">

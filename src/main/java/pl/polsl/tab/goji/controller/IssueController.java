@@ -65,4 +65,9 @@ public class IssueController {
     public ResponseEntity<List<TaskReadModel>> getSubTasks(@PathVariable Long issueId){
         return ResponseEntity.ok(issueService.getSubTusks(issueId));
     }
+
+    @GetMapping("/{issueId}/request")
+    public ResponseEntity<RequestReadModel> getParentRequest(@PathVariable Long issueId){
+        return ResponseEntity.ok(issueService.getParentRequest(issueId));
+    }
 }

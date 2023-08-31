@@ -13,6 +13,7 @@ import {DialogComponent} from "../dialog/dialog.component";
 import { Product } from 'src/app/interfaces/product';
 import { Client } from 'src/app/interfaces/client';
 import { SpecificService } from 'src/app/services/specific.service';
+import { ListService } from 'src/app/services/list.service';
 
 @Component({
   selector: 'app-specific',
@@ -31,7 +32,7 @@ export class SpecificComponent implements OnInit{
   value = '';
 
   constructor(private route: ActivatedRoute,private router: Router,private app:AppService,private userService:UserService,
-    private dialogService:DialogService,private dialog: MatDialog,private specificService:SpecificService){
+    private dialogService:DialogService,private dialog: MatDialog,private specificService:SpecificService,private generalService:DialogService){
     this.app.refresh();//In case of refresh
     this.user = this.app.user;
     this.info=[];
@@ -50,8 +51,9 @@ export class SpecificComponent implements OnInit{
       forkJoin([
         this.userService.getUserByLogin(this.app.login),
         this.getData(),
-        this.getSubElements()
-      ]).subscribe(([user, element, subElements]) => {
+        this.getSubElements(),
+        this.getParentElement()
+      ]).subscribe(([user, element, subElements,parentElement]) => {
         this.user = user;
         this.element = element;
         
@@ -60,11 +62,57 @@ export class SpecificComponent implements OnInit{
         } else {
           this.subElements = [];
         }
-        console.log(this.subElements);
+        if (parentElement !== null) {
+          this.parentElement = parentElement;
+        } else {
+          this.parentElement = null;
+        }
+
         this.info = this.getInfo();
       });
+      
     });
   }
+
+public getParentElementInfo():string[]{
+  if(this.element!=null){
+    switch (typeof this.element) {
+      case 'object': {
+        if ('requestName' in this.element) {
+          return [(this.parentElement as Product).productName,
+            (this.parentElement as Product).description,(this.parentElement as Product).version,(this.parentElement as Product).productId.toString()];
+        } else if ('issueName' in this.element) {
+          return [(this.parentElement as Request).requestName,
+            (this.parentElement as Request).description,(this.parentElement as Request).status,(this.parentElement as Request).requestId.toString()];
+        }
+        else if ('taskName' in this.element) {
+          return [(this.parentElement as Issue).issueName, (this.parentElement as Issue).description, (this.parentElement as Issue).status, 
+            (this.parentElement as Issue).issueId.toString()];
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+  return [''];
+}
+
+public getParentElement():Observable<Product|Issue|Request|Client|null>{
+  if (this.type == "issue") {
+    return this.specificService.getParentRequestFromIssue(this.elementId!);}
+  // } else if (this.type == "request") {
+  //   return this.generalService.getProductById((this.element as Request).productId.toString());
+  // }else if (this.type == "task") {
+  //   return this.generalService.getIssueById((this.element as Task).issueId.toString());
+  // // } else if (this.type == "task") {
+  // //   return this.specificService.getTaskById(this.elementId!);
+  // } 
+  else {
+    return of(null); // Handle unknown types or return an empty observable
+  }
+}
 
 public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
   if(this.element!=null){

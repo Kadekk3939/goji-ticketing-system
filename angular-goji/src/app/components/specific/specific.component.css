@@ -43,3 +43,16 @@ img {
 .mod-button {
     margin: 0px 5px;
 }
+
+.subElements {
+    display: flex;
+    justify-content: flex-end;
+    /* Align items to the right side */
+    margin: 10px 0;
+    /* Add some margin for spacing */
+    padding-right: 50px;
+}
+
+.card-container-sub {
+    width: 40%;
+}

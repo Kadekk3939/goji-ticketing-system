@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {DialogComponent} from "../dialog/dialog.component";
 import { Product } from 'src/app/interfaces/product';
 import { Client } from 'src/app/interfaces/client';
+import { SpecificService } from 'src/app/services/specific.service';
 
 @Component({
   selector: 'app-specific',
@@ -24,13 +25,13 @@ export class SpecificComponent implements OnInit{
   type: string|undefined;
   public user:User|undefined;
   element: (User|Issue|Task|Request|null);
-  subElements: (Product|Request|Task|Issue)[]
+  subElements: (Product|Request|Task|Issue|null)[]
   parentElement:(Client|Product|Request|Issue|null)
   public info:String[];
   value = '';
 
   constructor(private route: ActivatedRoute,private router: Router,private app:AppService,private userService:UserService,
-    private dialogService:DialogService,private dialog: MatDialog){
+    private dialogService:DialogService,private dialog: MatDialog,private specificService:SpecificService){
     this.app.refresh();//In case of refresh
     this.user = this.app.user;
     this.info=[];
@@ -48,13 +49,61 @@ export class SpecificComponent implements OnInit{
       // Use forkJoin to wait for multiple observables to complete
       forkJoin([
         this.userService.getUserByLogin(this.app.login),
-        this.getData() // Modify getData to return an observable
-      ]).subscribe(([user, element]) => {
+        this.getData(),
+        this.getSubElements()
+      ]).subscribe(([user, element, subElements]) => {
         this.user = user;
         this.element = element;
+        
+        if (subElements !== null) {
+          this.subElements = subElements;
+        } else {
+          this.subElements = [];
+        }
+        console.log(this.subElements);
         this.info = this.getInfo();
       });
     });
+  }
+
+public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
+  if(this.element!=null){
+    switch (typeof this.element) {
+      case 'object': {
+        if ('requestName' in this.element) {
+          return [(obj as Issue).issueName,
+            (obj as Issue).description,(obj as Issue).status,(obj as Issue).issueId.toString()];
+        } else if ('issueName' in this.element) {
+          return [(obj as Task).taskName,
+            (obj as Task).description,(obj as Task).status,(obj as Task).taskId.toString()];
+        }
+        else if ('firstName' in this.element) {
+          return [(this.element as User).userId.toString(), (this.element as User).firstName, (this.element as User).lastName, 
+            (this.element as User).login, (this.element as User).email, (this.element as User).role];
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+  return [''];
+}
+
+  public getSubElements():Observable<Product[]|Issue[]|Request[]|Task[]|null>{
+    // if (this.type == "user") {
+    //   return this.userService.getUserById(this.elementId!);
+    // } else 
+    if (this.type == "issue") {
+      return this.specificService.getSubTasksFromIssue(this.elementId!);
+    } else if (this.type == "request") {
+      return this.specificService.getSubIssuesFromRequest(this.elementId!);
+    // } else if (this.type == "task") {
+    //   return this.specificService.getTaskById(this.elementId!);
+    } else {
+      return of(null); // Handle unknown types or return an empty observable
+    }
   }
 
   public getData(): Observable<User | Issue | Task | Request|null> {

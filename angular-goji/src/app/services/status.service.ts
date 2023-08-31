@@ -13,39 +13,39 @@ export class StatusService {
 
   constructor(private http:HttpClient) { }
 
-  public setTaskStatusClosed(taskId:string): Observable<Task> {
-    return this.http.put<Task>(`${environment.apiBaseUrl}/task/${taskId}/close`,null);
+  public setTaskStatusClosed(taskId:string, result:string): Observable<Task> {
+    return this.http.put<Task>(`${environment.apiBaseUrl}/task/${taskId}/close`,result);
   }
 
   public setTaskStatusOpen(taskId:string): Observable<Task> {
     return this.http.put<Task>(`${environment.apiBaseUrl}/task/${taskId}/open`, null);
   }
 
-  public setTaskStatusInProgress(taskId:string): Observable<Task> {
-    return this.http.put<Task>(`${environment.apiBaseUrl}/task/${taskId}/inProgress`, null);
+  public setTaskStatusInProgress(taskId:string, userLogin:string): Observable<Task> {
+    return this.http.put<Task>(`${environment.apiBaseUrl}/task/${taskId}/inProgress`, userLogin);
   }
 
-  public setIssueStatusClosed(issueId:string): Observable<Issue> {
-    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/close`, null);
+  public setIssueStatusClosed(issueId:string, result:string): Observable<Issue> {
+    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/close`, result);
   }
 
   public setIssueStatusOpen(issueId:string): Observable<Issue> {
     return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/open`, null);
   }
 
-  public setIssueStatusInProgress(issueId:string): Observable<Issue> {
-    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/inProgress`, null);
+  public setIssueStatusInProgress(issueId:string, userLogin:string): Observable<Issue> {
+    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/inProgress`, userLogin);
   }
 
-  public setRequestStatusClosed(requestId:string): Observable<Request> {
-    return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/close`,null);
+  public setRequestStatusClosed(requestId:string, result:string): Observable<Request> {
+    return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/close`, result);
   }
 
   public setRequestStatusOpen(requestId:string): Observable<Request> {
     return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/open`, null);
   }
 
-  public setRequestStatusInProgress(requestId:string): Observable<Request> {
-    return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/inProgress`, null);
+  public setRequestStatusInProgress(requestId:string, userLogin:string): Observable<Request> {
+    return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/inProgress`, userLogin);
   }
 }

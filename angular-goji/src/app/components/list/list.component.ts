@@ -508,7 +508,7 @@ export class ListComponent implements OnInit {
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
-          this.statusService.setRequestStatusInProgress(obj.requestId.toString()).subscribe(res => {
+          this.statusService.setRequestStatusInProgress(obj.requestId.toString(), this.user?.login??'').subscribe(res => {
               this.elements=[];
               this.getData();
             },
@@ -517,7 +517,7 @@ export class ListComponent implements OnInit {
             }
           );
         } else if ('issueName' in obj) {
-          this.statusService.setIssueStatusInProgress(obj.issueId.toString()).subscribe(res => {
+          this.statusService.setIssueStatusInProgress(obj.issueId.toString(),this.user?.login??'').subscribe(res => {
               this.elements=[];
               this.getData();
             },
@@ -526,46 +526,7 @@ export class ListComponent implements OnInit {
             }
           );
         } else if ('taskName' in obj) {
-          this.statusService.setTaskStatusInProgress(obj.taskId.toString()).subscribe(res => {
-              this.elements=[];
-              this.getData();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        }
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  }
-
-  setClosed(obj:Request|Issue|Task|User) {
-    switch (typeof obj) {
-      case 'object': {
-        if ('requestName' in obj) {
-          this.statusService.setRequestStatusClosed(obj.requestId.toString()).subscribe(res => {
-              this.elements=[];
-              this.getData();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        } else if ('issueName' in obj) {
-          this.statusService.setIssueStatusClosed(obj.issueId.toString()).subscribe(res => {
-              this.elements=[];
-              this.getData();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        } else if ('taskName' in obj) {
-          this.statusService.setTaskStatusClosed(obj.taskId.toString()).subscribe(res => {
+          this.statusService.setTaskStatusInProgress(obj.taskId.toString(),this.user?.login??'').subscribe(res => {
               this.elements=[];
               this.getData();
             },

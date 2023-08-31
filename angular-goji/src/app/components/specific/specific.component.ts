@@ -42,7 +42,7 @@ export class SpecificComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(async params => {
+    this.route.params.subscribe(params => {
       this.elementId = params['id'];
       const route = this.router.url;
       this.type = route.split('/')[1];
@@ -51,8 +51,9 @@ export class SpecificComponent implements OnInit{
       forkJoin([
         this.userService.getUserByLogin(this.app.login),
         this.getData(),
-        this.getSubElements()
-      ]).subscribe(([user, element, subElements]) => {
+        this.getSubElements(),
+        this.getParentElement()
+      ]).subscribe(([user, element, subElements,parentElement]) => {
         this.user = user;
         this.element = element;
         
@@ -61,14 +62,20 @@ export class SpecificComponent implements OnInit{
         } else {
           this.subElements = [];
         }
+        if (parentElement !== null) {
+          this.parentElement = parentElement;
+        } else {
+          this.parentElement = null;
+        }
+
         this.info = this.getInfo();
       });
-      this.parentElement=await this.getParentElement()
+      
     });
   }
 
 public getParentElementInfo():string[]{
-  if(this.parentElement!=null && this.element!=null){
+  if(this.element!=null){
     switch (typeof this.element) {
       case 'object': {
         if ('requestName' in this.element) {
@@ -92,31 +99,18 @@ public getParentElementInfo():string[]{
   return [''];
 }
 
-public async getParentElement(): Promise<Issue | Request | Product | Client | null> {
+public getParentElement():Observable<Product|Issue|Request|Client|null>{
   if (this.type == "issue") {
-    try {
-      const parentElement = await this.generalService.getRequestById((this.element as Issue).requestId.toString()).toPromise();
-      console.log(parentElement as Request)
-      return parentElement as Request;
-    } catch (error) {
-      return null;
-    }
-  } else if (this.type == "request") {
-    try {
-      const parentElement = await this.generalService.getProductById((this.element as Request).productId.toString()).toPromise();
-      return parentElement as Product;
-    } catch (error) {
-      return null;
-    }
-  } else if (this.type == "task") {
-    try {
-      const parentElement = await this.generalService.getIssueById((this.element as Task).issueId.toString()).toPromise();
-      return parentElement as Issue;
-    } catch (error) {
-      return null;
-    }
-  } else {
-    return null; // Handle unknown types or return null
+    return this.specificService.getParentRequestFromIssue(this.elementId!);}
+  // } else if (this.type == "request") {
+  //   return this.generalService.getProductById((this.element as Request).productId.toString());
+  // }else if (this.type == "task") {
+  //   return this.generalService.getIssueById((this.element as Task).issueId.toString());
+  // // } else if (this.type == "task") {
+  // //   return this.specificService.getTaskById(this.elementId!);
+  // } 
+  else {
+    return of(null); // Handle unknown types or return an empty observable
   }
 }
 

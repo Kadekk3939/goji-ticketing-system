@@ -3,9 +3,11 @@ package pl.polsl.tab.goji.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.polsl.tab.goji.mappers.IssueMapper;
+import pl.polsl.tab.goji.mappers.RequestMapper;
 import pl.polsl.tab.goji.mappers.TaskMapper;
 import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
 import pl.polsl.tab.goji.model.dto.read.ProductReadModel;
+import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
 import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
 import pl.polsl.tab.goji.model.dto.write.IssueWriteModel;
 import pl.polsl.tab.goji.model.entity.Issue;
@@ -27,19 +29,21 @@ public class IssueService {
     private final IssueMapper issueMapper;
     private final IssueRepository issueRepository;
     private final RequestService requestService;
+    private final RequestMapper requestMapper;
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
 
     @Autowired
     public IssueService(IssueMapper issueMapper, IssueRepository issueRepository, RequestService requestService, UserRepository userRepository,TaskRepository taskRepository,
-                        TaskMapper taskMapper){
+                        TaskMapper taskMapper,RequestMapper requestMapper){
         this.issueMapper = issueMapper;
         this.issueRepository = issueRepository;
         this.requestService = requestService;
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
+        this.requestMapper=requestMapper;
     }
 
     public IssueReadModel addIssue(IssueWriteModel issueWriteModel){
@@ -132,5 +136,10 @@ public class IssueService {
     public List<TaskReadModel> getSubTusks(Long id){
         List<Task> tasks = taskRepository.findAllTasksFromIssue(id);
         return taskMapper.map(tasks);
+    }
+
+    public RequestReadModel getParentRequest(Long id){
+        Request request = issueRepository.findIssueByIssueId(id).get().getRequest();
+        return requestMapper.toReadModel(request);
     }
 }

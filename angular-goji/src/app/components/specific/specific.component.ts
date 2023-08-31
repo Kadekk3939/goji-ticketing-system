@@ -10,6 +10,8 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { Observable, forkJoin, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import {DialogComponent} from "../dialog/dialog.component";
+import { Product } from 'src/app/interfaces/product';
+import { Client } from 'src/app/interfaces/client';
 
 @Component({
   selector: 'app-specific',
@@ -22,6 +24,8 @@ export class SpecificComponent implements OnInit{
   type: string|undefined;
   public user:User|undefined;
   element: (User|Issue|Task|Request|null);
+  subElements: (Product|Request|Task|Issue)[]
+  parentElement:(Client|Product|Request|Issue|null)
   public info:String[];
   value = '';
 
@@ -30,6 +34,8 @@ export class SpecificComponent implements OnInit{
     this.app.refresh();//In case of refresh
     this.user = this.app.user;
     this.info=[];
+    this.subElements=[]
+    this.parentElement=null;
     this.element=null;
   }
 

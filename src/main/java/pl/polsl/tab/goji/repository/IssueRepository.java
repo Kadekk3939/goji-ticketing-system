@@ -15,5 +15,5 @@ public interface IssueRepository extends JpaRepository<Issue, Long>{
     Optional<Issue> findIssueByIssueName(String issueName);
 
     @Query(value = "SELECT * FROM issue where request_id = ?1 ORDER BY issue_id ASC ",nativeQuery = true)
-    List<Issue> findAllIsseues(Long requestId);
+    List<Issue> findAllIssuesFromRequest(Long requestId);
 }

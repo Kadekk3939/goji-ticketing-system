@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
 import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
+import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
 import pl.polsl.tab.goji.model.dto.write.IssueWriteModel;
 import pl.polsl.tab.goji.model.dto.write.RequestWriteModel;
 import pl.polsl.tab.goji.service.IssueService;
@@ -58,5 +59,10 @@ public class IssueController {
     public ResponseEntity<IssueReadModel> setIssueStatusInProgress(@PathVariable Long issueId,@RequestBody String userLogin) {
         IssueReadModel issueReadModel = issueService.setIssueStatusInProgress(issueId,userLogin);
         return ResponseEntity.ok(issueReadModel);
+    }
+
+    @GetMapping("/{issueId}/tasks")
+    public ResponseEntity<List<TaskReadModel>> getSubTasks(@PathVariable Long issueId){
+        return ResponseEntity.ok(issueService.getSubTusks(issueId));
     }
 }

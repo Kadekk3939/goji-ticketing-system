@@ -14,4 +14,7 @@ public interface RequestRepository extends JpaRepository<Request, Long>{
     Optional<Request> findRequestByRequestId(Long requestId);
 
     Optional<Request> findRequestByRequestName(String requestId);
+
+    @Query(value = "SELECT * FROM request where product_id = ?1 ORDER BY request_id ASC",nativeQuery = true)
+    List<Request> findAllRequestsFromProduct(Long productId);
 }

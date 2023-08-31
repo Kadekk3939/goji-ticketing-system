@@ -129,7 +129,7 @@ public class RequestService {
     }
 
     public List<IssueReadModel> getSubIssues(Long id){
-        List<Issue> issues = issueRepository.findAllIsseues(id);
+        List<Issue> issues = issueRepository.findAllIssuesFromRequest(id);
         return issueMapper.map(issues);
     }
 }

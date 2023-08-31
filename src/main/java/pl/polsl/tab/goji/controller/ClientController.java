@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.tab.goji.model.dto.read.ClientReadModel;
+import pl.polsl.tab.goji.model.dto.read.ProductReadModel;
+import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
 import pl.polsl.tab.goji.model.dto.read.UserReadModel;
 import pl.polsl.tab.goji.model.dto.write.ClientWriteModel;
 import pl.polsl.tab.goji.model.dto.write.UserWriteModel;
@@ -30,5 +32,10 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<ClientReadModel> addClient(@RequestBody ClientWriteModel clientWriteModel) {
         return new ResponseEntity<>(clientService.addClient(clientWriteModel), HttpStatus.OK);
+    }
+
+    @GetMapping("/{clientId}/products")
+    public ResponseEntity<List<ProductReadModel>> getSubProducts(@PathVariable Long clientId){
+        return ResponseEntity.ok(clientService.getSubProducts(clientId));
     }
 }

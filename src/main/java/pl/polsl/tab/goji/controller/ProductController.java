@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import pl.polsl.tab.goji.model.dto.read.ClientReadModel;
+import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
 import pl.polsl.tab.goji.model.dto.read.ProductReadModel;
+import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
 import pl.polsl.tab.goji.model.dto.write.ClientWriteModel;
 import pl.polsl.tab.goji.model.dto.write.ProductWriteModel;
 import pl.polsl.tab.goji.service.ProductService;
@@ -29,5 +31,10 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductReadModel>> getAllProducts(){
         return new ResponseEntity<>(productService.getAllProducts(),HttpStatus.OK);
+    }
+
+    @GetMapping("/{productId}/requests")
+    public ResponseEntity<List<RequestReadModel>> getSubRequests(@PathVariable Long productId){
+        return ResponseEntity.ok(productService.getSubRequests(productId));
     }
 }

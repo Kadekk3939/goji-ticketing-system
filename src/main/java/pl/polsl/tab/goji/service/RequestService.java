@@ -2,12 +2,16 @@ package pl.polsl.tab.goji.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.polsl.tab.goji.mappers.IssueMapper;
 import pl.polsl.tab.goji.mappers.RequestMapper;
+import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
 import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
 import pl.polsl.tab.goji.model.dto.write.RequestWriteModel;
+import pl.polsl.tab.goji.model.entity.Issue;
 import pl.polsl.tab.goji.model.entity.Product;
 import pl.polsl.tab.goji.model.entity.Request;
 import pl.polsl.tab.goji.model.enums.Status;
+import pl.polsl.tab.goji.repository.IssueRepository;
 import pl.polsl.tab.goji.repository.RequestRepository;
 import pl.polsl.tab.goji.repository.UserRepository;
 
@@ -19,16 +23,20 @@ import java.util.Set;
 @Service
 public class RequestService {
     private final RequestMapper requestMapper;
+    private final IssueMapper issueMapper;
     private final RequestRepository requestRepository;
+    private final IssueRepository issueRepository;
     private final ProductService productService;
     private final UserRepository userRepository;
 
     @Autowired
-    public RequestService(RequestRepository requestRepository,RequestMapper requestMapper, ProductService productService,UserRepository userRepository){
+    public RequestService(RequestRepository requestRepository,RequestMapper requestMapper, ProductService productService,UserRepository userRepository,IssueMapper issueMapper,IssueRepository issueRepository){
         this.productService = productService;
         this.requestMapper = requestMapper;
         this.requestRepository = requestRepository;
         this.userRepository = userRepository;
+        this.issueMapper = issueMapper;
+        this.issueRepository = issueRepository;
     }
 
     public RequestReadModel addRequest(RequestWriteModel requestWriteModel){
@@ -120,4 +128,9 @@ public class RequestService {
         return requestReadModel;
     }
 
+    public List<IssueReadModel> getSubIssues(Long id){
+        List<Issue> issues = issueRepository.findAllIsseues(id);
+        return issueMapper.map(issues);
+    }
 }
+

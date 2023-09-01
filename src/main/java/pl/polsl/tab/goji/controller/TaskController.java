@@ -66,4 +66,9 @@ public class TaskController {
         TaskReadModel taskReadModel = taskService.setTaskStatusInProgress(taskId,userLogin);
         return ResponseEntity.ok(taskReadModel);
     }
+
+    @GetMapping("/{taskId}/issue")
+    public ResponseEntity<IssueReadModel> getParentIssue(@PathVariable Long taskId){
+        return ResponseEntity.ok(taskService.getParentIssue(taskId));
+    }
 }

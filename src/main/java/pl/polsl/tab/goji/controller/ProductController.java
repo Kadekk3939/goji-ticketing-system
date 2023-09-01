@@ -42,4 +42,9 @@ public class ProductController {
     public ResponseEntity<ProductReadModel> getProduct(@PathVariable Long productId){
         return  ResponseEntity.ok(productService.getProductDto(productId));
     }
+
+    @GetMapping("/{productId}/client")
+    public ResponseEntity<ClientReadModel> getParentClient(@PathVariable Long clientId){
+        return ResponseEntity.ok(productService.getParentClient(clientId));
+    }
 }

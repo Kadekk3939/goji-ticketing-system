@@ -4,6 +4,7 @@ package pl.polsl.tab.goji.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import pl.polsl.tab.goji.mappers.IssueMapper;
 import pl.polsl.tab.goji.mappers.TaskMapper;
 import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
 import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
@@ -12,6 +13,7 @@ import pl.polsl.tab.goji.model.entity.Issue;
 import pl.polsl.tab.goji.model.entity.Task;
 import pl.polsl.tab.goji.model.entity.User;
 import pl.polsl.tab.goji.model.enums.Status;
+import pl.polsl.tab.goji.repository.IssueRepository;
 import pl.polsl.tab.goji.repository.TaskRepository;
 import pl.polsl.tab.goji.repository.UserRepository;
 
@@ -28,13 +30,19 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final IssueService issueService;
     private final UserRepository userRepository;
+    private final IssueMapper issueMapper;
+    private final IssueRepository issueRepository;
 
     @Autowired
-    public TaskService(TaskMapper taskMapper,TaskRepository taskRepository,IssueService issueService,UserRepository userRepository){
+    public TaskService(TaskMapper taskMapper,TaskRepository taskRepository
+            ,IssueService issueService,UserRepository userRepository,IssueMapper issueMapper,
+                       IssueRepository issueRepository){
         this.taskMapper = taskMapper;
         this.taskRepository = taskRepository;
         this.issueService = issueService;
         this.userRepository = userRepository;
+        this.issueMapper=issueMapper;
+        this.issueRepository=issueRepository;
     }
 
     public TaskReadModel addTask(TaskWriteModel taskWriteModel){
@@ -115,6 +123,11 @@ public class TaskService {
             taskReadModel = taskMapper.toReadModel(task.get());
         }
         return taskReadModel;
+    }
+
+    public IssueReadModel getParentIssue(Long taskId){
+        Issue issue = taskRepository.findTaskByTaskId(taskId).get().getIssue();
+        return issueMapper.toReadModel(issue);
     }
 
 }

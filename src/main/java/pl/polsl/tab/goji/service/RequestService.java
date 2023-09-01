@@ -3,8 +3,10 @@ package pl.polsl.tab.goji.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.polsl.tab.goji.mappers.IssueMapper;
+import pl.polsl.tab.goji.mappers.ProductMapper;
 import pl.polsl.tab.goji.mappers.RequestMapper;
 import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
+import pl.polsl.tab.goji.model.dto.read.ProductReadModel;
 import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
 import pl.polsl.tab.goji.model.dto.write.RequestWriteModel;
 import pl.polsl.tab.goji.model.entity.Issue;
@@ -28,15 +30,19 @@ public class RequestService {
     private final IssueRepository issueRepository;
     private final ProductService productService;
     private final UserRepository userRepository;
+    private final ProductMapper productMapper;
 
     @Autowired
-    public RequestService(RequestRepository requestRepository,RequestMapper requestMapper, ProductService productService,UserRepository userRepository,IssueMapper issueMapper,IssueRepository issueRepository){
+    public RequestService(RequestRepository requestRepository,RequestMapper requestMapper, ProductService productService,
+                          UserRepository userRepository,IssueMapper issueMapper,IssueRepository issueRepository,
+                          ProductMapper productMapper){
         this.productService = productService;
         this.requestMapper = requestMapper;
         this.requestRepository = requestRepository;
         this.userRepository = userRepository;
         this.issueMapper = issueMapper;
         this.issueRepository = issueRepository;
+        this.productMapper = productMapper;
     }
 
     public RequestReadModel addRequest(RequestWriteModel requestWriteModel){
@@ -131,6 +137,11 @@ public class RequestService {
     public List<IssueReadModel> getSubIssues(Long id){
         List<Issue> issues = issueRepository.findAllIssuesFromRequest(id);
         return issueMapper.map(issues);
+    }
+
+    public ProductReadModel getParentProduct(Long requestId){
+        Product product = requestRepository.findRequestByRequestId(requestId).get().getProduct();
+        return productMapper.toReadModel(product);
     }
 }
 

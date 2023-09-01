@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
+import pl.polsl.tab.goji.model.dto.read.ProductReadModel;
 import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
 import pl.polsl.tab.goji.model.dto.read.UserReadModel;
 import pl.polsl.tab.goji.model.dto.write.RequestWriteModel;
@@ -65,5 +66,10 @@ public class RequestController {
     @GetMapping("/{requestId}/issues")
     public ResponseEntity<List<IssueReadModel>> getSubIssues(@PathVariable Long requestId){
         return ResponseEntity.ok(requestService.getSubIssues(requestId));
+    }
+
+    @GetMapping("/{requestId}/product")
+    public ResponseEntity<ProductReadModel> getParentProduct(@PathVariable Long requestId){
+        return ResponseEntity.ok(requestService.getParentProduct(requestId));
     }
 }

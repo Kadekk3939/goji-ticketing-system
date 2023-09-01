@@ -2,8 +2,10 @@ package pl.polsl.tab.goji.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.polsl.tab.goji.mappers.ClientMapper;
 import pl.polsl.tab.goji.mappers.ProductMapper;
 import pl.polsl.tab.goji.mappers.RequestMapper;
+import pl.polsl.tab.goji.model.dto.read.ClientReadModel;
 import pl.polsl.tab.goji.model.dto.read.ProductReadModel;
 import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
 import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
@@ -27,14 +29,17 @@ public class ProductService {
     private final ClientService clientService;
     private final RequestMapper requestMapper;
     private final RequestRepository requestRepository;
+    private final ClientMapper clientMapper;
 
     @Autowired
-    public ProductService(ProductMapper productMapper,ProductRepository productRepository,ClientService clientService,RequestRepository requestRepository,RequestMapper requestMapper){
+    public ProductService(ProductMapper productMapper,ProductRepository productRepository,ClientService clientService,
+                          RequestRepository requestRepository,RequestMapper requestMapper,ClientMapper clientMapper){
         this.productMapper = productMapper;
         this.productRepository = productRepository;
         this.clientService = clientService;
         this.requestMapper=requestMapper;
         this.requestRepository=requestRepository;
+        this.clientMapper = clientMapper;
     }
 
     public ProductReadModel addProduct(ProductWriteModel productWriteModel){
@@ -70,5 +75,10 @@ public class ProductService {
             productToReturn=product.get();
         }
         return productMapper.toReadModel(productToReturn);
+    }
+
+    public ClientReadModel getParentClient(Long clientId){
+        Client client = productRepository.findProductByProductId(clientId).get().getClient();
+        return clientMapper.toReadModel(client);
     }
 }

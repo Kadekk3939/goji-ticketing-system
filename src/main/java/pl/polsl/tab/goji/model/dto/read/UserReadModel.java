@@ -13,7 +13,6 @@ public class UserReadModel {
     private String firstName;
     private String lastName;
     private String login;
-    private String password;
     private String email;
     private String role;
 }

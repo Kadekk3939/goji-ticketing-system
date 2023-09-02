@@ -48,11 +48,36 @@ img {
     display: flex;
     justify-content: flex-end;
     /* Align items to the right side */
-    margin: 10px 0;
+    margin-left: 10px;
+    margin-top: 20px;
     /* Add some margin for spacing */
     padding-right: 50px;
 }
 
 .card-container-sub {
-    width: 40%;
+    width: 300px;
+}
+
+.card-container-parent {
+    width: 300px;
+}
+
+
+/* Style for the container */
+
+.subAndParentsElements {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* Distribute elements evenly between parentElements and subElements */
+}
+
+.parents {
+    margin-top: 20px;
+    padding-left: 50px;
+}
+
+.specificElement {
+    padding-left: 50px;
+    padding-right: 50px;
 }

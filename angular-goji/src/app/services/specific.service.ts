@@ -7,6 +7,7 @@ import {Request} from "../interfaces/request";
 import {Task} from "../interfaces/task";
 import {Issue} from "../interfaces/issue";
 import {Product} from "../interfaces/product";
+import { Client } from '../interfaces/client';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,19 @@ export class SpecificService {
     return this.http.get<Product[]>(`${environment.apiBaseUrl}/client/${clientId}/products`);
   }
 
+  public getParentIssueFromTask(taskId:string):Observable<Issue>{
+    return this.http.get<Issue>(`${environment.apiBaseUrl}/task/${taskId}/issue`)
+  }
+
   public getParentRequestFromIssue(issueId:string):Observable<Request>{
     return this.http.get<Request>(`${environment.apiBaseUrl}/issue/${issueId}/request`)
+  }
+
+  public getParentProductFromRequest(requestId:string):Observable<Product>{
+    return this.http.get<Product>(`${environment.apiBaseUrl}/request/${requestId}/product`)
+  }
+
+  public getClientProductFromProduct(productId:string):Observable<Client>{
+    return this.http.get<Client>(`${environment.apiBaseUrl}/product/${productId}/client`)
   }
 }

@@ -28,7 +28,7 @@ export class SpecificComponent implements OnInit{
   elementId: string | undefined;
   type: string|undefined;
   public user:User|undefined;
-  element: (User|Issue|Task|Request|null);
+  element: (User|Issue|Task|Request|Product|Client|null);
   subElements: (Product|Request|Task|Issue|null)[]
   parentElement:(Client|Product|Request|Issue|null)
   public info:String[];
@@ -82,15 +82,31 @@ public getParentElementInfo():string[]{
     switch (typeof this.element) {
       case 'object': {
         if ('requestName' in this.element) {
-          return ['Product',(this.parentElement as Product).productName,
-            (this.parentElement as Product).description,(this.parentElement as Product).version,(this.parentElement as Product).productId.toString()];
+          return ['Product',
+            (this.parentElement as Product).productName,
+            (this.parentElement as Product).description,
+            (this.parentElement as Product).version,
+            (this.parentElement as Product).productId.toString()];
         } else if ('issueName' in this.element) {
-          return ['Request',(this.parentElement as Request).requestName,
-            (this.parentElement as Request).description,(this.parentElement as Request).status,(this.parentElement as Request).requestId.toString()];
+          return ['Request',
+            (this.parentElement as Request).requestName,
+            (this.parentElement as Request).description,
+            (this.parentElement as Request).status,
+            (this.parentElement as Request).requestId.toString()];
         }
         else if ('taskName' in this.element) {
-          return ['Issue',(this.parentElement as Issue).issueName, (this.parentElement as Issue).description, (this.parentElement as Issue).status, 
+          return ['Issue',
+            (this.parentElement as Issue).issueName, 
+            (this.parentElement as Issue).description, 
+            (this.parentElement as Issue).status, 
             (this.parentElement as Issue).issueId.toString()];
+        }
+        else if ('productName' in this.element) {
+          return ['Issue',
+            (this.parentElement as Client).name, 
+            (this.parentElement as Client).email, 
+            (this.parentElement as Client).phoneNumber, 
+            (this.parentElement as Client).clientId.toString()];
         }
         break;
       }
@@ -107,15 +123,10 @@ public getParentElement():Observable<Product|Issue|Request|Client|null>{
     return this.specificService.getParentRequestFromIssue(this.elementId!);}
   else if (this.type == "task") {
     return this.specificService.getParentIssueFromTask(this.elementId!);}
-    else if (this.type == "request") {
-      return this.specificService.getParentProductFromRequest(this.elementId!);}
-  // } else if (this.type == "request") {
-  //   return this.generalService.getProductById((this.element as Request).productId.toString());
-  // }else if (this.type == "task") {
-  //   return this.generalService.getIssueById((this.element as Task).issueId.toString());
-  // // } else if (this.type == "task") {
-  // //   return this.specificService.getTaskById(this.elementId!);
-  // } 
+  else if (this.type == "request") {
+    return this.specificService.getParentProductFromRequest(this.elementId!);}
+  else if (this.type == "product") {
+      return this.specificService.getParentClientFromProduct(this.elementId!);}
   else {
     return of(null); // Handle unknown types or return an empty observable
   }
@@ -126,15 +137,31 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     switch (typeof this.element) {
       case 'object': {
         if ('requestName' in this.element) {
-          return ['Issue',(obj as Issue).issueName,
-            (obj as Issue).description,(obj as Issue).status,(obj as Issue).issueId.toString()];
+          return ['Issue',
+            (obj as Issue).issueName,
+            (obj as Issue).description,
+            (obj as Issue).status,
+            (obj as Issue).issueId.toString()];
         } else if ('issueName' in this.element) {
-          return ['Task',(obj as Task).taskName,
-            (obj as Task).description,(obj as Task).status,(obj as Task).taskId.toString()];
+          return ['Task',
+            (obj as Task).taskName,
+            (obj as Task).description,
+            (obj as Task).status,
+            (obj as Task).taskId.toString()];
         }
-        else if ('firstName' in this.element) {
-          return [(this.element as User).userId.toString(), (this.element as User).firstName, (this.element as User).lastName, 
-            (this.element as User).login, (this.element as User).email, (this.element as User).role];
+        else if ('productName' in this.element) {
+          return ['Request',
+            (obj as Request).requestName, 
+            (obj as Request).description, 
+            (obj as Request).status, 
+            (obj as Request).requestId.toString()];
+        }
+        else if ('email' in this.element) {
+          return ['Product',
+            (obj as Product).productName, 
+            (obj as Product).version, 
+            (obj as Product).description, 
+            (obj as Product).productId.toString()];
         }
         break;
       }
@@ -146,22 +173,22 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
   return [''];
 }
 
-  public getSubElements():Observable<Product[]|Issue[]|Request[]|Task[]|null>{
-    // if (this.type == "user") {
-    //   return this.userService.getUserById(this.elementId!);
-    // } else 
+  public getSubElements():Observable<Product[]|Issue[]|Request[]|Task[]|Product[]|null>{
     if (this.type == "issue") {
       return this.specificService.getSubTasksFromIssue(this.elementId!);
     } else if (this.type == "request") {
       return this.specificService.getSubIssuesFromRequest(this.elementId!);
-    // } else if (this.type == "task") {
-    //   return this.specificService.getTaskById(this.elementId!);
+    } else if (this.type == "product") {
+      return this.specificService.getSubRequestFromProduct(this.elementId!);
+    } else if (this.type == "client") {
+      return this.specificService.getSubProductFromClient(this.elementId!);
+
     } else {
       return of(null); // Handle unknown types or return an empty observable
     }
   }
 
-  public getData(): Observable<User | Issue | Task | Request|null> {
+  public getData(): Observable<User | Issue | Task | Request|Product|Client|null> {
     if (this.type == "user") {
       return this.userService.getUserById(this.elementId!);
     } else if (this.type == "issue") {
@@ -170,7 +197,11 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
       return this.dialogService.getRequestById(this.elementId!);
     } else if (this.type == "task") {
       return this.dialogService.getTaskById(this.elementId!);
-    } else {
+    } else if (this.type == "product") {
+      return this.dialogService.getProductById(this.elementId!);
+    } else if (this.type == "client") {
+      return this.dialogService.getClientById(this.elementId!);
+    }else {
       return of(null); // Handle unknown types or return an empty observable
     }
   }
@@ -212,10 +243,23 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
               (this.element as Task).openDate.toString().slice(0,10), 
               ((this.element as Task).inProgressDate||'none').toString().slice(0,10), 
               ((this.element as Task).finalizationDate||'none').toString().slice(0,10)];
-          }
-          else if ('firstName' in this.element) {
-            return [(this.element as User).userId.toString(), (this.element as User).firstName, (this.element as User).lastName, 
-              (this.element as User).login, (this.element as User).email, (this.element as User).role];
+          }else if ('firstName' in this.element) {
+            return [(this.element as User).userId.toString(), 
+              (this.element as User).firstName, 
+              (this.element as User).lastName, 
+              (this.element as User).login, 
+              (this.element as User).email, 
+              (this.element as User).role];
+          }else if('productName' in this.element){
+            return [(this.element as Product).productId.toString(),
+              (this.element as Product).productName,
+              (this.element as Product).version,
+              (this.element as Product).description]
+          }else if('clientId' in this.element){
+            return[(this.element as Client).clientId.toString(),
+              (this.element as Client).name,
+              (this.element as Client).email,
+              (this.element as Client).phoneNumber]
           }
           break;
         }
@@ -263,7 +307,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     });
   }
 
-  getId(obj:Request|Issue|Task|User):number{
+  getId(obj:Request|Issue|Task|User|Client|Product):number{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -287,19 +331,27 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
 
   toParent(id:string){
     if(this.type=='issue' && this.user?.role=='Account Manager')
-      this.router.navigate(['/request/'+id]); // Navigate to the 'home' route
+      this.router.navigate(['/request/'+id]);
     if(this.type=='task' &&(this.user?.role=='Account Manager' || this.user?.role=='Product Manager'))
-      this.router.navigate(['/issue/'+id]); // Navigate to the 'home' route
+      this.router.navigate(['/issue/'+id]);
+    if(this.type=='request')
+      this.router.navigate(['/product/'+id])
+    if(this.type=='product')
+      this.router.navigate(['/client/'+id])
   }
 
   toSubElement(id:string){
     if(this.type=='issue')
-      this.router.navigate(['/task/'+id]); // Navigate to the 'home' route
+      this.router.navigate(['/task/'+id]);
     if(this.type=='request')
-      this.router.navigate(['/issue/'+id]); // Navigate to the 'home' route
+      this.router.navigate(['/issue/'+id]);
+    if(this.type=='product')
+      this.router.navigate(['/request/'+id])
+    if(this.type=='client')
+      this.router.navigate(['/product/'+id])
   }
 
-  getStatus(obj:Request|Issue|Task|User|null):string{
+  getStatus(obj:Request|Issue|Task|User|Client|Product|null):string{
     if(this.element!=null){
       switch (typeof obj) {
         case 'object': {
@@ -320,7 +372,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     return '';
   }
 
-  setInProgress(obj:Request|Issue|Task|User) {
+  setInProgress(obj:Request|Issue|Task|User|Client|Product) {
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -359,7 +411,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     }
   }
 
-  openFinishDialog(id:any, obj:Request|Issue|Task|User)
+  openFinishDialog(id:any, obj:Request|Issue|Task|User|Client|Product)
   {
     var _dialog = this.dialog.open(FinishDialogComponent, {
       width:'40%',
@@ -378,7 +430,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     });
   }
 
-  getObjType(obj:Request|Issue|Task|User):string{
+  getObjType(obj:Request|Issue|Task|User|Client|Product):string{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -400,7 +452,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     return '';
   }
 
-  setOpen(obj:Request|Issue|Task|User) {
+  setOpen(obj:Request|Issue|Task|User|Client|Product) {
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {

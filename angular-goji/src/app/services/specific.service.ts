@@ -44,7 +44,7 @@ export class SpecificService {
     return this.http.get<Product>(`${environment.apiBaseUrl}/request/${requestId}/product`)
   }
 
-  public getClientProductFromProduct(productId:string):Observable<Client>{
+  public getParentClientFromProduct(productId:string):Observable<Client>{
     return this.http.get<Client>(`${environment.apiBaseUrl}/product/${productId}/client`)
   }
 }

@@ -38,4 +38,9 @@ public class ClientController {
     public ResponseEntity<List<ProductReadModel>> getSubProducts(@PathVariable Long clientId){
         return ResponseEntity.ok(clientService.getSubProducts(clientId));
     }
+
+    @GetMapping("/{clientId}")
+    public ResponseEntity<ClientReadModel> getClient(@PathVariable Long clientId){
+        return ResponseEntity.ok(clientService.getClient(clientId));
+    }
 }

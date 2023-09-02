@@ -74,17 +74,17 @@
                         </mat-card-content>
                         <mat-card-actions class="element-card-actions ">
                             <div *ngIf="((user?.role=='Account Manager'&&type=='request')||(user?.role=='Product Manager'&&type=='issue')||(user?.role=='Worker'&&type=='task'))">
-                                <div *ngIf="getStatus(element!)=='OPEN'">
+                                <div *ngIf="getStatus(element)=='OPEN'">
                                     <button mat-flat-button color="accent" class="mod-button" (click)="setInProgress(element!)">
                                   Start
                                 </button>
                                 </div>
-                                <div *ngIf="getStatus(element!)=='IN_PROGRESS'">
+                                <div *ngIf="getStatus(element)=='IN_PROGRESS'">
                                     <button mat-flat-button color="accent" class="mod-button" (click)="openFinishDialog(getId(element!), element!)">
                                   Finish
                                 </button>
                                 </div>
-                                <div *ngIf="getStatus(element!)=='CLOSED'">
+                                <div *ngIf="getStatus(element)=='CLOSED'">
                                     <button mat-flat-button color="accent" class="mod-button" (click)="setOpen(element!)">
                                   Reopen
                                 </button>
@@ -94,9 +94,42 @@
                     </mat-card>
                 </div>
             </div>
+            <div *ngIf="type=='product'">
+                <div class="card-container mat-elevation-z3">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>Information</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p><strong>ID:</strong> {{info![0] }}</p>
+                            <p><strong>Name:</strong> {{info![1] }}</p>
+                            <p><strong>Version:</strong> {{info![2] }}</p>
+                            <p><strong>Description:</strong> {{info![3] }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <div *ngIf="type=='client'">
+                <div class="card-container mat-elevation-z3">
+                    <mat-card>
+                        <mat-card-header>
+                            <mat-card-title>Information</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <p><strong>ID:</strong> {{info![0] }}</p>
+                            <p><strong>Name:</strong> {{info![1] }}</p>
+                            <p><strong>Email:</strong> {{info![2] }}</p>
+                            <p><strong>Phone number:</strong> {{info![3] }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
         </div>
+
         <div class="subAndParentsElements">
+
             <div class="parents">
+
                 <div *ngIf="type=='issue'||type=='task'">
                     <div class="card-container-parent  mat-elevation-z3">
                         <mat-card>
@@ -115,6 +148,18 @@
                             <mat-card-content class="parentElement" (click)="toParent(getParentElementInfo()![4])">
                                 <p><strong>Type:</strong> {{getParentElementInfo()![0]}}</p>
                                 <p><strong>Name:</strong> {{getParentElementInfo()![1] }}</p>
+                                <p><strong>Email:</strong> {{getParentElementInfo()![2]}}</p>
+                                <p><strong>Phone number:</strong> {{getParentElementInfo()![3] }}</p>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <div *ngIf="type=='product'">
+                    <div class="card-container-parent  mat-elevation-z3">
+                        <mat-card>
+                            <mat-card-content class="parentElement" (click)="toParent(getParentElementInfo()![4])">
+                                <p><strong>Type:</strong> {{getParentElementInfo()![0]}}</p>
+                                <p><strong>Name:</strong> {{getParentElementInfo()![1] }}</p>
                                 <p><strong>Version:</strong> {{getParentElementInfo()![2]}}</p>
                                 <p><strong>Description:</strong> {{getParentElementInfo()![3] }}</p>
                             </mat-card-content>
@@ -122,16 +167,32 @@
                     </div>
                 </div>
             </div>
+
             <div class='sub'>
-                <div *ngIf="type=='issue' || type=='request'">
+
+                <div *ngIf="type=='issue' || type=='request'|| type=='product'">
+                    <div *ngFor="let obj of subElements" class="subElements">
+                        <div class="card-container-sub  mat-elevation-z3">
+                            <mat-card>
+                                <mat-card-content class="subElement" (click)="toSubElement(getSubElementInfo(obj)![4])">
+                                    <p><strong>Type:</strong> {{getSubElementInfo(obj)![0]}}</p>
+                                    <p><strong>Name:</strong> {{getSubElementInfo(obj)![1] }}</p>
+                                    <p><strong>Version:</strong> {{getSubElementInfo(obj)![2]}}</p>
+                                    <p><strong>Description:</strong> {{getSubElementInfo(obj)![3] }}</p>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="type=='client'">
                     <div *ngFor="let obj of subElements" class="subElements">
                         <div class="card-container-sub  mat-elevation-z3">
                             <mat-card>
                                 <mat-card-content class="subElement" (click)="toSubElement(getSubElementInfo(obj)![4])">
                                     <p><strong>Type:</strong> {{getSubElementInfo(obj)![0] }}</p>
                                     <p><strong>Name:</strong> {{getSubElementInfo(obj)![1] }}</p>
-                                    <p><strong>Description:</strong> {{getSubElementInfo(obj)![2]}}</p>
-                                    <p><strong>Status:</strong> {{getSubElementInfo(obj)![3] }}</p>
+                                    <p><strong>Version:</strong> {{getSubElementInfo(obj)![2]}}</p>
+                                    <p><strong>Description:</strong> {{getSubElementInfo(obj)![3] }}</p>
                                 </mat-card-content>
                             </mat-card>
                         </div>

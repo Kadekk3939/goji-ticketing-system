@@ -56,6 +56,11 @@ public class ClientService {
         return client.orElse(null);
     }
 
+    public ClientReadModel getClient(Long id){
+        Client client = clientRepository.findClientByClientId(id).get();
+        return clientMapper.toReadModel(client);
+    }
+
     public List<ProductReadModel> getSubProducts(Long id){
         List<Product> products = productRepository.findAllProductsFromClient(id);
         return productMapper.map(products);

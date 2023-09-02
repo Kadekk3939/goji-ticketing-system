@@ -7,6 +7,7 @@ import {Request} from "../interfaces/request";
 import {Task} from "../interfaces/task";
 import {Issue} from "../interfaces/issue";
 import {Product} from "../interfaces/product";
+import { Client } from '../interfaces/client';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,10 @@ export class DialogService {
 
   public getProductById(id:string):Observable<Product>{
     return this.http.get<Product>(`${environment.apiBaseUrl}/product/${id}`);
+  }
+
+  public getClientById(id:string):Observable<Client>{
+    return this.http.get<Client>(`${environment.apiBaseUrl}/client/${id}`);
   }
 
   public updateUser(id:string, user:User): Observable<User> {

@@ -44,7 +44,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}/client")
-    public ResponseEntity<ClientReadModel> getParentClient(@PathVariable Long clientId){
-        return ResponseEntity.ok(productService.getParentClient(clientId));
+    public ResponseEntity<ClientReadModel> getParentClient(@PathVariable Long productId){
+        return ResponseEntity.ok(productService.getParentClient(productId));
     }
 }

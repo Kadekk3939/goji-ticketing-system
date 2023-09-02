@@ -20,7 +20,7 @@ public interface RequestMapper {
     Request toEntity(RequestWriteModel requestWriteModel);
 
     @Mappings({ @Mapping(source = "product.productId" ,target = "productId"),
-            @Mapping(source="responsiblePerson.userId",target="responsibleUser")})
+            @Mapping(source="responsiblePerson.login",target="responsibleUser")})
     RequestReadModel toReadModel(Request request);
     List<RequestReadModel> map(List<Request> products);
 

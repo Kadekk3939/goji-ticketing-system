@@ -18,7 +18,7 @@ public interface IssueMapper {
 
     @Mappings({
             @Mapping(source = "request.requestId" ,target = "requestId"),
-            @Mapping(source="responsiblePerson.userId",target="responsibleUser")
+            @Mapping(source="responsiblePerson.login",target="responsibleUser")
     })
     IssueReadModel toReadModel(Issue issue);
 

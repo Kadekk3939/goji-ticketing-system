@@ -13,7 +13,7 @@ public class IssueReadModel {
 
     private Long issueId;
     private Long requestId;
-    private Long responsibleUser;
+    private String responsibleUser;
     private String issueName;
     private String description;
     private String result;

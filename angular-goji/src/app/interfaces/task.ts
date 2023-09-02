@@ -1,7 +1,7 @@
 export interface Task {
     taskId:number;
     issueId:number;
-    responsibleUser:number;
+    responsibleUser:string;
     taskName:string;
     description:string;
     result:string;

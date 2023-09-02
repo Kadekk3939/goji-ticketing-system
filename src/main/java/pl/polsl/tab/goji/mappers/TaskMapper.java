@@ -17,7 +17,7 @@ public interface TaskMapper {
     Task toEntity(TaskWriteModel taskWriteModel);
 
     @Mappings({@Mapping(source = "issue.issueId" ,target = "issueId"),
-            @Mapping(source="responsiblePerson.userId",target="responsibleUser")})
+            @Mapping(source="responsiblePerson.login",target="responsibleUser")})
     TaskReadModel toReadModel(Task task);
 
     List<TaskReadModel> map(List<Task> donations);

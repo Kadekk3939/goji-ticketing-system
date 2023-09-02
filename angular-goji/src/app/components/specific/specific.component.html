@@ -1,7 +1,7 @@
 <body class="mat-typography" xmlns:list-style-type="http://www.w3.org/1999/xhtml">
     <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
-        <a class="navbar-brand"  routerLink="/user"routerLinkActive="active" ariaCurrentWhenActive="page">
-          <img src="../../../assets/goji.png" class="d-inline-block" alt="Goji">
+        <a class="navbar-brand" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <img src="../../../assets/goji.png" class="d-inline-block" alt="Goji">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
             <span class="navbar-toggler-icon"></span>
@@ -64,13 +64,33 @@
                             <p><strong>ID:</strong> {{info![0] }}</p>
                             <p><strong>Name:</strong> {{info![1] }}</p>
                             <p><strong>Description:</strong> {{info![2] }}</p>
-                            <p><strong>Result:</strong> {{info![3] }}</p>
-                            <p><strong>Status:</strong> {{info![4] }}</p>
-                            <p><strong>Type:</strong> {{info![5] }}</p>
-                            <p><strong>Open Date:</strong> {{info![6] }}</p>
-                            <p><strong>In Progress Date:</strong> {{info![7] }}</p>
-                            <p><strong>Closed Date:</strong> {{info![8] }}</p>
+                            <p><strong>Responsible User:</strong> {{info![3] }}</p>
+                            <p><strong>Result:</strong> {{info![4] }}</p>
+                            <p><strong>Status:</strong> {{info![5] }}</p>
+                            <p><strong>Type:</strong> {{info![6] }}</p>
+                            <p><strong>Open Date:</strong> {{info![7] }}</p>
+                            <p><strong>In Progress Date:</strong> {{info![8] }}</p>
+                            <p><strong>Closed Date:</strong> {{info![9] }}</p>
                         </mat-card-content>
+                        <mat-card-actions class="element-card-actions ">
+                            <div *ngIf="((user?.role=='Account Manager'&&type=='request')||(user?.role=='Product Manager'&&type=='issue')||(user?.role=='Worker'&&type=='task'))">
+                                <div *ngIf="getStatus(element!)=='OPEN'">
+                                    <button mat-flat-button color="accent" class="mod-button" (click)="setInProgress(element!)">
+                                  Start
+                                </button>
+                                </div>
+                                <div *ngIf="getStatus(element!)=='IN_PROGRESS'">
+                                    <button mat-flat-button color="accent" class="mod-button" (click)="openFinishDialog(getId(element!), element!)">
+                                  Finish
+                                </button>
+                                </div>
+                                <div *ngIf="getStatus(element!)=='CLOSED'">
+                                    <button mat-flat-button color="accent" class="mod-button" (click)="setOpen(element!)">
+                                  Reopen
+                                </button>
+                                </div>
+                            </div>
+                        </mat-card-actions>
                     </mat-card>
                 </div>
             </div>

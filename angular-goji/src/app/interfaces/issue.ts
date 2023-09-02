@@ -1,7 +1,7 @@
 export interface Issue {
     issueId:number;
     requestId:number;
-    responsibleUser:number;
+    responsibleUser:string;
     issueName:string;
     description:string;
     result:string;

@@ -12,7 +12,7 @@ public class TaskReadModel {
 
     private Long taskId;
     private Long issueId;
-    private Long responsibleUser;
+    private String responsibleUser;
     private String taskName;
     private String description;
     private String result;

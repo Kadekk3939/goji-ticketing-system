@@ -14,6 +14,9 @@ import { Product } from 'src/app/interfaces/product';
 import { Client } from 'src/app/interfaces/client';
 import { SpecificService } from 'src/app/services/specific.service';
 import { ListService } from 'src/app/services/list.service';
+import { StatusService } from 'src/app/services/status.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import {FinishDialogComponent} from "../finish-dialog/finish-dialog.component";
 
 @Component({
   selector: 'app-specific',
@@ -32,7 +35,7 @@ export class SpecificComponent implements OnInit{
   value = '';
 
   constructor(private route: ActivatedRoute,private router: Router,private app:AppService,private userService:UserService,
-    private dialogService:DialogService,private dialog: MatDialog,private specificService:SpecificService,private generalService:DialogService){
+    private dialogService:DialogService,private dialog: MatDialog,private specificService:SpecificService,private generalService:DialogService,private statusService :StatusService){
     this.app.refresh();//In case of refresh
     this.user = this.app.user;
     this.info=[];
@@ -177,22 +180,34 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
       switch (typeof this.element) {
         case 'object': {
           if ('requestName' in this.element) {
-            return [(this.element as Request).requestId.toString(),(this.element as Request).requestName,
-              (this.element as Request).description,(this.element as Request).result,(this.element as Request).status,
+            return [(this.element as Request).requestId.toString(),
+              (this.element as Request).requestName,
+              (this.element as Request).description,
+              (this.element as Request).responsibleUser,
+              (this.element as Request).result,
+              (this.element as Request).status,
               (this.element as Request).type,
               (this.element as Request).openDate.toString().slice(0,10), 
               ((this.element as Request).inProgressDate||'none').toString().slice(0,10), 
               ((this.element as Request).finalizationDate||'none').toString().slice(0,10)];
           } else if ('issueName' in this.element) {
-            return [(this.element as Issue).issueId.toString(),(this.element as Issue).issueName,
-              (this.element as Issue).description,(this.element as Issue).result,(this.element as Issue).status,
+            return [(this.element as Issue).issueId.toString(),
+              (this.element as Issue).issueName,
+              (this.element as Issue).description,
+              (this.element as Issue).responsibleUser,
+              (this.element as Issue).result,
+              (this.element as Issue).status,
               (this.element as Issue).type,
               (this.element as Issue).openDate.toString().slice(0,10), 
               ((this.element as Issue).inProgressDate||'none').toString().slice(0,10), 
               ((this.element as Issue).finalizationDate||'none').toString().slice(0,10)];
           } else if ('taskName' in this.element) {
-            return [(this.element as Task).taskId.toString(),(this.element as Task).taskName,
-              (this.element as Task).description,(this.element as Task).result,(this.element as Task).status,
+            return [(this.element as Task).taskId.toString(),
+              (this.element as Task).taskName,
+              (this.element as Task).description,
+              (this.element as Task).responsibleUser,
+              (this.element as Task).result,
+              (this.element as Task).status,
               (this.element as Task).type,
               (this.element as Task).openDate.toString().slice(0,10), 
               ((this.element as Task).inProgressDate||'none').toString().slice(0,10), 
@@ -282,5 +297,145 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
       this.router.navigate(['/task/'+id]); // Navigate to the 'home' route
     if(this.type=='request')
       this.router.navigate(['/issue/'+id]); // Navigate to the 'home' route
+  }
+
+  getStatus(obj:Request|Issue|Task|User|null):string{
+    if(this.element!=null){
+      switch (typeof obj) {
+        case 'object': {
+          if ('requestName' in obj!) {
+            return (obj as Request).status;
+          } else if ('issueName' in obj!) {
+            return (obj as Issue).status;
+          } else if ('taskName' in obj!) {
+            return (obj as Task).status;
+          }
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+    return '';
+  }
+
+  setInProgress(obj:Request|Issue|Task|User) {
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          this.statusService.setRequestStatusInProgress(obj.requestId.toString(), this.user?.login??'').subscribe(res => {
+              this.element=null;
+              this.ngOnInit();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('issueName' in obj) {
+          this.statusService.setIssueStatusInProgress(obj.issueId.toString(),this.user?.login??'').subscribe(res => {
+            this.element=null;
+              this.ngOnInit();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('taskName' in obj) {
+          this.statusService.setTaskStatusInProgress(obj.taskId.toString(),this.user?.login??'').subscribe(res => {
+              this.element=null;
+              this.ngOnInit();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
+  openFinishDialog(id:any, obj:Request|Issue|Task|User)
+  {
+    var _dialog = this.dialog.open(FinishDialogComponent, {
+      width:'40%',
+      enterAnimationDuration:'500ms',
+      exitAnimationDuration:'500ms',
+      data:{
+        id: id,
+        objectType: this.getObjType(obj)
+      }
+    })
+    _dialog.afterClosed().subscribe(item=>{
+      if(item!==undefined) {
+        this.element=null;
+        this.ngOnInit();
+      }
+    });
+  }
+
+  getObjType(obj:Request|Issue|Task|User):string{
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          return 'request';
+        } else if ('issueName' in obj) {
+          return 'issue';
+        } else if ('taskName' in obj) {
+          return 'task';
+        }
+        else if ('firstName' in obj) {
+          return 'user';
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+    return '';
+  }
+
+  setOpen(obj:Request|Issue|Task|User) {
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          this.statusService.setRequestStatusOpen(obj.requestId.toString()).subscribe(res => {
+              this.element=null;
+              this.ngOnInit();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('issueName' in obj) {
+          this.statusService.setIssueStatusOpen(obj.issueId.toString()).subscribe(res => {
+              this.element=null;
+              this.ngOnInit();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('taskName' in obj) {
+          this.statusService.setTaskStatusOpen(obj.taskId.toString()).subscribe(res => {
+              this.element=null;
+              this.ngOnInit();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
   }
 }

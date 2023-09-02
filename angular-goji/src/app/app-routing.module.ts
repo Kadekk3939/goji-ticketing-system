@@ -16,7 +16,9 @@ const routes: Routes = [
   {path: 'user/:id', component:SpecificComponent},
   {path: 'request/:id', component:SpecificComponent},
   {path: 'issue/:id', component:SpecificComponent},
-  {path: 'task/:id', component:SpecificComponent}
+  {path: 'task/:id', component:SpecificComponent},
+  {path: 'product/:id', component:SpecificComponent},
+  {path: 'client/:id', component:SpecificComponent}
 ];
 
 @NgModule({

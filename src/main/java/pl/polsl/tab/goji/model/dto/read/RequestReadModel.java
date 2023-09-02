@@ -13,6 +13,7 @@ public class RequestReadModel {
 
     private Long requestId;
     private Long productId;
+    private Long responsibleUser;
     private String requestName;
     private String description;
     private String result;

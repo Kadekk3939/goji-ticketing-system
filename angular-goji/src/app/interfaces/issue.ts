@@ -1,6 +1,7 @@
 export interface Issue {
     issueId:number;
     requestId:number;
+    responsibleUser:number;
     issueName:string;
     description:string;
     result:string;

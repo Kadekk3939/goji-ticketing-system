@@ -1,9 +1,6 @@
 package pl.polsl.tab.goji.mappers;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
 import pl.polsl.tab.goji.model.dto.write.IssueWriteModel;
@@ -19,7 +16,10 @@ public interface IssueMapper {
     @Mapping(target = "issueId",ignore = true)
     Issue toEntity(IssueWriteModel issueWriteModel);
 
-    @Mapping(source = "request.requestId" ,target = "requestId")
+    @Mappings({
+            @Mapping(source = "request.requestId" ,target = "requestId"),
+            @Mapping(source="responsiblePerson.userId",target="responsibleUser")
+    })
     IssueReadModel toReadModel(Issue issue);
 
     List<IssueReadModel>map(List<Issue> issues);

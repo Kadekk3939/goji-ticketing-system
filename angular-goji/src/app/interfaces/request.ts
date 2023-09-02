@@ -1,5 +1,6 @@
 export interface Request {
     requestId:number;
+    responsibleUser:number;
     requestName:string;
     description:string;
     productId:number;

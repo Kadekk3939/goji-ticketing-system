@@ -1,9 +1,6 @@
 package pl.polsl.tab.goji.mappers;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
@@ -19,7 +16,8 @@ public interface TaskMapper {
 
     Task toEntity(TaskWriteModel taskWriteModel);
 
-    @Mapping(source = "issue.issueId" ,target = "issueId")
+    @Mappings({@Mapping(source = "issue.issueId" ,target = "issueId"),
+            @Mapping(source="responsiblePerson.userId",target="responsibleUser")})
     TaskReadModel toReadModel(Task task);
 
     List<TaskReadModel> map(List<Task> donations);

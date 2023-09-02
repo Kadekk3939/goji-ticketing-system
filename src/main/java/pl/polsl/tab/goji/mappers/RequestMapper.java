@@ -2,6 +2,7 @@ package pl.polsl.tab.goji.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
@@ -18,7 +19,8 @@ public interface RequestMapper {
 
     Request toEntity(RequestWriteModel requestWriteModel);
 
-    @Mapping(source = "product.productId" ,target = "productId")
+    @Mappings({ @Mapping(source = "product.productId" ,target = "productId"),
+            @Mapping(source="responsiblePerson.userId",target="responsibleUser")})
     RequestReadModel toReadModel(Request request);
     List<RequestReadModel> map(List<Request> products);
 

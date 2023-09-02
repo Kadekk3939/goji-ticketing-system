@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import { User } from "src/app/interfaces/user";
 import {MatTableDataSource} from "@angular/material/table";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -38,6 +38,7 @@ export class ListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
   constructor(private router: Router,
+              private route: ActivatedRoute,
               private dialog: MatDialog,
               private listService:ListService,
               private app:AppService,
@@ -479,8 +480,7 @@ export class ListComponent implements OnInit {
     })
     _dialog.afterClosed().subscribe(item=>{
       if(item!==undefined) {
-        this.elements=[];
-        this.getData();
+        this.router.navigate([type.slice(0, -1), item]);
       }
     });
   }

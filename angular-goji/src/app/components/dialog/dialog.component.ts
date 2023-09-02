@@ -128,8 +128,8 @@ export class DialogComponent implements OnInit {
     }
   }
 
-  closeDialog() {
-    this.ref.close('Closed using function');
+  closeDialog(id:string) {
+    this.ref.close(id);
   }
 
   isFormValid(formGroup: FormGroup): boolean {
@@ -140,7 +140,7 @@ export class DialogComponent implements OnInit {
     if(this.type=="/users") {
       if(this.inputData.id==0) {
         this.service.addUser(<User>this.userForm.value).subscribe(res => {
-            this.closeDialog();
+            this.closeDialog(res.userId);
           },
           (error: HttpErrorResponse) => {
             if (error.status === 409) {
@@ -165,7 +165,7 @@ export class DialogComponent implements OnInit {
       else {
        if(this.inputData.id!=undefined) {
          this.service.updateUser(this.inputData.id, <User>this.userForm.value).subscribe(res => {
-             this.closeDialog();
+             this.closeDialog(this.inputData.id);
            },
            (error: HttpErrorResponse) => {
              alert(error.message);
@@ -177,7 +177,7 @@ export class DialogComponent implements OnInit {
     else if(this.type=="/requests") {
       if(this.inputData.id==0) {
         this.service.addRequest(<Request>this.requestForm.value).subscribe(res => {
-            this.closeDialog();
+            this.closeDialog(res.requestId.toString());
           },
           (error: HttpErrorResponse) => {
             alert(error.message);
@@ -187,7 +187,7 @@ export class DialogComponent implements OnInit {
       else {
         if(this.inputData.id!=undefined) {
           this.service.updateRequest(this.inputData.id, <Request>this.requestForm.value).subscribe(res => {
-              this.closeDialog();
+              this.closeDialog(this.inputData.id);
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
@@ -199,7 +199,7 @@ export class DialogComponent implements OnInit {
     else if(this.type=="/issues") {
       if(this.inputData.id==0) {
         this.service.addIssue(<Issue>this.issueForm.value).subscribe(res => {
-            this.closeDialog();
+            this.closeDialog(res.issueId.toString());
           },
           (error: HttpErrorResponse) => {
             alert(error.message);
@@ -209,7 +209,7 @@ export class DialogComponent implements OnInit {
       else {
         if(this.inputData.id!=undefined) {
           this.service.updateIssue(this.inputData.id, <Issue>this.issueForm.value).subscribe(res => {
-              this.closeDialog();
+              this.closeDialog(this.inputData.id);
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
@@ -221,7 +221,7 @@ export class DialogComponent implements OnInit {
     else if(this.type=="/tasks") {
       if(this.inputData.id==0) {
         this.service.addTask(<Task>this.taskForm.value).subscribe(res => {
-            this.closeDialog();
+            this.closeDialog(res.taskId.toString());
           },
           (error: HttpErrorResponse) => {
             alert(error.message);
@@ -231,7 +231,7 @@ export class DialogComponent implements OnInit {
       else {
         if(this.inputData.id!=undefined) {
           this.service.updateTask(this.inputData.id, <Task>this.taskForm.value).subscribe(res => {
-              this.closeDialog();
+              this.closeDialog(this.inputData.id);
             },
             (error: HttpErrorResponse) => {
               alert(error.message);

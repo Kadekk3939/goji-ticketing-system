@@ -89,6 +89,14 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+            <mat-form-field>
+              <mat-label>Type</mat-label>
+              <mat-select formControlName="type" matInput>
+                <mat-option *ngFor="let type of types" [value]="type">
+                  {{type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
         </div>
 
         <div mat-dialog-actions>
@@ -116,6 +124,14 @@
                         {{issue.issueName}}
                     </mat-option>
                 </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Type</mat-label>
+              <mat-select formControlName="type" matInput>
+                <mat-option *ngFor="let type of types" [value]="type">
+                  {{type}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
         </div>
 

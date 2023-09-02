@@ -63,6 +63,7 @@ public class TaskService {
             taskToUpdate = task.get();
             taskToUpdate.setTaskName(taskWriteModel.getTaskName());
             taskToUpdate.setDescription(taskWriteModel.getDescription());
+            taskToUpdate.setType(taskWriteModel.getType());
             taskToUpdate = taskRepository.save(taskToUpdate);
         }
         return taskMapper.toReadModel(taskToUpdate);

@@ -67,6 +67,7 @@ public class IssueService {
             issueToUpdate = issue.get();
             issueToUpdate.setIssueName(issueWriteModel.getIssueName());
             issueToUpdate.setDescription(issueWriteModel.getDescription());
+            issueToUpdate.setType(issueWriteModel.getType());
             issueToUpdate = issueRepository.save(issueToUpdate);
         }
         return issueMapper.toReadModel(issueToUpdate);

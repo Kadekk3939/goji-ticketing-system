@@ -30,6 +30,9 @@ export class DialogComponent implements OnInit {
     {value: 'Product Manager', viewValue: 'Product Manager'},
     {value: 'Worker', viewValue: 'Worker'},
   ];
+
+  types = ['Bug', 'Feature', 'Update'];
+
   public user:User|undefined;
 
   userForm: FormGroup;
@@ -58,13 +61,15 @@ export class DialogComponent implements OnInit {
     this.issueForm = this.fb.group({
       requestId: ['', Validators.required],
       issueName: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      type: ['', Validators.required]
     });
 
     this.taskForm = this.fb.group({
       issueId: ['', Validators.required],
       taskName: ['', Validators.required],
-      description: ['', Validators.required]
+      description: ['', Validators.required],
+      type: ['', Validators.required]
     });
   }
   ngOnInit(): void {
@@ -105,7 +110,8 @@ export class DialogComponent implements OnInit {
         this.issueForm.setValue({
           requestId: this.editData.requestId,
           issueName: this.editData.issueName,
-          description: this.editData.description
+          description: this.editData.description,
+          type: this.editData.type
         })
       })
     }
@@ -115,7 +121,8 @@ export class DialogComponent implements OnInit {
         this.taskForm.setValue({
           issueId: this.editData.issueId,
           taskName: this.editData.taskName,
-          description: this.editData.description
+          description: this.editData.description,
+          type: this.editData.type
         })
       })
     }

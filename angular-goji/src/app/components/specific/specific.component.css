@@ -56,10 +56,12 @@ img {
 
 .card-container-sub {
     width: 300px;
+    cursor: pointer;
 }
 
 .card-container-parent {
     width: 300px;
+    cursor: pointer;
 }
 
 
@@ -80,4 +82,12 @@ img {
 .specificElement {
     padding-left: 50px;
     padding-right: 50px;
+}
+
+.parentElement:hover {
+    background-color: #59ec66;
+}
+
+.subElement:hover {
+    background-color: #59ec66;
 }

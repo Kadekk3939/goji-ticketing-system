@@ -269,4 +269,18 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     }
     return -1;
   }
+
+  toParent(id:string){
+    if(this.type=='issue' && this.user?.role=='Account Manager')
+      this.router.navigate(['/request/'+id]); // Navigate to the 'home' route
+    if(this.type=='task' &&(this.user?.role=='Account Manager' || this.user?.role=='Product Manager'))
+      this.router.navigate(['/issue/'+id]); // Navigate to the 'home' route
+  }
+
+  toSubElement(id:string){
+    if(this.type=='issue')
+      this.router.navigate(['/task/'+id]); // Navigate to the 'home' route
+    if(this.type=='request')
+      this.router.navigate(['/issue/'+id]); // Navigate to the 'home' route
+  }
 }

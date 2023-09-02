@@ -79,14 +79,14 @@ public getParentElementInfo():string[]{
     switch (typeof this.element) {
       case 'object': {
         if ('requestName' in this.element) {
-          return [(this.parentElement as Product).productName,
+          return ['Product',(this.parentElement as Product).productName,
             (this.parentElement as Product).description,(this.parentElement as Product).version,(this.parentElement as Product).productId.toString()];
         } else if ('issueName' in this.element) {
-          return [(this.parentElement as Request).requestName,
+          return ['Request',(this.parentElement as Request).requestName,
             (this.parentElement as Request).description,(this.parentElement as Request).status,(this.parentElement as Request).requestId.toString()];
         }
         else if ('taskName' in this.element) {
-          return [(this.parentElement as Issue).issueName, (this.parentElement as Issue).description, (this.parentElement as Issue).status, 
+          return ['Issue',(this.parentElement as Issue).issueName, (this.parentElement as Issue).description, (this.parentElement as Issue).status, 
             (this.parentElement as Issue).issueId.toString()];
         }
         break;
@@ -102,6 +102,10 @@ public getParentElementInfo():string[]{
 public getParentElement():Observable<Product|Issue|Request|Client|null>{
   if (this.type == "issue") {
     return this.specificService.getParentRequestFromIssue(this.elementId!);}
+  else if (this.type == "task") {
+    return this.specificService.getParentIssueFromTask(this.elementId!);}
+    else if (this.type == "request") {
+      return this.specificService.getParentProductFromRequest(this.elementId!);}
   // } else if (this.type == "request") {
   //   return this.generalService.getProductById((this.element as Request).productId.toString());
   // }else if (this.type == "task") {
@@ -119,10 +123,10 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     switch (typeof this.element) {
       case 'object': {
         if ('requestName' in this.element) {
-          return [(obj as Issue).issueName,
+          return ['Issue',(obj as Issue).issueName,
             (obj as Issue).description,(obj as Issue).status,(obj as Issue).issueId.toString()];
         } else if ('issueName' in this.element) {
-          return [(obj as Task).taskName,
+          return ['Task',(obj as Task).taskName,
             (obj as Task).description,(obj as Task).status,(obj as Task).taskId.toString()];
         }
         else if ('firstName' in this.element) {
@@ -264,5 +268,19 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
       }
     }
     return -1;
+  }
+
+  toParent(id:string){
+    if(this.type=='issue' && this.user?.role=='Account Manager')
+      this.router.navigate(['/request/'+id]); // Navigate to the 'home' route
+    if(this.type=='task' &&(this.user?.role=='Account Manager' || this.user?.role=='Product Manager'))
+      this.router.navigate(['/issue/'+id]); // Navigate to the 'home' route
+  }
+
+  toSubElement(id:string){
+    if(this.type=='issue')
+      this.router.navigate(['/task/'+id]); // Navigate to the 'home' route
+    if(this.type=='request')
+      this.router.navigate(['/issue/'+id]); // Navigate to the 'home' route
   }
 }

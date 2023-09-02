@@ -341,9 +341,9 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
   }
 
   toSubElement(id:string){
-    if(this.type=='issue')
+    if(this.type=='issue'&& (this.user?.role=='Account Manager' || this.user?.role=='Product Manager'))
       this.router.navigate(['/task/'+id]);
-    if(this.type=='request')
+    if(this.type=='request'&& this.user?.role=='Account Manager')
       this.router.navigate(['/issue/'+id]);
     if(this.type=='product')
       this.router.navigate(['/request/'+id])

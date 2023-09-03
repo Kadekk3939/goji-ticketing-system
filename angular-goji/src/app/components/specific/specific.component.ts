@@ -353,6 +353,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
         break;
       }
     }
+    
     return -1;
   }
 

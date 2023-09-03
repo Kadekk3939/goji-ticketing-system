@@ -1,4 +1,4 @@
-<body class="mat-typography" xmlns:list-style-type="http://www.w3.org/1999/xhtml">
+<body>
     <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
         <a class="navbar-brand"  routerLink="/user"routerLinkActive="active" ariaCurrentWhenActive="page">
           <img src="../../../assets/goji.png" class="d-inline-block" alt="Goji">
@@ -24,20 +24,17 @@
                     <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log
-                        out</a>
+                    <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
                 </li>
             </ul>
         </div>
     </nav>
-
     <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
         <button mat-fab color="primary" class="add-button" (click)="addData(type)">
             <mat-icon>add</mat-icon>
         </button>
     </div>
-
-    <div class="container" id="main-container">
+    <div class="container mat-typography" id="main-container">
         <div class="field-container">
             <mat-form-field class="sort" *ngIf="user?.role!='Admin'; else elseUserBlock">
                 <mat-label>Sort by</mat-label>

@@ -30,18 +30,15 @@
     </div>
   </nav>
     <header>
-        <h1>Welcome {{user?.firstName}}</h1>
+        <h1>Welcome {{user?.login}}</h1>
     </header>
     <!-- Page Content -->
     <div class="container">
         <div class="card border-0 shadow my-5">
             <div class="card-body p-5">
-                <p class="lead">User name : {{user?.firstName}} {{user?.lastName}}</p>
-                <p class="lead">User login : {{user?.login}}</p>
-                <p class="lead">User email : {{user?.email}}</p>
-                <p class="lead">User role : {{user?.role}}</p>
-                <p>This is a starter page for a logged user.</p>
-                <p> They can use the navigation bar above to view the list of Users, Requests, Issues or Tasks as well as to log out. </p>
+                <p class="lead">Name : {{user?.firstName}} {{user?.lastName}}</p>
+                <p class="lead">Email : {{user?.email}}</p>
+                <p class="lead">Role : {{user?.role}}</p>
             </div>
         </div>
     </div>

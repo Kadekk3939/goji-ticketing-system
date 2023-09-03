@@ -1,4 +1,4 @@
-<body class="mat-typography" xmlns:list-style-type="http://www.w3.org/1999/xhtml">
+<body>
     <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
         <a class="navbar-brand" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">
             <img src="../../../assets/goji.png" class="d-inline-block" alt="Goji">
@@ -31,7 +31,7 @@
         </div>
     </nav>
     <div *ngIf="type=='user'">
-        <div class="card-container mat-elevation-z3">
+        <div class="card-container mat-elevation-z3 mat-typography">
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>User Information</mat-card-title>
@@ -52,7 +52,7 @@
             </mat-card>
         </div>
     </div>
-    <div>
+    <div class="mat-typography">
         <div class="specificElement">
             <div *ngIf="type=='issue' || type=='request' || type=='task'">
                 <div class="card-container mat-elevation-z3">

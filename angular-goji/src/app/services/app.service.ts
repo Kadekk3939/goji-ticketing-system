@@ -46,7 +46,6 @@ export class AppService {
       }
     }
     else {
-      console.log('Und');
       this.router.navigateByUrl('/');
     }
 

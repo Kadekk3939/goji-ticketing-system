@@ -165,7 +165,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
             (obj as Request).requestId.toString()];
         }
         else if ('phoneNumber' in this.element) {
-          return ['Product',
+          return ['Client',
             (obj as Product).productName,
             (obj as Product).version,
             (obj as Product).description,
@@ -180,11 +180,11 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
             (obj as Task).taskId.toString()];
           }
           else if((this.element as unknown as User).role=="Product Manager"){
-            return ['Task',
-            (obj as Task).taskName,
-            (obj as Task).description,
-            (obj as Task).status,
-            (obj as Task).taskId.toString()];
+            return ['Issue',
+            (obj as Issue).issueName,
+            (obj as Issue).description,
+            (obj as Issue).status,
+            (obj as Issue).issueId.toString()];
           }
           else if((this.element as unknown as User).role=="Account Manager"){
             return ['Request',
@@ -353,6 +353,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
         break;
       }
     }
+    
     return -1;
   }
 

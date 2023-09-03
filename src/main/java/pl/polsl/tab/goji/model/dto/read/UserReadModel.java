@@ -15,4 +15,5 @@ public class UserReadModel {
     private String login;
     private String email;
     private String role;
+    private Boolean active;
 }

@@ -447,21 +447,12 @@ export class ListComponent implements OnInit {
 
   editData(id:any, type:any)
   {
-    if(type=="/users")
-    {
-      this.openDialog(id,'Edit user', type);
-    }
-    else
-      this.openDialog(id,'Edit', type);
+    this.openDialog(id,'Edit '+type.slice(1,-1), type);
   }
 
   addData(type:any)
   {
-    if(type=="/users") {
-      this.openDialog(0, 'Add user', type);
-    }
-    else
-      this.openDialog(0, 'Add', type);
+    this.openDialog(0, 'Add '+type.slice(1,-1), type);
   }
 
 

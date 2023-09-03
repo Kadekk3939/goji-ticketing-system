@@ -57,7 +57,6 @@ export class ListComponent implements OnInit {
     }
   ngOnInit() {
     this.getData();
-
   }
 
   public getData(){
@@ -76,7 +75,7 @@ export class ListComponent implements OnInit {
               response.forEach(user=>{
                 this.elements?.push(user);
               })
-              this.pageSlice = this.elements!.slice(0,2);
+              this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
             }
           )
         }
@@ -91,7 +90,7 @@ export class ListComponent implements OnInit {
                 response.forEach(request => {
                   this.elements?.push(request);
                 })
-               this.pageSlice = this.elements!.slice(0,2);
+               this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
             )
           }
@@ -101,7 +100,7 @@ export class ListComponent implements OnInit {
                 response.forEach(issue => {
                   this.elements?.push(issue);
                 })
-                this.pageSlice = this.elements!.slice(0,2);
+                this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
             )
           }
@@ -111,7 +110,7 @@ export class ListComponent implements OnInit {
                 response.forEach(task => {
                   this.elements?.push(task);
                 })
-                this.pageSlice = this.elements!.slice(0,2);
+                this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
             )
           }
@@ -128,7 +127,7 @@ export class ListComponent implements OnInit {
                 response.forEach(issue => {
                   this.elements?.push(issue);
                 })
-                this.pageSlice = this.elements!.slice(0,2);
+                this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
             )
           }
@@ -138,7 +137,7 @@ export class ListComponent implements OnInit {
                 response.forEach(task => {
                   this.elements?.push(task);
                 })
-               this.pageSlice = this.elements!.slice(0,2);
+               this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
             )
           }
@@ -153,7 +152,7 @@ export class ListComponent implements OnInit {
               response.forEach(task=>{
                 this.elements?.push(task);
               })
-              this.pageSlice = this.elements!.slice(0,2);
+              this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
             }
           )
         }
@@ -333,39 +332,32 @@ export class ListComponent implements OnInit {
     switch (this.selected) {
       case 'opendown':
         this.elements.sort((a, b) => new Date(this.getOpenDate(b)).getTime() - new Date(this.getOpenDate(a)).getTime());
-        this.paginator?.lastPage()
-        this.paginator?.firstPage()
+        this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
         break;
       case 'openup':
         this.elements.sort((a, b) => new Date(this.getOpenDate(a)).getTime() - new Date(this.getOpenDate(b)).getTime());
-        this.paginator?.lastPage()
-        this.paginator?.firstPage()
+        this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
         break;
       case 'startdown':
         this.elements.sort((a, b) => new Date(this.getProgressDate(b)).getTime() - new Date(this.getProgressDate(a)).getTime());
-        this.paginator?.lastPage()
-        this.paginator?.firstPage()
+        this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
         break;
       case 'startup':
         this.elements.sort((a, b) => new Date(this.getProgressDate(a)).getTime() - new Date(this.getProgressDate(b)).getTime());
-        this.paginator?.lastPage()
-        this.paginator?.firstPage()
+        this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
         break;
       case 'finishdown':
         this.elements.sort((a, b) => new Date(this.getFinishDate(b)).getTime() - new Date(this.getFinishDate(a)).getTime());
-        this.paginator?.lastPage()
-        this.paginator?.firstPage()
+        this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
         break;
       case 'finishup':
         this.elements.sort((a, b) => new Date(this.getFinishDate(a)).getTime() - new Date(this.getFinishDate(b)).getTime());
-        this.paginator?.lastPage()
-        this.paginator?.firstPage()
+        this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
         break;
       default:
         this.elements=[];
         this.getData()
-        this.paginator?.lastPage()
-        this.paginator?.firstPage()
+        this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
         break;
     }
   }
@@ -386,8 +378,7 @@ export class ListComponent implements OnInit {
           return 0; // names are equal
         }
       });
-        this.paginator?.lastPage()
-        this.paginator?.firstPage()
+        this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
         break;
       case 'desc':
         this.elements.sort((a, b) => {
@@ -402,14 +393,12 @@ export class ListComponent implements OnInit {
             return 0; // names are equal
           }
         });
-        this.paginator?.lastPage()
-        this.paginator?.firstPage()
+        this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
         break;
       default:
         this.elements=[];
         this.getData()
-        this.paginator?.lastPage()
-        this.paginator?.firstPage()
+        this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
         break;
     }
   }

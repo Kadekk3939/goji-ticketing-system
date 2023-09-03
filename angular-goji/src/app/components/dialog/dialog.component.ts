@@ -35,7 +35,8 @@ export class DialogComponent implements OnInit {
 
   public user:User|undefined;
 
-  userForm: FormGroup;
+  addUserForm: FormGroup;
+  editUserForm: FormGroup;
   requestForm: FormGroup;
   issueForm: FormGroup;
   taskForm: FormGroup;
@@ -43,11 +44,19 @@ export class DialogComponent implements OnInit {
               private ref:MatDialogRef<DialogComponent>,
               private fb:FormBuilder,
               private service:DialogService) {
-    this.userForm = this.fb.group({
+    this.addUserForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       login: ['', Validators.required],
       password: ['', Validators.required],
+      email: ['', Validators.required],
+      role: ['', Validators.required]
+    });
+
+    this.editUserForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      login: ['', Validators.required],
       email: ['', Validators.required],
       role: ['', Validators.required]
     });
@@ -88,9 +97,9 @@ export class DialogComponent implements OnInit {
     if(this.type=="/users") {
       this.service.getUserById(id).subscribe(user => {
         this.editData = user;
-        this.userForm.setValue({
+        this.editUserForm.setValue({
           firstName: this.editData.firstName, lastName: this.editData.lastName, login: this.editData.login,
-          password: this.editData.password, email: this.editData.email, role: this.editData.role
+          email: this.editData.email, role: this.editData.role
         })
       })
     }
@@ -139,7 +148,7 @@ export class DialogComponent implements OnInit {
   SaveData(){
     if(this.type=="/users") {
       if(this.inputData.id==0) {
-        this.service.addUser(<User>this.userForm.value).subscribe(res => {
+        this.service.addUser(<User>this.addUserForm.value).subscribe(res => {
             this.closeDialog(res.userId);
           },
           (error: HttpErrorResponse) => {
@@ -164,7 +173,7 @@ export class DialogComponent implements OnInit {
       }
       else {
        if(this.inputData.id!=undefined) {
-         this.service.updateUser(this.inputData.id, <User>this.userForm.value).subscribe(res => {
+         this.service.updateUser(this.inputData.id, <User>this.editUserForm.value).subscribe(res => {
              this.closeDialog(this.inputData.id);
            },
            (error: HttpErrorResponse) => {

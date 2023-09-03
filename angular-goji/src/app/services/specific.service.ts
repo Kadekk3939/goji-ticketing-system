@@ -47,4 +47,8 @@ export class SpecificService {
   public getParentClientFromProduct(productId:string):Observable<Client>{
     return this.http.get<Client>(`${environment.apiBaseUrl}/product/${productId}/client`)
   }
+
+  public getSubElementsForUser(userId:string):Observable<Issue[]|Task[]|Request[]>{
+    return this.http.get<Issue[]|Task[]|Request[]>(`${environment.apiBaseUrl}/user/${userId}/subElements`)
+  }
 }

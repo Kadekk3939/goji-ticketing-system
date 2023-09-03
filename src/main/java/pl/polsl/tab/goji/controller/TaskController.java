@@ -71,4 +71,9 @@ public class TaskController {
     public ResponseEntity<IssueReadModel> getParentIssue(@PathVariable Long taskId){
         return ResponseEntity.ok(taskService.getParentIssue(taskId));
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<TaskReadModel>> getTasksForUser(@PathVariable Long userId){
+        return ResponseEntity.ok(taskService.getTasksForUser(userId));
+    }
 }

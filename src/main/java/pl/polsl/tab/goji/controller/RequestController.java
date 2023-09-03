@@ -3,10 +3,7 @@ package pl.polsl.tab.goji.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
-import pl.polsl.tab.goji.model.dto.read.ProductReadModel;
-import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
-import pl.polsl.tab.goji.model.dto.read.UserReadModel;
+import pl.polsl.tab.goji.model.dto.read.*;
 import pl.polsl.tab.goji.model.dto.write.RequestWriteModel;
 import pl.polsl.tab.goji.model.dto.write.UserWriteModel;
 import pl.polsl.tab.goji.model.entity.Request;
@@ -71,5 +68,10 @@ public class RequestController {
     @GetMapping("/{requestId}/product")
     public ResponseEntity<ProductReadModel> getParentProduct(@PathVariable Long requestId){
         return ResponseEntity.ok(requestService.getParentProduct(requestId));
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<RequestReadModel>> getRequestsForUser(@PathVariable Long userId){
+        return ResponseEntity.ok(requestService.getRequestsForUser(userId));
     }
 }

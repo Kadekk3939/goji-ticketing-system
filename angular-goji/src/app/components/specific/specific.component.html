@@ -39,7 +39,7 @@
                 <mat-card-header>
                     <mat-card-title>User Information</mat-card-title>
                     <mat-card-actions class="element-card-actions ">
-                      <button (click)="editData(getId(element!), type)" mat-icon-button color="primary" class="mod-button">
+                        <button (click)="editData(getId(element!), type)" mat-icon-button color="primary" class="mod-button">
                         <mat-icon>edit</mat-icon>
                       </button>
                     </mat-card-actions>
@@ -178,7 +178,7 @@
 
             <div class='sub'>
 
-                <div *ngIf="type=='issue' || type=='request'|| type=='product'">
+                <div *ngIf="type=='issue' || type=='request'|| type=='product'||type=='user'">
                     <div *ngFor="let obj of subElements" class="subElements">
                         <div class="card-container-sub  mat-elevation-z3">
                             <mat-card>

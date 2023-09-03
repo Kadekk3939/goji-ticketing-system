@@ -131,4 +131,9 @@ public class TaskService {
         return issueMapper.toReadModel(issue);
     }
 
+    public List<TaskReadModel>getTasksForUser(Long userId){
+        List<Task> tasks = taskRepository.findTasksForUser(userId);
+        return taskMapper.map(tasks);
+    }
+
 }

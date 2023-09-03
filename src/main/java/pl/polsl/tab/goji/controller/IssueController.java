@@ -70,4 +70,9 @@ public class IssueController {
     public ResponseEntity<RequestReadModel> getParentRequest(@PathVariable Long issueId){
         return ResponseEntity.ok(issueService.getParentRequest(issueId));
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<IssueReadModel>> getIssuesForUser(@PathVariable Long userId){
+        return ResponseEntity.ok(issueService.getIssuesForUser(userId));
+    }
 }

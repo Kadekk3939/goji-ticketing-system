@@ -143,4 +143,9 @@ public class IssueService {
         Request request = issueRepository.findIssueByIssueId(id).get().getRequest();
         return requestMapper.toReadModel(request);
     }
+
+    public List<IssueReadModel>getIssuesForUser(Long userId){
+        List<Issue> issues = issueRepository.findIssuesForUser(userId);
+        return issueMapper.map(issues);
+    }
 }

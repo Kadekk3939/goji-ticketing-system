@@ -10,6 +10,7 @@ import pl.polsl.tab.goji.service.UserService;
 import pl.polsl.tab.goji.utility.EmailValidator;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin(origins = {"http://localhost:4200"})
@@ -65,6 +66,21 @@ public class UserController {
     public ResponseEntity<UserReadModel> updateUser(@PathVariable Long userId, @RequestBody UserWriteModel userWriteModel) {
         UserReadModel updatedUser = userService.updateUser(userId, userWriteModel);
         return ResponseEntity.ok(updatedUser);
+    }
+
+    @GetMapping("/{userId}/subElements")
+    public ResponseEntity<?> getSubElementsForUser(@PathVariable Long userId){
+        UserReadModel user = userService.findUserByUserId(userId);
+        if(Objects.equals(user.getRole(), "Worker")){
+            return ResponseEntity.ok(userService.getTasksForUser(userId));
+        }
+        else if(Objects.equals(user.getRole(), "Account Manager")){
+            return ResponseEntity.ok(userService.getRequestsForUser(userId));
+        }
+        else if(Objects.equals(user.getRole(), "Product Manager")){
+            return ResponseEntity.ok(userService.getIssuesForUser(userId));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User wrong role");
     }
 
 }

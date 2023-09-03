@@ -164,12 +164,35 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
             (obj as Request).status,
             (obj as Request).requestId.toString()];
         }
-        else if ('email' in this.element) {
+        else if ('phoneNumber' in this.element) {
           return ['Product',
             (obj as Product).productName,
             (obj as Product).version,
             (obj as Product).description,
             (obj as Product).productId.toString()];
+        }
+        else if('role' in this.element){
+          if((this.element as unknown as User).role=="Worker"){
+            return ['Task',
+            (obj as Task).taskName,
+            (obj as Task).description,
+            (obj as Task).status,
+            (obj as Task).taskId.toString()];
+          }
+          else if((this.element as unknown as User).role=="Product Manager"){
+            return ['Task',
+            (obj as Task).taskName,
+            (obj as Task).description,
+            (obj as Task).status,
+            (obj as Task).taskId.toString()];
+          }
+          else if((this.element as unknown as User).role=="Account Manager"){
+            return ['Request',
+            (obj as Request).requestName,
+            (obj as Request).description,
+            (obj as Request).status,
+            (obj as Request).requestId.toString()];
+          }
         }
         break;
       }
@@ -190,10 +213,12 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
       return this.specificService.getSubRequestFromProduct(this.elementId!);
     } else if (this.type == "client") {
       return this.specificService.getSubProductFromClient(this.elementId!);
-
+    } else if(this.type=="user"){
+      return this.specificService.getSubElementsForUser(this.elementId!);
     } else {
       return of(null); // Handle unknown types or return an empty observable
     }
+    return of(null);
   }
 
   public getData(): Observable<User | Issue | Task | Request|Product|Client|null> {

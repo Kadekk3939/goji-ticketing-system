@@ -7,13 +7,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.polsl.tab.goji.mappers.UserMapper;
+import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
+import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
+import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
 import pl.polsl.tab.goji.model.dto.read.UserReadModel;
 import pl.polsl.tab.goji.model.dto.write.UserWriteModel;
+import pl.polsl.tab.goji.model.entity.Issue;
 import pl.polsl.tab.goji.model.entity.Task;
 import pl.polsl.tab.goji.model.entity.User;
 import pl.polsl.tab.goji.model.entity.UserRole;
-import pl.polsl.tab.goji.repository.UserRepository;
-import pl.polsl.tab.goji.repository.UserRoleRepository;
+import pl.polsl.tab.goji.repository.*;
 import pl.polsl.tab.goji.utility.CurrentUserData;
 
 import java.util.List;
@@ -26,13 +29,20 @@ public class UserService implements UserDetailsService {
     private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder encoder;
     private final UserMapper userMapper;
+    private final IssueService issueService;
+    private final TaskService taskService;
+    private final RequestService requestService;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder encoder, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository, PasswordEncoder encoder, UserMapper userMapper,
+                       IssueService issueService,TaskService taskService,RequestService requestService) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.encoder = encoder;
         this.userMapper = userMapper;
+        this.taskService = taskService;
+        this.issueService = issueService;
+        this.requestService = requestService;
     }
 
     public UserReadModel addUser(UserWriteModel userWriteModel) {
@@ -128,5 +138,17 @@ public class UserService implements UserDetailsService {
 
     public boolean checkIfUserExist(UserWriteModel userWriteModel){
         return userRepository.findUserByLogin(userWriteModel.getLogin()).isPresent();
+    }
+
+    public List<IssueReadModel> getIssuesForUser(Long userId){
+        return issueService.getIssuesForUser(userId);
+    }
+
+    public List<RequestReadModel> getRequestsForUser(Long userId){
+        return requestService.getRequestsForUser(userId);
+    }
+
+    public List<TaskReadModel> getTasksForUser(Long userId){
+        return  taskService.getTasksForUser(userId);
     }
 }

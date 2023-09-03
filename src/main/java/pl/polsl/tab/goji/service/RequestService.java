@@ -8,10 +8,12 @@ import pl.polsl.tab.goji.mappers.RequestMapper;
 import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
 import pl.polsl.tab.goji.model.dto.read.ProductReadModel;
 import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
+import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
 import pl.polsl.tab.goji.model.dto.write.RequestWriteModel;
 import pl.polsl.tab.goji.model.entity.Issue;
 import pl.polsl.tab.goji.model.entity.Product;
 import pl.polsl.tab.goji.model.entity.Request;
+import pl.polsl.tab.goji.model.entity.Task;
 import pl.polsl.tab.goji.model.enums.Status;
 import pl.polsl.tab.goji.repository.IssueRepository;
 import pl.polsl.tab.goji.repository.RequestRepository;
@@ -142,6 +144,11 @@ public class RequestService {
     public ProductReadModel getParentProduct(Long requestId){
         Product product = requestRepository.findRequestByRequestId(requestId).get().getProduct();
         return productMapper.toReadModel(product);
+    }
+
+    public List<RequestReadModel>getRequestsForUser(Long userId){
+        List<Request> requests = requestRepository.findRequestsForUser(userId);
+        return requestMapper.map(requests);
     }
 }
 

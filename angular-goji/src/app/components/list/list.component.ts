@@ -566,7 +566,7 @@ export class ListComponent implements OnInit {
       this.newArray.push(this.tempArray);
       for(let i = 0; i < this.newArray.length; i++){
         for(let j = 0; j < this.newArray[i].length; j++){
-          var obj = this.newArray[i][j];
+          const obj = this.newArray[i][j];
           this.elements.push(obj);
         }
       }
@@ -577,7 +577,7 @@ export class ListComponent implements OnInit {
       this.newArray.push(this.tempArray);
       for(let i = 0; i < this.newArray.length; i++){
         for(let j = 0; j < this.newArray[i].length; j++){
-          var obj = this.newArray[i][j];
+          const obj = this.newArray[i][j];
           this.elements.push(obj);
         }
       }

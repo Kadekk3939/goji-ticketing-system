@@ -1,5 +1,5 @@
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 shadow">
         <a class="navbar-brand" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">
             <img src="../../../assets/goji.png" class="d-inline-block" alt="Goji">
         </a>
@@ -30,6 +30,9 @@
             </ul>
         </div>
     </nav>
+    <button mat-mini-fab color="primary" class="mb-4 ml-3" (click)="location.back()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     <div *ngIf="type=='user'">
         <div class="card-container mat-elevation-z3 mat-typography">
             <mat-card>

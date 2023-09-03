@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import  {Location} from "@angular/common";
 import { ActivatedRoute, Router } from '@angular/router';
 import { Issue } from 'src/app/interfaces/issue';
 import { Task } from 'src/app/interfaces/task';
@@ -34,8 +35,15 @@ export class SpecificComponent implements OnInit{
   public info:String[];
   value = '';
 
-  constructor(private route: ActivatedRoute,private router: Router,private app:AppService,private userService:UserService,
-    private dialogService:DialogService,private dialog: MatDialog,private specificService:SpecificService,private generalService:DialogService,private statusService :StatusService){
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              public location: Location,
+              private app:AppService,
+              private userService:UserService,
+              private dialogService:DialogService,
+              private dialog: MatDialog,
+              private specificService:SpecificService,
+              private statusService :StatusService){
     this.app.refresh();//In case of refresh
     this.user = this.app.user;
     this.info=[];

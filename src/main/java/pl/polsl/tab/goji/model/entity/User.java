@@ -103,6 +103,13 @@ public class User implements UserDetails {
     public void prePersist() {
         active = true;
     }
+
+    public Boolean isActive(){
+        if(active||active==null){
+            return true;
+        }
+        return false;
+    }
     @Override
     public int hashCode() {
         return getClass().hashCode();

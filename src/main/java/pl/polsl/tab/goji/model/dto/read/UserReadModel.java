@@ -16,4 +16,11 @@ public class UserReadModel {
     private String email;
     private String role;
     private Boolean active;
+
+    public Boolean isActive(){
+        if(active==null){
+            return true;
+        }
+        return active;
+    }
 }

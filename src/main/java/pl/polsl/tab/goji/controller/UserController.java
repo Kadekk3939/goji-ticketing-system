@@ -53,7 +53,7 @@ public class UserController {
     @GetMapping("/login/{login}")
     public ResponseEntity<?> getUserByLogin(@PathVariable String login){
         UserReadModel user = userService.findUserByLogin(login);
-        if(user!=null && (user.getActive() || user.getActive()==null)){
+        if(user!=null && user.isActive()){
             return ResponseEntity.ok(user);
         }
         else{

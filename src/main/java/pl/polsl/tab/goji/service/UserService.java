@@ -151,4 +151,18 @@ public class UserService implements UserDetailsService {
     public List<TaskReadModel> getTasksForUser(Long userId){
         return  taskService.getTasksForUser(userId);
     }
+
+    public UserReadModel setUserNotActive(Long userId){
+        User user = userRepository.findUserByUserId(userId).get();
+        user.setActive(false);
+        user = userRepository.save(user);
+        return userMapper.toReadModel(user);
+    }
+
+    public UserReadModel setUserActive(Long userId){
+        User user = userRepository.findUserByUserId(userId).get();
+        user.setActive(true);
+        user = userRepository.save(user);
+        return userMapper.toReadModel(user);
+    }
 }

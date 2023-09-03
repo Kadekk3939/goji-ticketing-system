@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -46,6 +47,9 @@ public class User implements UserDetails {
     @NotBlank(message = "Password must not be blank")
     @Column(name = "password")
     private String password;
+
+    @Column(name = "active")
+    private Boolean active;
 
     @ManyToOne
     @JoinColumn(name = "roleId")
@@ -95,6 +99,10 @@ public class User implements UserDetails {
         return userId != null && Objects.equals(userId, user.userId);
     }
 
+    @PrePersist
+    public void prePersist() {
+        active = true;
+    }
     @Override
     public int hashCode() {
         return getClass().hashCode();

@@ -53,11 +53,11 @@ public class UserController {
     @GetMapping("/login/{login}")
     public ResponseEntity<?> getUserByLogin(@PathVariable String login){
         UserReadModel user = userService.findUserByLogin(login);
-        if(user!=null){
+        if(user!=null && (user.getActive() || user.getActive()==null)){
             return ResponseEntity.ok(user);
         }
         else{
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No such user");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No such user or not active");
         }
 
     }
@@ -81,6 +81,16 @@ public class UserController {
             return ResponseEntity.ok(userService.getIssuesForUser(userId));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User wrong role");
+    }
+
+    @PutMapping("/{userId}/notActive")
+    public ResponseEntity<UserReadModel>setUserNotActive(@PathVariable Long userId){
+        return ResponseEntity.ok(userService.setUserNotActive(userId));
+    }
+
+    @PutMapping("/{userId}/active")
+    public ResponseEntity<UserReadModel>setUserActive(@PathVariable Long userId){
+        return ResponseEntity.ok(userService.setUserActive(userId));
     }
 
 }

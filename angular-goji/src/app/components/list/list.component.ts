@@ -445,27 +445,22 @@ export class ListComponent implements OnInit {
     this.pageSlice = this.elements!.slice(startIndex,endIndex);
   }
 
-  editData(id:any, type:any)
-  {
-    this.openDialog(id,'Edit '+type.slice(1,-1), type);
-  }
-
   addData(type:any)
   {
-    this.openDialog(0, 'Add '+type.slice(1,-1), type);
+    this.openDialog('Add '+type.slice(1,-1), type);
   }
 
 
-  openDialog(id:any, title:any, type:any)
+  openDialog(title:any, type:any)
   {
     this.value='';
-    var _dialog = this.dialog.open(DialogComponent, {
+    const _dialog = this.dialog.open(DialogComponent, {
       width:'40%',
       enterAnimationDuration:'500ms',
       exitAnimationDuration:'500ms',
       data:{
         title: title,
-        id: id,
+        id: 0,
         type: type
       }
     })

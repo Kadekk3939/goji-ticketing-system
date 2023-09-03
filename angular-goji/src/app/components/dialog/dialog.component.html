@@ -31,7 +31,7 @@
                 </mat-select>
             </mat-form-field>
             <p class="loginWarning" [hidden]="!isLoginWarningVisible">❗ User with such login already exist</p>
-            <p class="emailWwarning" [hidden]="!isEmailWarningVisible">❗ Check if email is corect</p>
+            <p class="emailWarning" [hidden]="!isEmailWarningVisible">❗ Check if email is correct</p>
         </div>
         <div mat-dialog-actions>
             <button mat-raised-button color="primary" [disabled]="!isFormValid(addUserForm)">Save</button>
@@ -68,7 +68,7 @@
         </mat-select>
       </mat-form-field>
       <p class="loginWarning" [hidden]="!isLoginWarningVisible">❗ User with such login already exist</p>
-      <p class="emailWwarning" [hidden]="!isEmailWarningVisible">❗ Check if email is corect</p>
+      <p class="emailWarning" [hidden]="!isEmailWarningVisible">❗ Check if email is correct</p>
     </div>
     <div mat-dialog-actions>
       <button mat-raised-button color="primary" [disabled]="!isFormValid(editUserForm)">Save</button>

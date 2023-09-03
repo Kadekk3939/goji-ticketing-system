@@ -35,6 +35,11 @@
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>User Information</mat-card-title>
+                    <mat-card-actions class="element-card-actions ">
+                      <button (click)="editData(getId(element!), type)" mat-icon-button color="primary" class="mod-button">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                    </mat-card-actions>
                 </mat-card-header>
                 <mat-card-content>
                     <p><strong>User ID:</strong> {{info![0] }}</p>
@@ -56,8 +61,8 @@
                             <mat-card-title>Information</mat-card-title>
                             <mat-card-actions class="element-card-actions ">
                                 <button (click)="editData(getId(element!), type)" mat-icon-button color="primary" class="mod-button">
-                            <mat-icon>edit</mat-icon>
-                        </button>
+                                    <mat-icon>edit</mat-icon>
+                                </button>
                             </mat-card-actions>
                         </mat-card-header>
                         <mat-card-content>

@@ -76,11 +76,6 @@
                         <mat-card-header>
                             <mat-card-title>{{ getName(element) }}</mat-card-title>
                             <mat-card-actions class="element-card-actions ">
-                                <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
-                                    <button (click)="editData(getId(element), type)" mat-icon-button color="primary" class="mod-button">
-                                        <mat-icon>edit</mat-icon>
-                                    </button>
-                                </div>
                                 <div *ngIf="(type=='/requests')">
                                     <button [routerLink]="['/request', getId(element)]" mat-icon-button color="primary" class="mod-button">
                                         <mat-icon>more_vert</mat-icon>

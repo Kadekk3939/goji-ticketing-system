@@ -1,34 +1,34 @@
 <body>
-  <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
-    <a class="navbar-brand" routerLink="/user"routerLinkActive="active" ariaCurrentWhenActive="page">
-      <img src="../../../assets/goji.png" class="d-inline-block" alt="Goji">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-5 shadow">
+        <a class="navbar-brand" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <img src="../../../assets/goji.png" class="d-inline-block" alt="Goji">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu">
      <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="mainmenu">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
-        </li>
-        <li class="nav-item" *ngIf="user?.role=='Admin'">
-          <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
-        </li>
-        <li class="nav-item" *ngIf="user?.role=='Account Manager'">
-          <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
-        </li>
-        <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager'">
-          <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
-        </li>
-        <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager' || user?.role=='Worker'">
-          <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+        <div class="collapse navbar-collapse" id="mainmenu">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/user" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Admin'">
+                    <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager'">
+                    <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager'">
+                    <a class="nav-link" routerLink="/issues" routerLinkActive="active" ariaCurrentWhenActive="page">Issues</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager' || user?.role=='Worker'">
+                    <a class="nav-link" routerLink="/tasks" routerLinkActive="active" ariaCurrentWhenActive="page">Tasks</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" (click)="logout()" routerLinkActive="active" ariaCurrentWhenActive="page">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <header>
         <h1>Welcome {{user?.login}}</h1>
     </header>
@@ -39,6 +39,22 @@
                 <p class="lead">Name : {{user?.firstName}} {{user?.lastName}}</p>
                 <p class="lead">Email : {{user?.email}}</p>
                 <p class="lead">Role : {{user?.role}}</p>
+            </div>
+        </div>
+    </div>
+    <div class='sub'>
+        <div>
+            <div *ngFor="let obj of subElements" class="subElements">
+                <div class="card-container-sub  mat-elevation-z3">
+                    <mat-card>
+                        <mat-card-content class="subElement" (click)="toSubElement(getSubElementInfo(obj)![4],obj)">
+                            <p><strong>Type:</strong> {{getSubElementInfo(obj)![0]}}</p>
+                            <p><strong>Name:</strong> {{getSubElementInfo(obj)![1] }}</p>
+                            <p><strong>Version:</strong> {{getSubElementInfo(obj)![2]}}</p>
+                            <p><strong>Description:</strong> {{getSubElementInfo(obj)![3] }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
             </div>
         </div>
     </div>

@@ -163,12 +163,14 @@
                                     </mat-expansion-panel-header>
                                     <mat-form-field>
                                         <mat-label>Choose a date</mat-label>
-                                        <input matInput [matDatepicker]="odPicker" (dateChange)="onFilterDateChange($event, 'open')">
+                                        <input matInput [matDatepicker]="odPicker" (dateChange)="onFilterDateChange($event, 'open')" [(ngModel)]="opendateFValue">
                                         <mat-datepicker-toggle matIconSuffix [for]="odPicker"></mat-datepicker-toggle>
                                         <mat-datepicker #odPicker></mat-datepicker>
+                                        <button *ngIf="opendateFValue" matSuffix mat-icon-button aria-label="OD" (click)="onClearDateFilter($event,'open')">
+                                          <mat-icon>close</mat-icon>
+                                        </button>
                                     </mat-form-field>
                                 </mat-expansion-panel>
-
                                 <mat-expansion-panel>
                                     <mat-expansion-panel-header>
                                         <mat-panel-title>
@@ -177,9 +179,12 @@
                                     </mat-expansion-panel-header>
                                     <mat-form-field>
                                         <mat-label>Choose a date</mat-label>
-                                        <input matInput [matDatepicker]="ipdPicker" (dateChange)="onFilterDateChange($event, 'inProgress')">
+                                        <input matInput [matDatepicker]="ipdPicker" (dateChange)="onFilterDateChange($event, 'inProgress')" [(ngModel)]="inProgressDateFValue">
                                         <mat-datepicker-toggle matIconSuffix [for]="ipdPicker"></mat-datepicker-toggle>
                                         <mat-datepicker #ipdPicker></mat-datepicker>
+                                        <button *ngIf="inProgressDateFValue" matSuffix mat-icon-button aria-label="IPD" (click)="onClearDateFilter($event,'inProgress')">
+                                          <mat-icon>close</mat-icon>
+                                        </button>
                                     </mat-form-field>
                                 </mat-expansion-panel>
 
@@ -191,9 +196,12 @@
                                     </mat-expansion-panel-header>
                                     <mat-form-field>
                                         <mat-label>Choose a date</mat-label>
-                                        <input matInput [matDatepicker]="fdPicker" (dateChange)="onFilterDateChange($event, 'finalization')">
+                                        <input #openDate id="odDatePicker" matInput [matDatepicker]="fdPicker" (dateChange)="onFilterDateChange($event, 'finalization')" [(ngModel)]="closedDateFValue">
                                         <mat-datepicker-toggle matIconSuffix [for]="fdPicker"></mat-datepicker-toggle>
                                         <mat-datepicker #fdPicker></mat-datepicker>
+                                        <button *ngIf="closedDateFValue" matSuffix mat-icon-button aria-label="CD" (click)="onClearDateFilter($event,'close')">
+                                          <mat-icon>close</mat-icon>
+                                        </button>
                                     </mat-form-field>
                                 </mat-expansion-panel>
 

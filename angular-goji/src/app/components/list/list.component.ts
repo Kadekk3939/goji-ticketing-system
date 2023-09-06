@@ -16,6 +16,7 @@ import {DialogComponent} from "../dialog/dialog.component";
 import {FinishDialogComponent} from "../finish-dialog/finish-dialog.component";
 import {FormControl} from "@angular/forms";
 import {StatusService} from "../../services/status.service";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-list',
@@ -37,7 +38,12 @@ export class ListComponent implements OnInit {
   tempArray: any = [];
   newArray: any = [];
   numOfChecked: number = 0;
-  
+  opendateFValue: any;
+  inProgressDateFValue: any;
+  closedDateFValue: any;
+
+  @ViewChild('openDate', {read: MatInput}) openDate: any ;
+
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
   constructor(private router: Router,
@@ -607,14 +613,17 @@ export class ListComponent implements OnInit {
     const pick = new Date(new Date(event.value.toISOString()).getTime()).setUTCHours(24,0,0,0);
     switch (mode) {
       case 'open': {
+        this.opendateFValue = event.value;
         this.elements = this.originalElements.filter((e: any) =>
           new Date(new Date(new Date(e.openDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
       case 'inProgress': {
+        this.inProgressDateFValue = event.value;
         this.elements = this.originalElements.filter((e: any) =>
           new Date(new Date(new Date(e.inProgressDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
       case 'finalization': {
+        this.closedDateFValue = event.value;
         this.elements = this.originalElements.filter((e: any) =>
           new Date(new Date(new Date(e.finalizationDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
@@ -631,6 +640,28 @@ export class ListComponent implements OnInit {
       this.pageSlice = this.elements!.slice(startIndex,endIndex);
     }
   }
+
+  onClearDateFilter(event: any, mode: string){
+    event.stopPropagation();
+    switch (mode) {
+      case 'open': {
+        this.opendateFValue = null;
+        break;
+      }
+      case 'inProgress': {
+        this.inProgressDateFValue = null;
+        break;
+      }
+      case 'close': {
+        this.closedDateFValue = null;
+        break;
+      }
+      default:
+        break;
+    }
+    this.elements = this.originalElements;
+  }
+
 }
 
 

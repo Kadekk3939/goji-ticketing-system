@@ -34,7 +34,10 @@ export class ListComponent implements OnInit {
   public pageSlice: (Request|Issue|Task|User)[];
   public statusArray: any[] = [{id:1, name: 'OPEN'}, {id:2, name: 'CLOSED'}, {id:3, name: 'IN_PROGRESS'}];
   public rolesArray: any[] = [{id:1, name: 'Admin'}, {id:2, name: 'Account Manager'}, {id:3, name: 'Product Manager'}, {id:4, name: 'Worker'}];
-
+  tempArray: any = [];
+  newArray: any = [];
+  numOfChecked: number = 0;
+  
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
   constructor(private router: Router,
@@ -557,10 +560,9 @@ export class ListComponent implements OnInit {
     }
   }
 
-  tempArray: any = [];
-  newArray: any = [];
   onFilterCheckboxChange(event: any){
     if(event.target.checked){
+      this.numOfChecked++;
       this.tempArray = this.originalElements.filter((e: any)=> e.status == event.target.value || e.role == event.target.value);
       this.elements = [];
       this.newArray.push(this.tempArray);
@@ -571,16 +573,22 @@ export class ListComponent implements OnInit {
         }
       }
     }else{
+      this.numOfChecked--;
       this.tempArray = this.elements.filter((e: any)=> e.status != event.target.value && e.role != event.target.value);
       this.newArray = [];
       this.elements = [];
       this.newArray.push(this.tempArray);
-      for(let i = 0; i < this.newArray.length; i++){
-        for(let j = 0; j < this.newArray[i].length; j++){
-          const obj = this.newArray[i][j];
-          this.elements.push(obj);
+      if (this.numOfChecked == 0){
+        this.elements = this.originalElements;
+      }else{
+        for(let i = 0; i < this.newArray.length; i++){
+          for(let j = 0; j < this.newArray[i].length; j++){
+            const obj = this.newArray[i][j];
+            this.elements.push(obj);
+          }
         }
       }
+
     }
 
     if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)

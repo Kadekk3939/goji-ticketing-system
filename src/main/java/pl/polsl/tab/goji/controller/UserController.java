@@ -53,6 +53,12 @@ public class UserController {
     @GetMapping("/login/{login}")
     public ResponseEntity<?> getUserByLogin(@PathVariable String login){
         UserReadModel user = userService.findUserByLogin(login);
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/duringLogin/{login}")
+    public ResponseEntity<?> getUserByLoginDuringLoginIn(@PathVariable String login){
+        UserReadModel user = userService.findUserByLogin(login);
         if(user!=null && user.isActive()){
             return ResponseEntity.ok(user);
         }
@@ -79,6 +85,9 @@ public class UserController {
         }
         else if(Objects.equals(user.getRole(), "Product Manager")){
             return ResponseEntity.ok(userService.getIssuesForUser(userId));
+        }
+        else if(Objects.equals(user.getRole(), "Admin")){
+            return ResponseEntity.status(HttpStatus.OK).body("");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User wrong role");
     }

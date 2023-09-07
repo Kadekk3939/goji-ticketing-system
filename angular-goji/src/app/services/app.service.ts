@@ -59,7 +59,7 @@ export class AppService {
     localStorage.clear()
     localStorage.setItem('login', credentials.login);
     localStorage.setItem('password', credentials.password);
-    this.http.get(`${environment.apiBaseUrl}/user/login/${credentials.login}`, { headers: this.headers }).subscribe
+    this.http.get(`${environment.apiBaseUrl}/user/duringLogin/${credentials.login}`, { headers: this.headers }).subscribe
     (response => {
         if (response) {
           this.authenticated = true;

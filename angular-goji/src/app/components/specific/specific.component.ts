@@ -277,12 +277,18 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
               ((this.element as Task).inProgressDate||'none').toString().slice(0,10),
               ((this.element as Task).finalizationDate||'none').toString().slice(0,10)];
           }else if ('firstName' in this.element) {
+            var active =''
+            if((this.element as User).active==null)
+              active='';
+            else
+              active = (this.element as User).active!
             return [(this.element as User).userId.toString(),
               (this.element as User).firstName,
               (this.element as User).lastName,
               (this.element as User).login,
               (this.element as User).email,
-              (this.element as User).role];
+              (this.element as User).role,
+              active];
           }else if('productName' in this.element){
             return [(this.element as Product).productId.toString(),
               (this.element as Product).productName,
@@ -516,6 +522,38 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
       }
       default: {
         break;
+      }
+    }
+  }
+
+  getActive(obj:User|Issue|Task|Request|Product|Client|null):string|null{
+    if(obj!=null){
+      if('firstName' in obj) {
+        if((obj as User).active==null)
+          return null
+        else
+          return (obj as User).active!.toString();
+      }
+    }
+    return ''
+  }
+
+  setActive(obj:User|Issue|Task|Request|Product|Client){
+    if(obj!=null){
+      if('firstName' in obj) {
+        if((obj as User).active==null||(obj as User).active=='true'){
+          this.specificService.setUserActiveFalse(obj.userId.toString()).subscribe(res=>{
+            this.element=null;
+            this.ngOnInit();
+          });
+        }
+        else{
+          this.specificService.setUserActiveTrue(obj.userId.toString()).subscribe(res=>{
+            this.element=null;
+            this.ngOnInit();
+          });
+        }
+          
       }
     }
   }

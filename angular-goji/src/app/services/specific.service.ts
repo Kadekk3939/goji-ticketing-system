@@ -51,4 +51,12 @@ export class SpecificService {
   public getSubElementsForUser(userId:string):Observable<Issue[]|Task[]|Request[]>{
     return this.http.get<Issue[]|Task[]|Request[]>(`${environment.apiBaseUrl}/user/${userId}/subElements`)
   }
+
+  public setUserActiveTrue(userId:string):Observable<User>{
+    return this.http.put<User>(`${environment.apiBaseUrl}/user/${userId}/active`,null)
+  }
+
+  public setUserActiveFalse(userId:string):Observable<User>{
+    return this.http.put<User>(`${environment.apiBaseUrl}/user/${userId}/notActive`,null)
+  }
 }

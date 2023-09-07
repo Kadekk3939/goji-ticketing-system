@@ -5,4 +5,5 @@ export interface User {
   login: string;
   email: string;
   role: string;
+  active: string|null;
 }

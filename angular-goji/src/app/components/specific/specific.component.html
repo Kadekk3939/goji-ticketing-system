@@ -51,7 +51,22 @@
                     <p><strong>Login:</strong> {{info![3] }}</p>
                     <p><strong>Email:</strong> {{info![4] }}</p>
                     <p><strong>Role:</strong> {{info![5] }}</p>
+                    <p><strong>Active:</strong> {{info![6] }}</p>
                 </mat-card-content>
+                <mat-card-actions class="element-card-actions ">
+                    <div *ngIf="(user?.role=='Admin'&&type=='user')">
+                        <div *ngIf="getActive(element)=='true'||getActive(element)==null">
+                            <button mat-flat-button color="accent" class="mod-button" (click)="setActive(element!)">
+                          DISACTIVATE
+                        </button>
+                        </div>
+                        <div *ngIf="getActive(element)=='false'">
+                            <button mat-flat-button color="accent" class="mod-button" (click)="setActive(element!)">
+                          ACTIVATE
+                        </button>
+                        </div>
+                    </div>
+                </mat-card-actions>
             </mat-card>
         </div>
     </div>
@@ -177,7 +192,6 @@
             </div>
 
             <div class='sub'>
-
                 <div *ngIf="type=='issue' || type=='request'|| type=='product'||type=='user'">
                     <div *ngFor="let obj of subElements" class="subElements">
                         <div class="card-container-sub  mat-elevation-z3">

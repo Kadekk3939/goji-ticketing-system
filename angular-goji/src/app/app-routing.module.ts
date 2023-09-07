@@ -10,6 +10,8 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path:'user', component: UserComponent},
   {path: 'users', component:ListComponent},
+  {path: 'clients', component:ListComponent},
+  {path: 'products', component:ListComponent},
   {path: 'requests', component:ListComponent},
   {path: 'issues', component:ListComponent},
   {path: 'tasks', component:ListComponent},

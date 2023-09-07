@@ -15,6 +15,12 @@
                     <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
                 </li>
                 <li class="nav-item" *ngIf="user?.role=='Account Manager'">
+                  <a class="nav-link" routerLink="/clients" routerLinkActive="active" ariaCurrentWhenActive="page">Clients</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager'">
+                  <a class="nav-link" routerLink="/products" routerLinkActive="active" ariaCurrentWhenActive="page">Products</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager'">
                     <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
                 </li>
                 <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager'">

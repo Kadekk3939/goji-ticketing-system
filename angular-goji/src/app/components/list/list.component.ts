@@ -17,6 +17,8 @@ import {FinishDialogComponent} from "../finish-dialog/finish-dialog.component";
 import {FormControl} from "@angular/forms";
 import {StatusService} from "../../services/status.service";
 import {MatInput} from "@angular/material/input";
+import {Client} from "../../interfaces/client";
+import {Product} from "../../interfaces/product";
 
 @Component({
   selector: 'app-list',
@@ -24,15 +26,14 @@ import {MatInput} from "@angular/material/input";
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  control = new FormControl("steak-0");
   value = '';
   selected = '';
   public type:string | undefined;
   public users: User[] | undefined;
   public user:User|undefined;
-  public elements:(Request|Issue|Task|User)[];
-  public originalElements:(Request|Issue|Task|User)[];
-  public pageSlice: (Request|Issue|Task|User)[];
+  public elements:(Request|Issue|Task|User|Client|Product)[];
+  public originalElements:(Request|Issue|Task|User|Client|Product)[];
+  public pageSlice: (Request|Issue|Task|User|Client|Product)[];
   public statusArray: any[] = [{id:1, name: 'OPEN'}, {id:2, name: 'CLOSED'}, {id:3, name: 'IN_PROGRESS'}];
   public rolesArray: any[] = [{id:1, name: 'Admin'}, {id:2, name: 'Account Manager'}, {id:3, name: 'Product Manager'}, {id:4, name: 'Worker'}];
   tempArray: any = [];
@@ -60,9 +61,6 @@ export class ListComponent implements OnInit {
       this.originalElements =[];
       this.pageSlice = [];
       this.type=router.url;
-    this.control.valueChanges.subscribe(s => {
-      console.log(`The selected value is ${s}`);
-    });
     }
   ngOnInit() {
     this.getData();
@@ -92,6 +90,26 @@ export class ListComponent implements OnInit {
           if(this.type=="/users")
           {
             this.router.navigateByUrl('/requests');
+          }
+          if(this.router.url=="/clients") {
+            this.listService.getAllClients().subscribe(
+              (response: Client[]) => {
+                response.forEach(client => {
+                  this.elements?.push(client);
+                })
+                this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
+              }
+            )
+          }
+          if(this.router.url=="/products") {
+            this.listService.getAllProducts().subscribe(
+              (response: Product[]) => {
+                response.forEach(product => {
+                  this.elements?.push(product);
+                })
+                this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
+              }
+            )
           }
           if(this.router.url=="/requests") {
             this.listService.getAllRequests().subscribe(
@@ -175,7 +193,7 @@ export class ListComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  getObjType(obj:Request|Issue|Task|User):string{
+  getObjType(obj:Request|Issue|Task|User|Client|Product):string{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -188,6 +206,12 @@ export class ListComponent implements OnInit {
         else if ('firstName' in obj) {
           return 'user';
         }
+        else if ('clientId' in obj) {
+          return 'client';
+        }
+        else if ('productId' in obj) {
+          return 'product';
+        }
         break;
       }
       default: {
@@ -197,7 +221,7 @@ export class ListComponent implements OnInit {
     return '';
   }
 
-  getId(obj:Request|Issue|Task|User):number{
+  getId(obj:Request|Issue|Task|User|Client|Product):number{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -210,6 +234,12 @@ export class ListComponent implements OnInit {
         else if ('firstName' in obj) {
           return (obj as User).userId;
         }
+        else if ('clientId' in obj) {
+          return (obj as Client).clientId;
+        }
+        else if ('productId' in obj) {
+          return (obj as Product).productId;
+        }
         break;
       }
       default: {
@@ -219,7 +249,7 @@ export class ListComponent implements OnInit {
     return -1;
   }
 
-  getName(obj:Request|Issue|Task|User):string{
+  getName(obj:Request|Issue|Task|User|Client|Product):string{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -232,6 +262,12 @@ export class ListComponent implements OnInit {
         else if ('firstName' in obj) {
           return (obj as User).firstName + " " + (obj as User).lastName;
         }
+        else if ('clientId' in obj) {
+          return (obj as Client).name;
+        }
+        else if ('productId' in obj) {
+          return (obj as Product).productName;
+        }
         break;
       }
       default: {
@@ -240,7 +276,7 @@ export class ListComponent implements OnInit {
     }
     return '';
   }
-  getOpenDate(obj:Request|Issue|Task|User):Date{
+  getOpenDate(obj:Request|Issue|Task|User|Client|Product):Date{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -258,7 +294,7 @@ export class ListComponent implements OnInit {
     }
     return new Date();
   }
-  getProgressDate(obj:Request|Issue|Task|User):Date{
+  getProgressDate(obj:Request|Issue|Task|User|Client|Product):Date{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -277,7 +313,7 @@ export class ListComponent implements OnInit {
     return new Date();
   }
 
-  getFinishDate(obj:Request|Issue|Task|User):Date{
+  getFinishDate(obj:Request|Issue|Task|User|Client|Product):Date{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -296,7 +332,7 @@ export class ListComponent implements OnInit {
     return new Date();
   }
 
-  getStatus(obj:Request|Issue|Task|User):string{
+  getStatus(obj:Request|Issue|Task|User|Client|Product):string{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -315,7 +351,7 @@ export class ListComponent implements OnInit {
     return '';
   }
 
-  getInfo(obj:Request|Issue|Task|User):string[]{
+  getInfo(obj:Request|Issue|Task|User|Client|Product):string[]{
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -327,6 +363,12 @@ export class ListComponent implements OnInit {
         }
         else if ('firstName' in obj) {
           return [(obj as User).login, (obj as User).email, (obj as User).role];
+        }
+        else if ('clientId' in obj) {
+          return [(obj as Client).email, (obj as Client).phoneNumber];
+        }
+        else if ('productId' in obj) {
+          return [(obj as Product).version, (obj as Product).description];
         }
         break;
       }
@@ -470,7 +512,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  openFinishDialog(id:any, obj:Request|Issue|Task|User)
+  openFinishDialog(id:any, obj:Request|Issue|Task|User|Client|Product)
   {
     var _dialog = this.dialog.open(FinishDialogComponent, {
       width:'40%',
@@ -489,7 +531,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  setInProgress(obj:Request|Issue|Task|User) {
+  setInProgress(obj:Request|Issue|Task|User|Client|Product) {
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {
@@ -528,7 +570,7 @@ export class ListComponent implements OnInit {
     }
   }
 
-  setOpen(obj:Request|Issue|Task|User) {
+  setOpen(obj:Request|Issue|Task|User|Client|Product) {
     switch (typeof obj) {
       case 'object': {
         if ('requestName' in obj) {

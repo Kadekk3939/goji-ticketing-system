@@ -15,6 +15,12 @@
                     <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
                 </li>
                 <li class="nav-item" *ngIf="user?.role=='Account Manager'">
+                  <a class="nav-link" routerLink="/clients" routerLinkActive="active" ariaCurrentWhenActive="page">Clients</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager'">
+                  <a class="nav-link" routerLink="/products" routerLinkActive="active" ariaCurrentWhenActive="page">Products</a>
+                </li>
+                <li class="nav-item" *ngIf="user?.role=='Account Manager'">
                     <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
                 </li>
                 <li class="nav-item" *ngIf="user?.role=='Account Manager' || user?.role=='Product Manager'">
@@ -36,7 +42,7 @@
     </div>
     <div class="container mat-typography" id="main-container">
         <div class="field-container">
-            <mat-form-field class="sort" *ngIf="user?.role!='Admin'; else elseUserBlock">
+            <mat-form-field class="sort" *ngIf="user?.role!='Admin'; else elseUserBlock" [hidden]="type=='/products'||'/clients'">
                 <mat-label>Sort by</mat-label>
                 <mat-select [(value)]="selected" (selectionChange)="onSortOptionSelected()">
                     <mat-option>None</mat-option>
@@ -93,20 +99,38 @@
                                         <mat-icon>more_vert</mat-icon>
                                     </button>
                                 </div>
+                                <div *ngIf="(type=='/clients')">
+                                  <button [routerLink]="['/client', getId(element)]" mat-icon-button color="primary" class="mod-button">
+                                    <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                </div>
+                                <div *ngIf="(type=='/products')">
+                                  <button [routerLink]="['/product', getId(element)]" mat-icon-button color="primary" class="mod-button">
+                                    <mat-icon>more_vert</mat-icon>
+                                  </button>
+                                </div>
                             </mat-card-actions>
                         </mat-card-header>
                         <mat-card-content>
-                            <div *ngIf="user?.role=='Admin'; else elseBlock">
+                            <div *ngIf="user?.role=='Admin'">
                                 <p>Login: {{getInfo(element)[0]}}</p>
                                 <p>Email: {{getInfo(element)[1]}}</p>
                                 <p>Role: {{getInfo(element)[2]}}</p>
                             </div>
-                            <ng-template #elseBlock>
+                            <div *ngIf="type=='/products'">
+                              <p>Version: {{getInfo(element)[0]}}</p>
+                              <p>Description: {{getInfo(element)[1]}}</p>
+                            </div>
+                            <div *ngIf="type=='/clients'">
+                              <p>Email: {{getInfo(element)[0]}}</p>
+                              <p>Phone number: {{getInfo(element)[1]}}</p>
+                            </div>
+                            <div *ngIf="type==('/requests'||'/issues'||'/tasks')">
                                 <p>Status: {{getStatus(element)}}</p>
                                 <p>Opening date: {{getInfo(element)[0]}}</p>
                                 <p>In progress date: {{getInfo(element)[1]}}</p>
                                 <p>Closing date: {{getInfo(element)[2]}}</p>
-                            </ng-template>
+                            </div>
                         </mat-card-content>
 
                         <mat-card-actions class="element-card-actions ">
@@ -139,7 +163,6 @@
                     <mat-card-content>
                         <ng-template [ngIf]="user?.role!='Admin'" [ngIfElse]="isAdmin">
                             <mat-accordion>
-
                                 <mat-expansion-panel>
                                     <mat-expansion-panel-header>
                                         <mat-panel-title>

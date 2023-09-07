@@ -6,6 +6,8 @@ import { Request } from '../interfaces/request';
 import { Issue } from '../interfaces/issue';
 import { Task } from '../interfaces/task';
 import {User} from "../interfaces/user";
+import {Client} from "../interfaces/client";
+import {Product} from "../interfaces/product";
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +30,13 @@ export class ListService {
 
   public getAllUsers():Observable<User[]>{
     return this.http.get<User[]>(`${environment.apiBaseUrl}/user`);
+  }
+
+  public getAllClients():Observable<Client[]>{
+    return this.http.get<Client[]>(`${environment.apiBaseUrl}/client`);
+  }
+
+  public getAllProducts():Observable<Product[]>{
+    return this.http.get<Product[]>(`${environment.apiBaseUrl}/product`);
   }
 }

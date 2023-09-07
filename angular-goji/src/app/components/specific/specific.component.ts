@@ -305,6 +305,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
   }
 
   public logout(): void {
+    localStorage.clear();
     this.router.navigateByUrl('/');
   }
 

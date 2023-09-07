@@ -171,6 +171,7 @@ export class ListComponent implements OnInit {
   }
 
   public logout(): void {
+    localStorage.clear();
     this.router.navigateByUrl('/');
   }
 

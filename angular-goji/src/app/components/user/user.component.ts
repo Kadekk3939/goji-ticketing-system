@@ -41,6 +41,7 @@ export class UserComponent implements OnInit{
   }
 
   public logout(): void {
+    localStorage.clear();
     this.router.navigateByUrl('/');
   }
 

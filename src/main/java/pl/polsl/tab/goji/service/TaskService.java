@@ -141,7 +141,8 @@ public class TaskService {
         List<Task> tasks = taskRepository.findTasksForUser(userId);
         for(Task task:tasks){
             if(task.getStatus()==Status.IN_PROGRESS){
-                setTaskStatusClosed(task.getTaskId(),"Responsible user was deactivated while task was in progress");
+                task.setResponsiblePerson(null);
+                taskRepository.save(task);
             }
         }
     }

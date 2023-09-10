@@ -155,7 +155,8 @@ public class RequestService {
         List<Request> requests = requestRepository.findRequestsForUser(userId);
         for(Request request:requests){
             if(request.getStatus()==Status.IN_PROGRESS){
-                setRequestStatusClosed(request.getRequestId(),"Responsible user was deactivated while request was in progress");
+                request.setResponsiblePerson(null);
+                requestRepository.save(request);
             }
         }
     }

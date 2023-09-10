@@ -158,6 +158,12 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findUserByUserId(userId).get();
         user.setActive(false);
         user = userRepository.save(user);
+        if(Objects.equals(user.getUserRole().getRoleName(), "Account Manager")){
+            requestService.responsibleUserDisactivate(userId);
+        }
+        else if(Objects.equals(user.getUserRole().getRoleName(), "Product Manage")){
+            issueService.responsibleUserDisactivate(userId);
+        }
         if(Objects.equals(user.getUserRole().getRoleName(), "Worker")){
             taskService.responsibleUserDisactivate(userId);
         }

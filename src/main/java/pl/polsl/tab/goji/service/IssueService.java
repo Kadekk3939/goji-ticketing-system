@@ -153,7 +153,8 @@ public class IssueService {
         List<Issue> issues = issueRepository.findIssuesForUser(userId);
         for(Issue issue:issues){
             if(issue.getStatus()==Status.IN_PROGRESS){
-                setIssueStatusClosed(issue.getIssueId(),"Responsible user was deactivated while issue was in progress");
+                issue.setResponsiblePerson(null);
+                issueRepository.save(issue);
             }
         }
     }

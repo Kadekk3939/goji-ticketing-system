@@ -150,7 +150,6 @@
         </mat-error>
       </mat-form-field>
     </div>
-
     <div mat-dialog-actions>
       <button mat-raised-button color="primary" [disabled]="!isFormValid(clientForm)">Save</button>
       <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
@@ -224,6 +223,15 @@
                   Description is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
+            <mat-form-field *ngIf="users$ | async as users">
+              <mat-label>Responsible user</mat-label>
+              <mat-select formControlName="responsibleUser" matInput>
+                <mat-option [value]="''">None</mat-option>
+                <mat-option *ngFor="let user of users" [value]="user.login">
+                  {{user.firstName+' '+user.lastName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
             <mat-form-field *ngIf="products$ | async as products" [hidden]="inputData.id">
                 <mat-label>Product</mat-label>
                 <mat-select formControlName="productId" matInput>
@@ -262,6 +270,15 @@
                   Description is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
+            <mat-form-field *ngIf="users$ | async as users">
+              <mat-label>Responsible user</mat-label>
+              <mat-select formControlName="responsibleUser" matInput>
+                <mat-option [value]="''">None</mat-option>
+                <mat-option *ngFor="let user of users" [value]="user.login">
+                  {{user.firstName+' '+user.lastName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
             <mat-form-field *ngIf="requests$ | async as requests" [hidden]="inputData.id">
                 <mat-label>Request</mat-label>
                 <mat-select formControlName="requestId" matInput>
@@ -285,7 +302,6 @@
               </mat-error>
             </mat-form-field>
         </div>
-
         <div mat-dialog-actions>
             <button mat-raised-button color="primary" [disabled]="!isFormValid(issueForm)">Save</button>
             <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
@@ -310,6 +326,15 @@
                 <mat-error *ngIf="taskForm.controls['description'].hasError('required')">
                   Description is <strong>required</strong>
                 </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="users$ | async as users">
+              <mat-label>Responsible user</mat-label>
+              <mat-select formControlName="responsibleUser" matInput>
+                <mat-option [value]="''">None</mat-option>
+                <mat-option *ngFor="let user of users" [value]="user.login">
+                  {{user.firstName+' '+user.lastName}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
             <mat-form-field *ngIf="issues$ | async as issues" [hidden]="inputData.id">
                 <mat-label>Issue</mat-label>

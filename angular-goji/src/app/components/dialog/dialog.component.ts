@@ -21,6 +21,7 @@ export class DialogComponent implements OnInit {
   requests$: Observable<Request[]> | undefined;
   products$: Observable<Product[]> | undefined;
   clients$: Observable<Client[]> | undefined;
+  users$: Observable<User[]> | undefined;
   isLoginWarningVisible=false
   isEmailWarningVisible=false
   type:any;
@@ -81,6 +82,7 @@ export class DialogComponent implements OnInit {
     this.requestForm = this.fb.group({
       requestName: ['', Validators.required],
       description: ['', Validators.required],
+      responsibleUser: '',
       productId: ['', Validators.required]
     });
 
@@ -88,6 +90,7 @@ export class DialogComponent implements OnInit {
       requestId: ['', Validators.required],
       issueName: ['', Validators.required],
       description: ['', Validators.required],
+      responsibleUser: '',
       type: ['', Validators.required]
     });
 
@@ -95,6 +98,7 @@ export class DialogComponent implements OnInit {
       issueId: ['', Validators.required],
       taskName: ['', Validators.required],
       description: ['', Validators.required],
+      responsibleUser: '',
       type: ['', Validators.required]
     });
   }
@@ -109,6 +113,7 @@ export class DialogComponent implements OnInit {
     this.requests$ = this.service.getAllRequests();
     this.products$ = this.service.getAllProducts();
     this.clients$ = this.service.getAllClients();
+    this.users$ = this.service.getAllUsers();
   }
 
   setDialogData(id:any){
@@ -148,6 +153,7 @@ export class DialogComponent implements OnInit {
         this.requestForm.setValue({
           requestName: this.editData.requestName,
           description: this.editData.description,
+          responsibleUser: this.editData.responsibleUser,
           productId: this.editData.productId
         })
       })
@@ -159,6 +165,7 @@ export class DialogComponent implements OnInit {
           requestId: this.editData.requestId,
           issueName: this.editData.issueName,
           description: this.editData.description,
+          responsibleUser: this.editData.responsibleUser,
           type: this.editData.type
         })
       })
@@ -170,6 +177,7 @@ export class DialogComponent implements OnInit {
           issueId: this.editData.issueId,
           taskName: this.editData.taskName,
           description: this.editData.description,
+          responsibleUser: this.editData.responsibleUser,
           type: this.editData.type
         })
       })

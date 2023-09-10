@@ -12,6 +12,7 @@ import javax.validation.constraints.NotBlank;
 public class TaskWriteModel {
     @NotBlank(message = "Issue Id must not be blank")
     private Long issueId;
+    private String responsibleUser;
     @NotBlank(message = "Task name must not be blank")
     private String taskName;
     private String description;

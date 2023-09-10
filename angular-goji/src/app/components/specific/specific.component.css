@@ -35,6 +35,7 @@ img {
   display: flex;
   gap: 50px;
   padding: 50px;
+  justify-content: center;
 }
 
 .specificElement {

@@ -103,4 +103,8 @@ export class DialogService {
   public getAllClients():Observable<Client[]>{
     return this.http.get<Client[]>(`${environment.apiBaseUrl}/client`);
   }
+
+  public getAllUsers():Observable<User[]>{
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/user`);
+  }
 }

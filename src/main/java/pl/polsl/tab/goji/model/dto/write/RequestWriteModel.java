@@ -14,6 +14,7 @@ public class RequestWriteModel {
     private String requestName;
     @NotBlank(message = "Product Id must not be blank")
     private Long productId;
+    private String responsibleUser;
     private String description;
     private String type;
 }

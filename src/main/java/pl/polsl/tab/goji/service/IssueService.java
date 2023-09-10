@@ -52,6 +52,8 @@ public class IssueService {
         Set<Issue> issues = request.getIssues();
         issue.setRequest(request);
         issue.setStatus(Status.OPEN);
+        if(!issueWriteModel.getResponsibleUser().isEmpty())
+            issue.setResponsiblePerson(userRepository.findUserByLogin(issueWriteModel.getResponsibleUser()).get());
         issues.add(issue);
         issueRepository.save(issue);
         request.setIssues(issues);
@@ -68,6 +70,10 @@ public class IssueService {
             issueToUpdate.setIssueName(issueWriteModel.getIssueName());
             issueToUpdate.setDescription(issueWriteModel.getDescription());
             issueToUpdate.setType(issueWriteModel.getType());
+            if(!issueWriteModel.getResponsibleUser().isEmpty())
+                issueToUpdate.setResponsiblePerson(userRepository.findUserByLogin(issueWriteModel.getResponsibleUser()).get());
+            else
+                issueToUpdate.setResponsiblePerson(null);
             issueToUpdate = issueRepository.save(issueToUpdate);
         }
         return issueMapper.toReadModel(issueToUpdate);

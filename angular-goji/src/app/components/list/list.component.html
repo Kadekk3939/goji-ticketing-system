@@ -35,7 +35,7 @@
             </ul>
         </div>
     </nav>
-    <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')">
+    <div *ngIf="(user?.role=='Admin'&&type=='/users')||(user?.role=='Account Manager'&&type!='/users')||(user?.role=='Product Manager'&&type=='/tasks')" class="addButton">
         <button mat-fab color="primary" class="add-button" (click)="addData(type)">
             <mat-icon>add</mat-icon>
         </button>

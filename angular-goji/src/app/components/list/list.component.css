@@ -89,7 +89,7 @@ img {
 }
 
 .sort {
-  max-width: 20svw;
+  width: 125px;
 }
 .search {
   flex: 1;
@@ -105,4 +105,8 @@ img {
   .filters {
     display: none;
   }
+  .add-button {
+    display: none;
+  }
+
 }

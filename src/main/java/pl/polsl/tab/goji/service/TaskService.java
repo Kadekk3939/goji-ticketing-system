@@ -54,6 +54,8 @@ public class TaskService {
         issue.setTasks(tasks);
         task.setIssue(issue);
         task.setStatus(Status.OPEN);
+        if(!taskWriteModel.getResponsibleUser().isEmpty())
+            task.setResponsiblePerson(userRepository.findUserByLogin(taskWriteModel.getResponsibleUser()).get());
         return taskMapper.toReadModel(taskRepository.save(task));
     }
 
@@ -65,6 +67,10 @@ public class TaskService {
             taskToUpdate.setTaskName(taskWriteModel.getTaskName());
             taskToUpdate.setDescription(taskWriteModel.getDescription());
             taskToUpdate.setType(taskWriteModel.getType());
+            if(!taskWriteModel.getResponsibleUser().isEmpty())
+                taskToUpdate.setResponsiblePerson(userRepository.findUserByLogin(taskWriteModel.getResponsibleUser()).get());
+            else
+                taskToUpdate.setResponsiblePerson(null);
             taskToUpdate = taskRepository.save(taskToUpdate);
         }
         return taskMapper.toReadModel(taskToUpdate);

@@ -39,43 +39,6 @@
     <button mat-mini-fab color="primary" class="ml-3" (click)="location.back()">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <div *ngIf="type=='user'">
-        <div class="card-container mat-elevation-z3 mat-typography">
-            <mat-card>
-                <mat-card-header>
-                    <mat-card-title>User Information</mat-card-title>
-                    <mat-card-actions class="element-card-actions ">
-                        <button (click)="editData(getId(element!), type)" mat-icon-button color="primary" class="mod-button">
-                        <mat-icon>edit</mat-icon>
-                      </button>
-                    </mat-card-actions>
-                </mat-card-header>
-                <mat-card-content>
-                    <p><strong>User ID:</strong> {{info![0] }}</p>
-                    <p><strong>First Name:</strong> {{info![1] }}</p>
-                    <p><strong>Last Name:</strong> {{info![2] }}</p>
-                    <p><strong>Login:</strong> {{info![3] }}</p>
-                    <p><strong>Email:</strong> {{info![4] }}</p>
-                    <p><strong>Role:</strong> {{info![5] }}</p>
-                    <p><strong>Active:</strong> {{info![6] }}</p>
-                </mat-card-content>
-                <mat-card-actions class="element-card-actions ">
-                    <div *ngIf="(user?.role=='Admin'&&type=='user'&&canDisactivate())">
-                        <div *ngIf="getActive(element)=='true'||getActive(element)==null">
-                            <button mat-flat-button color="accent" class="mod-button" (click)="setActive(element!)">
-                          DISACTIVATE
-                        </button>
-                        </div>
-                        <div *ngIf="getActive(element)=='false'">
-                            <button mat-flat-button color="accent" class="mod-button" (click)="setActive(element!)">
-                          ACTIVATE
-                        </button>
-                        </div>
-                    </div>
-                </mat-card-actions>
-            </mat-card>
-        </div>
-    </div>
     <div class="content mat-typography">
         <div class="specificElement">
             <div *ngIf="type=='issue' || type=='request' || type=='task'">
@@ -163,8 +126,45 @@
                     </mat-card>
                 </div>
             </div>
+            <div *ngIf="type=='user'">
+              <div class="card-container mat-elevation-z3">
+                <mat-card>
+                  <mat-card-header>
+                    <mat-card-title>User Information</mat-card-title>
+                    <mat-card-actions class="element-card-actions ">
+                      <button (click)="editData(getId(element!), type)" mat-icon-button color="primary" class="mod-button">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                    </mat-card-actions>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p><strong>User ID:</strong> {{info![0] }}</p>
+                    <p><strong>First Name:</strong> {{info![1] }}</p>
+                    <p><strong>Last Name:</strong> {{info![2] }}</p>
+                    <p><strong>Login:</strong> {{info![3] }}</p>
+                    <p><strong>Email:</strong> {{info![4] }}</p>
+                    <p><strong>Role:</strong> {{info![5] }}</p>
+                    <p><strong>Active:</strong> {{info![6] }}</p>
+                  </mat-card-content>
+                  <mat-card-actions class="element-card-actions ">
+                    <div *ngIf="(user?.role=='Admin'&&type=='user'&&canDisactivate())">
+                      <div *ngIf="getActive(element)=='true'||getActive(element)==null">
+                        <button mat-flat-button color="accent" class="mod-button" (click)="setActive(element!)">
+                          DISACTIVATE
+                        </button>
+                      </div>
+                      <div *ngIf="getActive(element)=='false'">
+                        <button mat-flat-button color="accent" class="mod-button" (click)="setActive(element!)">
+                          ACTIVATE
+                        </button>
+                      </div>
+                    </div>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+            </div>
         </div>
-        <div class="subAndParentsElements">
+        <div class="subAndParentsElements" *ngIf="type!='user'">
           <mat-tab-group backgroundColor="accent" animationDuration="0">
             <mat-tab *ngIf="getParentElementInfo()![0] as parent" label={{parent}}>
               <div class="parents">

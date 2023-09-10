@@ -55,6 +55,8 @@ public class RequestService {
         product.setRequests(requests);
         request.setProduct(product);
         request.setStatus(Status.OPEN);
+        if(!requestWriteModel.getResponsibleUser().isEmpty())
+            request.setResponsiblePerson(userRepository.findUserByLogin(requestWriteModel.getResponsibleUser()).get());
 
         return  requestMapper.toReadModel(requestRepository.save(request));
     }
@@ -112,6 +114,10 @@ public class RequestService {
             requestToUpdate = request.get();
             requestToUpdate.setRequestName(requestWriteModel.getRequestName());
             requestToUpdate.setDescription(requestWriteModel.getDescription());
+            if(!requestWriteModel.getResponsibleUser().isEmpty())
+                requestToUpdate.setResponsiblePerson(userRepository.findUserByLogin(requestWriteModel.getResponsibleUser()).get());
+            else
+                requestToUpdate.setResponsiblePerson(null);
             requestToUpdate = requestRepository.save(requestToUpdate);
         }
 

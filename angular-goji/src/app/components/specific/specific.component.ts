@@ -556,7 +556,8 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
   setActive(obj:User|Issue|Task|Request|Product|Client){
     if(obj!=null){
       if('firstName' in obj) {
-        if((obj as User).active==null||(obj as User).active=='true'){
+        console.log(obj)
+        if((obj as User).active==null||(obj as User).active?.toString()=="true"){
           this.specificService.setUserActiveFalse(obj.userId.toString()).subscribe(res=>{
             this.element=null;
             this.ngOnInit();

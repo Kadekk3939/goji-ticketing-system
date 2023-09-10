@@ -52,8 +52,8 @@ export class DialogComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       login: ['', Validators.required],
-      password: ['', Validators.required],
-      email: ['', Validators.required],
+      password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$')]],
+      email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required]
     });
 
@@ -61,7 +61,7 @@ export class DialogComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       login: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required]
     });
 

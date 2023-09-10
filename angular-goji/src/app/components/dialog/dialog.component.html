@@ -5,22 +5,43 @@
             <mat-form-field>
                 <mat-label>Firstname</mat-label>
                 <input formControlName="firstName" matInput>
+                <mat-error *ngIf="addUserForm.controls['firstName'].hasError('required')">
+                  First name is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Lastname</mat-label>
                 <input formControlName="lastName" matInput>
+                <mat-error *ngIf="addUserForm.controls['lastName'].hasError('required')">
+                  Last name is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Login</mat-label>
                 <input formControlName="login" matInput>
+                <mat-error *ngIf="addUserForm.controls['login'].hasError('required')">
+                  Login is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Password</mat-label>
                 <input formControlName="password" type="password" matInput>
+                <mat-error *ngIf="addUserForm.controls['password'].hasError('required')">
+                  Password is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="addUserForm.controls['password'].hasError('pattern') && !addUserForm.controls['password'].hasError('required')">
+                  Password should have at least one lowercase letter, uppercase letter, digit and minimum length of 8 characters.
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Email</mat-label>
                 <input formControlName="email" type="email" matInput>
+                <mat-error *ngIf="addUserForm.controls['email'].hasError('email') && !addUserForm.controls['email'].hasError('required')">
+                  Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="addUserForm.controls['email'].hasError('required')">
+                  Email is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Role</mat-label>
@@ -29,6 +50,9 @@
                         {{role.viewValue}}
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="addUserForm.controls['role'].hasError('required')">
+                  Role is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <p class="loginWarning" [hidden]="!isLoginWarningVisible">❗ User with such login already exist</p>
             <p class="emailWarning" [hidden]="!isEmailWarningVisible">❗ Check if email is correct</p>
@@ -38,6 +62,61 @@
             <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
         </div>
     </form>
+</div>
+<div *ngIf="type=='/users'&&this.inputData.id!=0">
+  <form [formGroup]="editUserForm" (ngSubmit)="SaveData()">
+    <h1 mat-dialog-title>{{inputData.title}}</h1>
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Firstname</mat-label>
+        <input formControlName="firstName" matInput>
+        <mat-error *ngIf="editUserForm.controls['firstName'].hasError('required')">
+          First name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Lastname</mat-label>
+        <input formControlName="lastName" matInput>
+        <mat-error *ngIf="editUserForm.controls['lastName'].hasError('required')">
+          Last name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Login</mat-label>
+        <input formControlName="login" matInput>
+        <mat-error *ngIf="editUserForm.controls['login'].hasError('required')">
+          Login is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input formControlName="email" type="email" matInput>
+        <mat-error *ngIf="editUserForm.controls['email'].hasError('email') && !editUserForm.controls['email'].hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="editUserForm.controls['email'].hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role" matInput>
+          <mat-option *ngFor="let role of roles" [value]="role.value">
+            {{role.viewValue}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="editUserForm.controls['role'].hasError('required')">
+          Role is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <p class="loginWarning" [hidden]="!isLoginWarningVisible">❗ User with such login already exist</p>
+      <p class="emailWarning" [hidden]="!isEmailWarningVisible">❗ Check if email is correct</p>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" [disabled]="!isFormValid(editUserForm)">Save</button>
+      <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
+    </div>
+  </form>
 </div>
 <div *ngIf="type=='/clients'">
   <form [formGroup]="clientForm" (ngSubmit)="SaveData()">
@@ -112,7 +191,8 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Description</mat-label>
-        <textarea formControlName="description" matInput></textarea>
+        <textarea #productDescription maxlength="400" formControlName="description" matInput></textarea>
+        <mat-hint align="end">{{productDescription.value.length}}/400</mat-hint>
         <mat-error *ngIf="productForm.controls['description'].hasError('required')">
           Description is <strong>required</strong>
         </mat-error>
@@ -125,43 +205,6 @@
     </div>
   </form>
 </div>
-<div *ngIf="type=='/users'&&this.inputData.id!=0">
-  <form [formGroup]="editUserForm" (ngSubmit)="SaveData()">
-    <h1 mat-dialog-title>{{inputData.title}}</h1>
-    <div mat-dialog-content>
-      <mat-form-field>
-        <mat-label>Firstname</mat-label>
-        <input formControlName="firstName" matInput>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Lastname</mat-label>
-        <input formControlName="lastName" matInput>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Login</mat-label>
-        <input formControlName="login" matInput>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input formControlName="email" type="email" matInput>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Role</mat-label>
-        <mat-select formControlName="role" matInput>
-          <mat-option *ngFor="let role of roles" [value]="role.value">
-            {{role.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <p class="loginWarning" [hidden]="!isLoginWarningVisible">❗ User with such login already exist</p>
-      <p class="emailWarning" [hidden]="!isEmailWarningVisible">❗ Check if email is correct</p>
-    </div>
-    <div mat-dialog-actions>
-      <button mat-raised-button color="primary" [disabled]="!isFormValid(editUserForm)">Save</button>
-      <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
-    </div>
-  </form>
-</div>
 <div *ngIf="type=='/requests'">
     <form [formGroup]="requestForm" (ngSubmit)="SaveData()">
         <h1 mat-dialog-title>{{inputData.title}}</h1>
@@ -169,10 +212,17 @@
             <mat-form-field>
                 <mat-label>Name</mat-label>
                 <input formControlName="requestName" matInput>
+                <mat-error *ngIf="requestForm.controls['requestName'].hasError('required')">
+                  Request name is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Description</mat-label>
-                <textarea formControlName="description" matInput></textarea>
+                <textarea #requestDescription maxlength="400" formControlName="description" matInput></textarea>
+                <mat-hint align="end">{{requestDescription.value.length}}/400</mat-hint>
+                <mat-error *ngIf="requestForm.controls['description'].hasError('required')">
+                  Description is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="products$ | async as products" [hidden]="inputData.id">
                 <mat-label>Product</mat-label>
@@ -181,6 +231,9 @@
                         {{product.productName}}
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="requestForm.controls['productId'].hasError('required')">
+                  Product is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
         </div>
 
@@ -197,10 +250,17 @@
             <mat-form-field>
                 <mat-label>Name</mat-label>
                 <input formControlName="issueName" matInput>
+                <mat-error *ngIf="issueForm.controls['issueName'].hasError('required')">
+                  Issue name is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Description</mat-label>
-                <textarea formControlName="description" matInput></textarea>
+                <textarea #issueDescription maxlength="400" formControlName="description" matInput></textarea>
+                <mat-hint align="end">{{issueDescription.value.length}}/400</mat-hint>
+                <mat-error *ngIf="issueForm.controls['description'].hasError('required')">
+                  Description is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="requests$ | async as requests" [hidden]="inputData.id">
                 <mat-label>Request</mat-label>
@@ -209,6 +269,9 @@
                         {{request.requestName}}
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="issueForm.controls['requestId'].hasError('required')">
+                  Request is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
               <mat-label>Type</mat-label>
@@ -217,6 +280,9 @@
                   {{type}}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="issueForm.controls['type'].hasError('required')">
+                Type is <strong>required</strong>
+              </mat-error>
             </mat-form-field>
         </div>
 
@@ -233,10 +299,17 @@
             <mat-form-field>
                 <mat-label>Name</mat-label>
                 <input formControlName="taskName" matInput>
+                <mat-error *ngIf="taskForm.controls['taskName'].hasError('required')">
+                  Task name is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Description</mat-label>
-                <textarea formControlName="description" matInput></textarea>
+                <textarea #taskDescription maxlength="400" formControlName="description" matInput></textarea>
+                <mat-hint align="end">{{taskDescription.value.length}}/400</mat-hint>
+                <mat-error *ngIf="taskForm.controls['description'].hasError('required')">
+                  Description is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="issues$ | async as issues" [hidden]="inputData.id">
                 <mat-label>Issue</mat-label>
@@ -245,6 +318,9 @@
                         {{issue.issueName}}
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="taskForm.controls['issueId'].hasError('required')">
+                  Issue is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
               <mat-label>Type</mat-label>
@@ -253,6 +329,9 @@
                   {{type}}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="taskForm.controls['type'].hasError('required')">
+                Type is <strong>required</strong>
+              </mat-error>
             </mat-form-field>
         </div>
 

@@ -100,3 +100,9 @@ img {
   max-height: 15rem;
   overflow-y: scroll;
 }
+@media only screen and (max-width: 600px) {
+
+  .filters {
+    display: none;
+  }
+}

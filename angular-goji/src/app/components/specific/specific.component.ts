@@ -67,7 +67,6 @@ export class SpecificComponent implements OnInit{
       ]).subscribe(([user, element, subElements,parentElement]) => {
         this.user = user;
         this.element = element;
-
         if (subElements !== null) {
           this.subElements = subElements;
         } else {
@@ -90,31 +89,42 @@ public getParentElementInfo():string[]{
     switch (typeof this.element) {
       case 'object': {
         if ('requestName' in this.element) {
-          return ['Product',
+          return ['Products',
             (this.parentElement as Product).productName,
             (this.parentElement as Product).description,
             (this.parentElement as Product).version,
-            (this.parentElement as Product).productId.toString()];
+            (this.parentElement as Product).productId.toString(),
+            'Issues'];
         } else if ('issueName' in this.element) {
-          return ['Request',
+          return ['Requests',
             (this.parentElement as Request).requestName,
             (this.parentElement as Request).description,
             (this.parentElement as Request).status,
-            (this.parentElement as Request).requestId.toString()];
+            (this.parentElement as Request).requestId.toString(),
+            'Tasks'];
         }
         else if ('taskName' in this.element) {
-          return ['Issue',
+          return ['Issues',
             (this.parentElement as Issue).issueName,
             (this.parentElement as Issue).description,
             (this.parentElement as Issue).status,
             (this.parentElement as Issue).issueId.toString()];
         }
         else if ('productName' in this.element) {
-          return ['Client',
+          return ['Clients',
             (this.parentElement as Client).name,
             (this.parentElement as Client).email,
             (this.parentElement as Client).phoneNumber,
-            (this.parentElement as Client).clientId.toString()];
+            (this.parentElement as Client).clientId.toString(),
+            'Requests'];
+        }
+        else if ('name' in this.element) {
+          return ['',
+            '',
+            '',
+            '',
+            '',
+            'Products'];
         }
         break;
       }
@@ -145,27 +155,27 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     switch (typeof this.element) {
       case 'object': {
         if ('requestName' in this.element) {
-          return ['Issue',
+          return ['Issues',
             (obj as Issue).issueName,
             (obj as Issue).description,
             (obj as Issue).status,
             (obj as Issue).issueId.toString()];
         } else if ('issueName' in this.element) {
-          return ['Task',
+          return ['Tasks',
             (obj as Task).taskName,
             (obj as Task).description,
             (obj as Task).status,
             (obj as Task).taskId.toString()];
         }
         else if ('productName' in this.element) {
-          return ['Request',
+          return ['Requests',
             (obj as Request).requestName,
             (obj as Request).description,
             (obj as Request).status,
             (obj as Request).requestId.toString()];
         }
         else if ('phoneNumber' in this.element) {
-          return ['Client',
+          return ['Products',
             (obj as Product).productName,
             (obj as Product).version,
             (obj as Product).description,
@@ -173,21 +183,21 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
         }
         else if('role' in this.element){
           if((this.element as unknown as User).role=="Worker"){
-            return ['Task',
+            return ['Tasks',
             (obj as Task).taskName,
             (obj as Task).description,
             (obj as Task).status,
             (obj as Task).taskId.toString()];
           }
           else if((this.element as unknown as User).role=="Product Manager"){
-            return ['Issue',
+            return ['Issues',
             (obj as Issue).issueName,
             (obj as Issue).description,
             (obj as Issue).status,
             (obj as Issue).issueId.toString()];
           }
           else if((this.element as unknown as User).role=="Account Manager"){
-            return ['Request',
+            return ['Requests',
             (obj as Request).requestName,
             (obj as Request).description,
             (obj as Request).status,

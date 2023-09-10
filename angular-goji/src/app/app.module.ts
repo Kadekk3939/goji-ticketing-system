@@ -29,6 +29,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { SpecificComponent } from './components/specific/specific.component';
 import { FinishDialogComponent } from './components/finish-dialog/finish-dialog.component';
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -40,30 +41,31 @@ import { FinishDialogComponent } from './components/finish-dialog/finish-dialog.
     SpecificComponent,
     FinishDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatSlideToggleModule,
-    FormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatPaginatorModule,
-    MatTableModule,
-    MatCardModule,
-    MatDialogModule,
-    MatToolbarModule,
-    MatGridListModule,
-    MatFormFieldModule,
-    MatRadioModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatExpansionModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatSlideToggleModule,
+        FormsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatPaginatorModule,
+        MatTableModule,
+        MatCardModule,
+        MatDialogModule,
+        MatToolbarModule,
+        MatGridListModule,
+        MatFormFieldModule,
+        MatRadioModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatExpansionModule,
+        MatTabsModule,
+    ],
   providers: [],
   bootstrap: [AppComponent],
   exports: [

@@ -54,7 +54,7 @@ export class UserComponent implements OnInit{
             (obj as Request).status,
             (obj as Request).requestId.toString()];
       }
-      else if('issuName' in obj){
+      else if('issueName' in obj){
         return ['Issue',
             (obj as Issue).issueName,
             (obj as Issue).description,
@@ -77,13 +77,13 @@ export class UserComponent implements OnInit{
 
     if(obj!=null){
       if('requestName' in obj){
-        this.router.navigate(['/request/'+id])
+        this.router.navigate(['/request/'+(obj as Request).requestId])
       }
       else if('issuName' in obj){
-        this.router.navigate(['/issue/'+id]);
+        this.router.navigate(['/issue/'+(obj as Issue).issueId]);
       }
       else if('taskName' in obj){
-        this.router.navigate(['/task/'+id]);
+        this.router.navigate(['/task/'+(obj as Task).taskId]);
       }
       return of(null)
     }

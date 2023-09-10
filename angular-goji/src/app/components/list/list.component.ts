@@ -262,10 +262,10 @@ export class ListComponent implements OnInit {
         else if ('firstName' in obj) {
           return (obj as User).firstName + " " + (obj as User).lastName;
         }
-        else if ('clientId' in obj) {
+        else if ('name' in obj) {
           return (obj as Client).name;
         }
-        else if ('productId' in obj) {
+        else if ('productName' in obj) {
           return (obj as Product).productName;
         }
         break;
@@ -364,10 +364,10 @@ export class ListComponent implements OnInit {
         else if ('firstName' in obj) {
           return [(obj as User).login, (obj as User).email, (obj as User).role];
         }
-        else if ('clientId' in obj) {
+        else if ('name' in obj) {
           return [(obj as Client).email, (obj as Client).phoneNumber];
         }
-        else if ('productId' in obj) {
+        else if ('productName' in obj) {
           return [(obj as Product).version, (obj as Product).description];
         }
         break;

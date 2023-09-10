@@ -3,7 +3,11 @@
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Result</mat-label>
-      <textarea formControlName="result" matInput></textarea>
+      <textarea #result maxlength="400" formControlName="result" matInput></textarea>
+      <mat-hint align="end">{{result.value.length}}/400</mat-hint>
+      <mat-error *ngIf="finishForm.controls['result'].hasError('required')">
+        Description is <strong>required</strong>
+      </mat-error>
     </mat-form-field>
   </div>
   <div mat-dialog-actions>

@@ -125,7 +125,7 @@
                               <p>Email: {{getInfo(element)[0]}}</p>
                               <p>Phone number: {{getInfo(element)[1]}}</p>
                             </div>
-                            <div *ngIf="type==('/requests'||'/issues'||'/tasks')">
+                            <div *ngIf="(type=='/requests'||type=='/issues'||type=='/tasks')">
                                 <p>Status: {{getStatus(element)}}</p>
                                 <p>Opening date: {{getInfo(element)[0]}}</p>
                                 <p>In progress date: {{getInfo(element)[1]}}</p>

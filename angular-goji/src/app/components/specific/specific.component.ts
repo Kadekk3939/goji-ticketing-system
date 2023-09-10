@@ -323,7 +323,6 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
   openDialog(id:any, title:any, type:any)
   {
     this.value='';
-    console.log(id+' '+title+' '+type)
     var _dialog = this.dialog.open(DialogComponent, {
       width:'40%',
       enterAnimationDuration:'500ms',
@@ -354,13 +353,19 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
         else if ('firstName' in obj) {
           return (obj as User).userId;
         }
+        else if ('name' in obj) {
+          return (obj as Client).clientId;
+        }
+        else if ('productName' in obj) {
+          return (obj as Product).productId;
+        }
         break;
       }
       default: {
         break;
       }
     }
-    
+
     return -1;
   }
 
@@ -553,7 +558,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
             this.ngOnInit();
           });
         }
-          
+
       }
     }
   }

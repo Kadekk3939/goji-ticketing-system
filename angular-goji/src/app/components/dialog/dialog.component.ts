@@ -121,6 +121,27 @@ export class DialogComponent implements OnInit {
         })
       })
     }
+    else if(this.type=="/clients") {
+      this.service.getClientById(id).subscribe(client => {
+        this.editData = client;
+        this.clientForm.setValue({
+          name: this.editData.name,
+          email: this.editData.email,
+          phoneNumber: this.editData.phoneNumber
+        })
+      })
+    }
+    else if(this.type=="/products") {
+      this.service.getProductById(id).subscribe(product => {
+        this.editData = product;
+        this.productForm.setValue({
+          clientId: this.editData.clientId,
+          productName: this.editData.productName,
+          version: this.editData.version,
+          description: this.editData.description
+        })
+      })
+    }
     else if(this.type=="/requests") {
       this.service.getRequestById(id).subscribe(request => {
         this.editData = request;
@@ -211,17 +232,17 @@ export class DialogComponent implements OnInit {
           }
         );
       }
-      // else {
-      //   if(this.inputData.id!=undefined) {
-      //     this.service.updateRequest(this.inputData.id, <Request>this.requestForm.value).subscribe(res => {
-      //         this.closeDialog(this.inputData.id);
-      //       },
-      //       (error: HttpErrorResponse) => {
-      //         alert(error.message);
-      //       }
-      //     );
-      //   }
-      // }
+      else {
+        if(this.inputData.id!=undefined) {
+          this.service.updateClient(this.inputData.id, <Client>this.clientForm.value).subscribe(res => {
+              this.closeDialog(this.inputData.id);
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+      }
     }
     else if(this.type=="/products") {
       if(this.inputData.id==0) {
@@ -233,17 +254,17 @@ export class DialogComponent implements OnInit {
           }
         );
       }
-      // else {
-      //   if(this.inputData.id!=undefined) {
-      //     this.service.updateRequest(this.inputData.id, <Request>this.requestForm.value).subscribe(res => {
-      //         this.closeDialog(this.inputData.id);
-      //       },
-      //       (error: HttpErrorResponse) => {
-      //         alert(error.message);
-      //       }
-      //     );
-      //   }
-      // }
+      else {
+        if(this.inputData.id!=undefined) {
+          this.service.updateProduct(this.inputData.id, <Product>this.productForm.value).subscribe(res => {
+              this.closeDialog(this.inputData.id);
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+      }
     }
     else if(this.type=="/requests") {
       if(this.inputData.id==0) {

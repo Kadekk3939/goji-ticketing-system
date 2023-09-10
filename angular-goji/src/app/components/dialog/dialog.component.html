@@ -39,6 +39,92 @@
         </div>
     </form>
 </div>
+<div *ngIf="type=='/clients'">
+  <form [formGroup]="clientForm" (ngSubmit)="SaveData()">
+    <h1 mat-dialog-title>{{inputData.title}}</h1>
+    <div mat-dialog-content>
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput>
+        <mat-error *ngIf="clientForm.controls['name'].hasError('required')">
+          Name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" formControlName="email" matInput>
+        <mat-error *ngIf="clientForm.controls['email'].hasError('email') && !clientForm.controls['email'].hasError('required')">
+          Please enter a valid email address
+        </mat-error>
+        <mat-error *ngIf="clientForm.controls['email'].hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Phone number</mat-label>
+        <input type="tel" formControlName="phoneNumber" matInput>
+        <mat-error *ngIf="clientForm.controls['phoneNumber'].hasError('pattern') && !clientForm.controls['phoneNumber'].hasError('required')">
+          Please enter a valid phone number
+        </mat-error>
+        <mat-error *ngIf="clientForm.controls['phoneNumber'].hasError('required')">
+          Phone number is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" [disabled]="!isFormValid(clientForm)">Save</button>
+      <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
+    </div>
+  </form>
+</div>
+<div *ngIf="type=='/products'">
+  <form [formGroup]="productForm" (ngSubmit)="SaveData()">
+    <h1 mat-dialog-title>{{inputData.title}}</h1>
+    <div mat-dialog-content>
+      <mat-form-field *ngIf="clients$ | async as clients" [hidden]="inputData.id">
+        <mat-label>Client</mat-label>
+        <mat-select formControlName="clientId" matInput>
+          <mat-option *ngFor="let client of clients" [value]="client.clientId">
+            {{client.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="productForm.controls['clientId'].hasError('required')">
+          Client is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Product name</mat-label>
+        <input formControlName="productName" matInput>
+        <mat-error *ngIf="productForm.controls['productName'].hasError('required')">
+          Product name is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Version number</mat-label>
+        <input type="number" min="1" step="0.1" formControlName="version" matInput>
+        <mat-error *ngIf="productForm.controls['version'].hasError('required')">
+          Version is <strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="productForm.controls['version'].hasError('min')">
+          Invalid number input
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea formControlName="description" matInput></textarea>
+        <mat-error *ngIf="productForm.controls['description'].hasError('required')">
+          Description is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+      <button mat-raised-button color="primary" [disabled]="!isFormValid(productForm)">Save</button>
+      <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
+    </div>
+  </form>
+</div>
 <div *ngIf="type=='/users'&&this.inputData.id!=0">
   <form [formGroup]="editUserForm" (ngSubmit)="SaveData()">
     <h1 mat-dialog-title>{{inputData.title}}</h1>

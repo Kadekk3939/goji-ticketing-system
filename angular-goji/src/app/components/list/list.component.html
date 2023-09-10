@@ -42,7 +42,7 @@
     </div>
     <div class="container mat-typography" id="main-container">
         <div class="field-container">
-            <mat-form-field class="sort" *ngIf="user?.role!='Admin'; else elseUserBlock" [hidden]="type=='/products'||'/clients'">
+            <mat-form-field class="sort" *ngIf="type!='/products'&&type!='/clients'&&type!='/users'; else elseUserBlock">
                 <mat-label>Sort by</mat-label>
                 <mat-select [(value)]="selected" (selectionChange)="onSortOptionSelected()">
                     <mat-option>None</mat-option>
@@ -55,7 +55,7 @@
                 </mat-select>
             </mat-form-field>
             <ng-template #elseUserBlock>
-                <mat-form-field class="form-field">
+                <mat-form-field class="sort">
                     <mat-label>Sort</mat-label>
                     <mat-select [(value)]="selected" (selectionChange)="onSortUserOptionSelected()">
                         <mat-option value="asc">A to Z</mat-option>

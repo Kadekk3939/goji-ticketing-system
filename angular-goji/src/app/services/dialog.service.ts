@@ -20,6 +20,14 @@ export class DialogService {
     return this.http.post<User>(`${environment.apiBaseUrl}/user`, user);
   }
 
+  public addClient(client: Client): Observable<Client>{
+    return this.http.post<Client>(`${environment.apiBaseUrl}/client`, client);
+  }
+
+  public addProduct(product: Product): Observable<Product>{
+    return this.http.post<Product>(`${environment.apiBaseUrl}/product`, product);
+  }
+
   public addRequest(request:Request): Observable<Request>{
     return this.http.post<Request>(`${environment.apiBaseUrl}/request`, request);
   }
@@ -82,5 +90,9 @@ export class DialogService {
 
   public getAllProducts():Observable<Product[]>{
     return this.http.get<Product[]>(`${environment.apiBaseUrl}/product`);
+  }
+
+  public getAllClients():Observable<Client[]>{
+    return this.http.get<Client[]>(`${environment.apiBaseUrl}/client`);
   }
 }

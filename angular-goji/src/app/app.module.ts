@@ -30,7 +30,6 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import { SpecificComponent } from './components/specific/specific.component';
 import { FinishDialogComponent } from './components/finish-dialog/finish-dialog.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

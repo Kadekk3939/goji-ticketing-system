@@ -9,6 +9,7 @@ import {Request} from "../../interfaces/request";
 import { Task } from 'src/app/interfaces/task';
 import {Issue} from "../../interfaces/issue";
 import {Observable} from "rxjs";
+import {Client} from "../../interfaces/client";
 
 @Component({
   selector: 'app-add-dialog',
@@ -19,6 +20,7 @@ export class DialogComponent implements OnInit {
   issues$: Observable<Issue[]> | undefined;
   requests$: Observable<Request[]> | undefined;
   products$: Observable<Product[]> | undefined;
+  clients$: Observable<Client[]> | undefined;
   isLoginWarningVisible=false
   isEmailWarningVisible=false
   type:any;
@@ -37,6 +39,8 @@ export class DialogComponent implements OnInit {
 
   addUserForm: FormGroup;
   editUserForm: FormGroup;
+  clientForm: FormGroup;
+  productForm: FormGroup;
   requestForm: FormGroup;
   issueForm: FormGroup;
   taskForm: FormGroup;
@@ -59,6 +63,19 @@ export class DialogComponent implements OnInit {
       login: ['', Validators.required],
       email: ['', Validators.required],
       role: ['', Validators.required]
+    });
+
+    this.clientForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^\\+?\\d{1,4}[-\\s]?\\d{8,14}$')]]
+    });
+
+    this.productForm = this.fb.group({
+      clientId: ['', Validators.required],
+      productName: ['', Validators.required],
+      version: ['', [Validators.required]],
+      description: ['', Validators.required]
     });
 
     this.requestForm = this.fb.group({
@@ -91,6 +108,7 @@ export class DialogComponent implements OnInit {
     this.issues$ = this.service.getAllIssues();
     this.requests$ = this.service.getAllRequests();
     this.products$ = this.service.getAllProducts();
+    this.clients$ = this.service.getAllClients();
   }
 
   setDialogData(id:any){
@@ -182,6 +200,50 @@ export class DialogComponent implements OnInit {
          );
        }
       }
+    }
+    else if(this.type=="/clients") {
+      if(this.inputData.id==0) {
+        this.service.addClient(<Client>this.clientForm.value).subscribe(res => {
+            this.closeDialog(res.clientId.toString());
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+      // else {
+      //   if(this.inputData.id!=undefined) {
+      //     this.service.updateRequest(this.inputData.id, <Request>this.requestForm.value).subscribe(res => {
+      //         this.closeDialog(this.inputData.id);
+      //       },
+      //       (error: HttpErrorResponse) => {
+      //         alert(error.message);
+      //       }
+      //     );
+      //   }
+      // }
+    }
+    else if(this.type=="/products") {
+      if(this.inputData.id==0) {
+        this.service.addProduct(<Product>this.productForm.value).subscribe(res => {
+            this.closeDialog(res.productId.toString());
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+      // else {
+      //   if(this.inputData.id!=undefined) {
+      //     this.service.updateRequest(this.inputData.id, <Request>this.requestForm.value).subscribe(res => {
+      //         this.closeDialog(this.inputData.id);
+      //       },
+      //       (error: HttpErrorResponse) => {
+      //         alert(error.message);
+      //       }
+      //     );
+      //   }
+      // }
     }
     else if(this.type=="/requests") {
       if(this.inputData.id==0) {

@@ -65,4 +65,17 @@ public class ClientService {
         List<Product> products = productRepository.findAllProductsFromClient(id);
         return productMapper.map(products);
     }
+
+    public ClientReadModel updateClient(Long clientId,ClientWriteModel clientWriteModel){
+        Optional<Client> client = clientRepository.findClientByClientId(clientId);
+        Client clientToUpdate = new Client();
+        if(client.isPresent()){
+            clientToUpdate = client.get();
+            clientToUpdate.setName(clientWriteModel.getName());
+            clientToUpdate.setEmail(clientWriteModel.getEmail());
+            clientToUpdate.setPhoneNumber(clientWriteModel.getPhoneNumber());
+            clientToUpdate = clientRepository.save(clientToUpdate);
+        }
+        return clientMapper.toReadModel(clientToUpdate);
+    }
 }

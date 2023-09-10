@@ -43,4 +43,9 @@ public class ClientController {
     public ResponseEntity<ClientReadModel> getClient(@PathVariable Long clientId){
         return ResponseEntity.ok(clientService.getClient(clientId));
     }
+
+    @PutMapping("/{clientId}")
+    public ResponseEntity<ClientReadModel> updateClient(@PathVariable Long clientId,@RequestBody ClientWriteModel clientWriteModel){
+        return ResponseEntity.ok(clientService.updateClient(clientId,clientWriteModel));
+    }
 }

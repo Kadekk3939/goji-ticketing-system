@@ -10,6 +10,7 @@ import pl.polsl.tab.goji.model.dto.read.ProductReadModel;
 import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
 import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
 import pl.polsl.tab.goji.model.dto.write.ProductWriteModel;
+import pl.polsl.tab.goji.model.dto.write.TaskWriteModel;
 import pl.polsl.tab.goji.model.entity.Client;
 import pl.polsl.tab.goji.model.entity.Product;
 import pl.polsl.tab.goji.model.entity.Request;
@@ -80,5 +81,18 @@ public class ProductService {
     public ClientReadModel getParentClient(Long clientId){
         Client client = productRepository.findProductByProductId(clientId).get().getClient();
         return clientMapper.toReadModel(client);
+    }
+
+    public ProductReadModel productUpdate(Long productId, ProductWriteModel productWriteModel){
+        Optional<Product> product = productRepository.findProductByProductId(productId);
+        Product productToUpdate = new Product();
+        if(product.isPresent()){
+            productToUpdate = product.get();
+            productToUpdate.setProductName(productWriteModel.getProductName());
+            productToUpdate.setDescription(productWriteModel.getDescription());
+            productToUpdate.setVersion(productWriteModel.getVersion());
+            productToUpdate = productRepository.save(productToUpdate);
+        }
+        return productMapper.toReadModel(productToUpdate);
     }
 }

@@ -40,7 +40,6 @@ img {
 }
 
 .element-card {
-  max-width: 50svw;
   max-height: 100svh;
   margin: 10px;
 }
@@ -54,8 +53,7 @@ img {
 }
 
 .paginator {
-    max-width: 50svw;
-    margin-left: 10px;
+    width:100%;
     bottom: 0;
 }
 
@@ -66,29 +64,39 @@ img {
 .field-container {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
 }
 .other-container {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
 }
 .list {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.5);
 }
+
 .filters{
   color: black;
-  max-width: 20svw;
+  width: 15svw;
 }
+
+.filter-panel {
+  margin-top: 0;
+  margin-right: 0;
+}
+
 .sort {
   max-width: 20svw;
-  margin-left: 10px;
-  bottom: 0;
 }
 .search {
   flex: 1;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 .ul_checkbox ul{
   list-style-type:none;
+  max-height: 15rem;
+  overflow-y: scroll;
 }

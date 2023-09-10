@@ -19,6 +19,7 @@ import {StatusService} from "../../services/status.service";
 import {MatInput} from "@angular/material/input";
 import {Client} from "../../interfaces/client";
 import {Product} from "../../interfaces/product";
+import {Observable, shareReplay} from "rxjs";
 
 @Component({
   selector: 'app-list',
@@ -26,6 +27,11 @@ import {Product} from "../../interfaces/product";
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
+  products$: Observable<Product[]> | undefined;
+  clients$: Observable<Client[]> | undefined;
+  requests$: Observable<Request[]> | undefined;
+  issues$: Observable<Issue[]> | undefined;
+  tasks$: Observable<Task[]> | undefined;
   value = '';
   selected = '';
   public type:string | undefined;
@@ -64,6 +70,11 @@ export class ListComponent implements OnInit {
     }
   ngOnInit() {
     this.getData();
+    this.products$ = this.listService.getAllProducts().pipe(shareReplay());
+    this.clients$ = this.listService.getAllClients().pipe(shareReplay());
+    this.requests$ = this.listService.getAllRequests().pipe(shareReplay());
+    this.issues$ = this.listService.getAllIssues().pipe(shareReplay());
+    this.tasks$ = this.listService.getAllTasks().pipe(shareReplay());
   }
 
   public getData(){
@@ -651,6 +662,89 @@ export class ListComponent implements OnInit {
     }
   }
 
+  onFilterChildChange(event: any){
+    if(event.target.checked){
+      this.numOfChecked++;
+      this.tempArray = this.originalElements.filter((e: any)=> e.status == event.target.value || e.role == event.target.value);
+      this.elements = [];
+      this.newArray.push(this.tempArray);
+      for(let i = 0; i < this.newArray.length; i++){
+        for(let j = 0; j < this.newArray[i].length; j++){
+          const obj = this.newArray[i][j];
+          this.elements.push(obj);
+        }
+      }
+    }else{
+      this.numOfChecked--;
+      this.tempArray = this.elements.filter((e: any)=> e.status != event.target.value && e.role != event.target.value);
+      this.newArray = [];
+      this.elements = [];
+      this.newArray.push(this.tempArray);
+      if (this.numOfChecked == 0){
+        this.elements = this.originalElements;
+      }else{
+        for(let i = 0; i < this.newArray.length; i++){
+          for(let j = 0; j < this.newArray[i].length; j++){
+            const obj = this.newArray[i][j];
+            this.elements.push(obj);
+          }
+        }
+      }
+
+    }
+
+    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
+    {
+      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
+      let endIndex = startIndex+this.paginator?.pageSize;
+      if(endIndex>this.elements!.length){
+        endIndex=this.elements!.length;
+      }
+      this.pageSlice = this.elements!.slice(startIndex,endIndex);
+    }
+  }
+
+  onFilterParentChange(event: any){
+    if(event.target.checked){
+      this.numOfChecked++;
+      this.tempArray = this.originalElements.filter((e: any)=> e.status == event.target.value || e.role == event.target.value);
+      this.elements = [];
+      this.newArray.push(this.tempArray);
+      for(let i = 0; i < this.newArray.length; i++){
+        for(let j = 0; j < this.newArray[i].length; j++){
+          const obj = this.newArray[i][j];
+          this.elements.push(obj);
+        }
+      }
+    }else{
+      this.numOfChecked--;
+      this.tempArray = this.elements.filter((e: any)=> e.status != event.target.value && e.role != event.target.value);
+      this.newArray = [];
+      this.elements = [];
+      this.newArray.push(this.tempArray);
+      if (this.numOfChecked == 0){
+        this.elements = this.originalElements;
+      }else{
+        for(let i = 0; i < this.newArray.length; i++){
+          for(let j = 0; j < this.newArray[i].length; j++){
+            const obj = this.newArray[i][j];
+            this.elements.push(obj);
+          }
+        }
+      }
+
+    }
+
+    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
+    {
+      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
+      let endIndex = startIndex+this.paginator?.pageSize;
+      if(endIndex>this.elements!.length){
+        endIndex=this.elements!.length;
+      }
+      this.pageSlice = this.elements!.slice(startIndex,endIndex);
+    }
+  }
   onFilterDateChange(event: any, mode: string){
 
     const pick = new Date(new Date(event.value.toISOString()).getTime()).setUTCHours(24,0,0,0);
@@ -683,7 +777,6 @@ export class ListComponent implements OnInit {
       this.pageSlice = this.elements!.slice(startIndex,endIndex);
     }
   }
-
   onClearDateFilter(event: any, mode: string){
     event.stopPropagation();
     switch (mode) {

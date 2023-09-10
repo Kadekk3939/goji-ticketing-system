@@ -19,7 +19,8 @@ import {StatusService} from "../../services/status.service";
 import {MatInput} from "@angular/material/input";
 import {Client} from "../../interfaces/client";
 import {Product} from "../../interfaces/product";
-import {Observable, shareReplay} from "rxjs";
+import {Observable, of, shareReplay} from "rxjs";
+import {SpecificService} from "../../services/specific.service";
 
 @Component({
   selector: 'app-list',
@@ -27,11 +28,6 @@ import {Observable, shareReplay} from "rxjs";
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  products$: Observable<Product[]> | undefined;
-  clients$: Observable<Client[]> | undefined;
-  requests$: Observable<Request[]> | undefined;
-  issues$: Observable<Issue[]> | undefined;
-  tasks$: Observable<Task[]> | undefined;
   value = '';
   selected = '';
   public type:string | undefined;
@@ -59,7 +55,8 @@ export class ListComponent implements OnInit {
               private listService:ListService,
               private app:AppService,
               private userService:UserService,
-              private statusService:StatusService) {
+              private statusService:StatusService,
+              private specificService: SpecificService) {
       this.app.refresh();//In case of refresh
       this.user = this.app.user;
 
@@ -70,11 +67,6 @@ export class ListComponent implements OnInit {
     }
   ngOnInit() {
     this.getData();
-    this.products$ = this.listService.getAllProducts().pipe(shareReplay());
-    this.clients$ = this.listService.getAllClients().pipe(shareReplay());
-    this.requests$ = this.listService.getAllRequests().pipe(shareReplay());
-    this.issues$ = this.listService.getAllIssues().pipe(shareReplay());
-    this.tasks$ = this.listService.getAllTasks().pipe(shareReplay());
   }
 
   public getData(){
@@ -390,6 +382,23 @@ export class ListComponent implements OnInit {
     return [''];
   }
 
+  getSubElements(elementId:string):Observable<Product[]|Issue[]|Request[]|Task[]|Product[]|null>{
+    if (this.type == "issue") {
+      return this.specificService.getSubTasksFromIssue(elementId);
+    } else if (this.type == "request") {
+      return this.specificService.getSubIssuesFromRequest(elementId);
+    } else if (this.type == "product") {
+      return this.specificService.getSubRequestFromProduct(elementId);
+    } else if (this.type == "client") {
+      return this.specificService.getSubProductFromClient(elementId);
+    } else if(this.type=="user"){
+      return this.specificService.getSubElementsForUser(elementId);
+    } else {
+      return of(null); // Handle unknown types or return an empty observable
+    }
+    return of(null);
+  }
+
   onSortOptionSelected() {
     // Sort the array based on the selected option
     switch (this.selected) {
@@ -621,90 +630,6 @@ export class ListComponent implements OnInit {
   }
 
   onFilterCheckboxChange(event: any){
-    if(event.target.checked){
-      this.numOfChecked++;
-      this.tempArray = this.originalElements.filter((e: any)=> e.status == event.target.value || e.role == event.target.value);
-      this.elements = [];
-      this.newArray.push(this.tempArray);
-      for(let i = 0; i < this.newArray.length; i++){
-        for(let j = 0; j < this.newArray[i].length; j++){
-          const obj = this.newArray[i][j];
-          this.elements.push(obj);
-        }
-      }
-    }else{
-      this.numOfChecked--;
-      this.tempArray = this.elements.filter((e: any)=> e.status != event.target.value && e.role != event.target.value);
-      this.newArray = [];
-      this.elements = [];
-      this.newArray.push(this.tempArray);
-      if (this.numOfChecked == 0){
-        this.elements = this.originalElements;
-      }else{
-        for(let i = 0; i < this.newArray.length; i++){
-          for(let j = 0; j < this.newArray[i].length; j++){
-            const obj = this.newArray[i][j];
-            this.elements.push(obj);
-          }
-        }
-      }
-
-    }
-
-    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
-    {
-      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
-      let endIndex = startIndex+this.paginator?.pageSize;
-      if(endIndex>this.elements!.length){
-        endIndex=this.elements!.length;
-      }
-      this.pageSlice = this.elements!.slice(startIndex,endIndex);
-    }
-  }
-
-  onFilterChildChange(event: any){
-    if(event.target.checked){
-      this.numOfChecked++;
-      this.tempArray = this.originalElements.filter((e: any)=> e.status == event.target.value || e.role == event.target.value);
-      this.elements = [];
-      this.newArray.push(this.tempArray);
-      for(let i = 0; i < this.newArray.length; i++){
-        for(let j = 0; j < this.newArray[i].length; j++){
-          const obj = this.newArray[i][j];
-          this.elements.push(obj);
-        }
-      }
-    }else{
-      this.numOfChecked--;
-      this.tempArray = this.elements.filter((e: any)=> e.status != event.target.value && e.role != event.target.value);
-      this.newArray = [];
-      this.elements = [];
-      this.newArray.push(this.tempArray);
-      if (this.numOfChecked == 0){
-        this.elements = this.originalElements;
-      }else{
-        for(let i = 0; i < this.newArray.length; i++){
-          for(let j = 0; j < this.newArray[i].length; j++){
-            const obj = this.newArray[i][j];
-            this.elements.push(obj);
-          }
-        }
-      }
-
-    }
-
-    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
-    {
-      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
-      let endIndex = startIndex+this.paginator?.pageSize;
-      if(endIndex>this.elements!.length){
-        endIndex=this.elements!.length;
-      }
-      this.pageSlice = this.elements!.slice(startIndex,endIndex);
-    }
-  }
-
-  onFilterParentChange(event: any){
     if(event.target.checked){
       this.numOfChecked++;
       this.tempArray = this.originalElements.filter((e: any)=> e.status == event.target.value || e.role == event.target.value);

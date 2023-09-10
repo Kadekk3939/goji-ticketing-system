@@ -155,7 +155,7 @@
                     </mat-card>
                 </div>
             </div>
-            <div class="filters">
+            <div *ngIf="type!='/clients'&&type!='/products'" class="filters">
                 <mat-card class="element-card mat-elevation-z8 filter-panel">
                     <mat-card-header>
                         <mat-card-title>Filter</mat-card-title>
@@ -225,131 +225,8 @@
                                         </button>
                                     </mat-form-field>
                                 </mat-expansion-panel>
-                                <div *ngIf="type=='/requests'">
-                                  <mat-expansion-panel>
-                                    <mat-expansion-panel-header>
-                                      <mat-panel-title>
-                                        Product
-                                      </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div class="container ul_checkbox">
-                                      <ul *ngIf="products$ | async as products">
-                                        <li *ngFor="let product of products">
-                                          <input type="checkbox" (change)="onFilterParentChange($event)" value="{{product.productId}}"> {{product.productName}}
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </mat-expansion-panel>
-                                  <mat-expansion-panel>
-                                    <mat-expansion-panel-header>
-                                      <mat-panel-title>
-                                        Issue
-                                      </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div class="container ul_checkbox">
-                                      <ul *ngIf="issues$ | async as issues">
-                                        <li *ngFor="let issue of issues">
-                                          <input type="checkbox" (change)="onFilterChildChange($event)" value="{{issue.issueId}}"> {{issue.issueName}}
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </mat-expansion-panel>
-                                </div>
-                                <div *ngIf="type=='/issues'">
-                                  <mat-expansion-panel>
-                                    <mat-expansion-panel-header>
-                                      <mat-panel-title>
-                                        Request
-                                      </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div class="container ul_checkbox">
-                                      <ul *ngIf="requests$ | async as requests">
-                                        <li *ngFor="let request of requests">
-                                          <input type="checkbox" (change)="onFilterParentChange($event)" value="{{request.requestId}}"> {{request.requestName}}
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </mat-expansion-panel>
-                                  <mat-expansion-panel>
-                                    <mat-expansion-panel-header>
-                                      <mat-panel-title>
-                                        Task
-                                      </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div class="container ul_checkbox">
-                                      <ul *ngIf="tasks$ | async as tasks">
-                                        <li *ngFor="let task of tasks">
-                                          <input type="checkbox" (change)="onFilterChildChange($event)" value="{{task.taskId}}"> {{task.taskName}}
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </mat-expansion-panel>
-                                </div>
-                                <div *ngIf="type=='/tasks'">
-                                  <mat-expansion-panel>
-                                    <mat-expansion-panel-header>
-                                      <mat-panel-title>
-                                        Issue
-                                      </mat-panel-title>
-                                    </mat-expansion-panel-header>
-                                    <div class="container ul_checkbox">
-                                      <ul *ngIf="issues$ | async as issues">
-                                        <li *ngFor="let issue of issues">
-                                          <input type="checkbox" (change)="onFilterParentChange($event)" value="{{issue.issueId}}"> {{issue.issueName}}
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </mat-expansion-panel>
-                                </div>
-
                             </mat-accordion>
                         </ng-template>
-                        <ng-template [ngIf]="type=='/clients'||type=='/products'">
-                        <mat-accordion>
-                          <mat-expansion-panel *ngIf="type=='/clients'">
-                            <mat-expansion-panel-header>
-                              <mat-panel-title>
-                                Product
-                              </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="container ul_checkbox">
-                              <ul *ngIf="products$ | async as products">
-                                <li *ngFor="let product of products">
-                                  <input type="checkbox" (change)="onFilterChildChange($event)" value="{{product.productId}}"> {{product.productName}}
-                                </li>
-                              </ul>
-                            </div>
-                          </mat-expansion-panel>
-                          <mat-expansion-panel *ngIf="type=='/products'">
-                            <mat-expansion-panel-header>
-                              <mat-panel-title>
-                                Client
-                              </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="container ul_checkbox">
-                              <ul *ngIf="clients$ | async as clients">
-                                <li *ngFor="let client of clients">
-                                  <input type="checkbox" (change)="onFilterParentChange($event)" value="{{client.clientId}}"> {{client.name}}
-                                </li>
-                              </ul>
-                            </div>
-                          </mat-expansion-panel>
-                          <mat-expansion-panel *ngIf="type=='/products'">
-                            <mat-expansion-panel-header>
-                              <mat-panel-title>
-                                Request
-                              </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="container ul_checkbox">
-                              <ul *ngIf="requests$ | async as requests">
-                                <li *ngFor="let request of requests">
-                                  <input type="checkbox" (change)="onFilterChildChange($event)" value="{{request.requestId}}"> {{request.requestName}}
-                                </li>
-                              </ul>
-                            </div>
-                          </mat-expansion-panel>
-                        </mat-accordion>
-                      </ng-template>
                         <ng-template [ngIf]="type=='/users'">
 
                             <mat-accordion>

@@ -237,10 +237,11 @@ export class ListComponent implements OnInit {
         else if ('firstName' in obj) {
           return (obj as User).userId;
         }
-        else if ('clientId' in obj) {
+        else if ('name' in obj) {
           return (obj as Client).clientId;
         }
-        else if ('productId' in obj) {
+        else if ('productName' in obj) {
+          console.log((obj as Product).productId)
           return (obj as Product).productId;
         }
         break;

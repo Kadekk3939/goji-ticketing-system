@@ -19,6 +19,7 @@ public interface ProductMapper {
     @Mapping(target = "productId", ignore = true) // Ignore ID during mapping
     Product toEntity(ProductWriteModel productWriteModel);
 
+    @Mapping(source = "client.clientId" ,target = "clientId")
     ProductReadModel toReadModel(Product product);
     List<ProductReadModel> map(List<Product> products);
 }

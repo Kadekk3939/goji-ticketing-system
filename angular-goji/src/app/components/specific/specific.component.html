@@ -15,10 +15,10 @@
                     <a class="nav-link" routerLink="/users" routerLinkActive="active" ariaCurrentWhenActive="page">Users</a>
                 </li>
                 <li class="nav-item" *ngIf="user?.role=='Account Manager'">
-                  <a class="nav-link" routerLink="/clients" routerLinkActive="active" ariaCurrentWhenActive="page">Clients</a>
+                    <a class="nav-link" routerLink="/clients" routerLinkActive="active" ariaCurrentWhenActive="page">Clients</a>
                 </li>
                 <li class="nav-item" *ngIf="user?.role=='Account Manager'">
-                  <a class="nav-link" routerLink="/products" routerLinkActive="active" ariaCurrentWhenActive="page">Products</a>
+                    <a class="nav-link" routerLink="/products" routerLinkActive="active" ariaCurrentWhenActive="page">Products</a>
                 </li>
                 <li class="nav-item" *ngIf="user?.role=='Account Manager'">
                     <a class="nav-link" routerLink="/requests" routerLinkActive="active" ariaCurrentWhenActive="page">Requests</a>
@@ -60,7 +60,7 @@
                     <p><strong>Active:</strong> {{info![6] }}</p>
                 </mat-card-content>
                 <mat-card-actions class="element-card-actions ">
-                    <div *ngIf="(user?.role=='Admin'&&type=='user')">
+                    <div *ngIf="(user?.role=='Admin'&&type=='user'&&canDisactivate())">
                         <div *ngIf="getActive(element)=='true'||getActive(element)==null">
                             <button mat-flat-button color="accent" class="mod-button" (click)="setActive(element!)">
                           DISACTIVATE
@@ -129,7 +129,7 @@
                         <mat-card-header>
                             <mat-card-title>Information</mat-card-title>
                             <mat-card-actions class="element-card-actions ">
-                              <button (click)="editData(getId(element!), type)" mat-icon-button color="primary" class="mod-button">
+                                <button (click)="editData(getId(element!), type)" mat-icon-button color="primary" class="mod-button">
                                 <mat-icon>edit</mat-icon>
                               </button>
                             </mat-card-actions>
@@ -149,7 +149,7 @@
                         <mat-card-header>
                             <mat-card-title>Information</mat-card-title>
                             <mat-card-actions class="element-card-actions ">
-                              <button (click)="editData(getId(element!), type)" mat-icon-button color="primary" class="mod-button">
+                                <button (click)="editData(getId(element!), type)" mat-icon-button color="primary" class="mod-button">
                                 <mat-icon>edit</mat-icon>
                               </button>
                             </mat-card-actions>

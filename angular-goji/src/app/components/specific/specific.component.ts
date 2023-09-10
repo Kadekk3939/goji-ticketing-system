@@ -110,7 +110,7 @@ public getParentElementInfo():string[]{
             (this.parentElement as Issue).issueId.toString()];
         }
         else if ('productName' in this.element) {
-          return ['Issue',
+          return ['Client',
             (this.parentElement as Client).name,
             (this.parentElement as Client).email,
             (this.parentElement as Client).phoneNumber,
@@ -561,5 +561,12 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
 
       }
     }
+  }
+
+  public canDisactivate():boolean{
+    if(this.elementId==this.user?.userId){
+      return false;
+    }
+    return true;
   }
 }

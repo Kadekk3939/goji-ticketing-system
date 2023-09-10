@@ -1,12 +1,10 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import { User } from "src/app/interfaces/user";
-import {MatTableDataSource} from "@angular/material/table";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ListService} from "../../services/list.service";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog} from "@angular/material/dialog";
 import { AppService } from 'src/app/services/app.service';
 import { Issue } from 'src/app/interfaces/issue';
 import { Task } from 'src/app/interfaces/task';
@@ -14,7 +12,6 @@ import { UserService } from 'src/app/services/user.service';
 import { Request } from 'src/app/interfaces/request';
 import {DialogComponent} from "../dialog/dialog.component";
 import {FinishDialogComponent} from "../finish-dialog/finish-dialog.component";
-import {FormControl} from "@angular/forms";
 import {StatusService} from "../../services/status.service";
 import {MatInput} from "@angular/material/input";
 import {Client} from "../../interfaces/client";
@@ -383,23 +380,6 @@ export class ListComponent implements OnInit {
     return [''];
   }
 
-  getSubElements(elementId:string):Observable<Product[]|Issue[]|Request[]|Task[]|Product[]|null>{
-    if (this.type == "issue") {
-      return this.specificService.getSubTasksFromIssue(elementId);
-    } else if (this.type == "request") {
-      return this.specificService.getSubIssuesFromRequest(elementId);
-    } else if (this.type == "product") {
-      return this.specificService.getSubRequestFromProduct(elementId);
-    } else if (this.type == "client") {
-      return this.specificService.getSubProductFromClient(elementId);
-    } else if(this.type=="user"){
-      return this.specificService.getSubElementsForUser(elementId);
-    } else {
-      return of(null); // Handle unknown types or return an empty observable
-    }
-    return of(null);
-  }
-
   onSortOptionSelected() {
     // Sort the array based on the selected option
     switch (this.selected) {
@@ -532,104 +512,6 @@ export class ListComponent implements OnInit {
       }
     });
   }
-
-  openFinishDialog(id:any, obj:Request|Issue|Task|User|Client|Product)
-  {
-    var _dialog = this.dialog.open(FinishDialogComponent, {
-      width:'40%',
-      enterAnimationDuration:'500ms',
-      exitAnimationDuration:'500ms',
-      data:{
-        id: id,
-        objectType: this.getObjType(obj)
-      }
-    })
-    _dialog.afterClosed().subscribe(item=>{
-      if(item!==undefined) {
-        this.elements=[];
-        this.getData();
-      }
-    });
-  }
-
-  setInProgress(obj:Request|Issue|Task|User|Client|Product) {
-    switch (typeof obj) {
-      case 'object': {
-        if ('requestName' in obj) {
-          this.statusService.setRequestStatusInProgress(obj.requestId.toString(), this.user?.login??'').subscribe(res => {
-              this.elements=[];
-              this.getData();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        } else if ('issueName' in obj) {
-          this.statusService.setIssueStatusInProgress(obj.issueId.toString(),this.user?.login??'').subscribe(res => {
-              this.elements=[];
-              this.getData();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        } else if ('taskName' in obj) {
-          this.statusService.setTaskStatusInProgress(obj.taskId.toString(),this.user?.login??'').subscribe(res => {
-              this.elements=[];
-              this.getData();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        }
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  }
-
-  setOpen(obj:Request|Issue|Task|User|Client|Product) {
-    switch (typeof obj) {
-      case 'object': {
-        if ('requestName' in obj) {
-          this.statusService.setRequestStatusOpen(obj.requestId.toString()).subscribe(res => {
-              this.elements=[];
-              this.getData();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        } else if ('issueName' in obj) {
-          this.statusService.setIssueStatusOpen(obj.issueId.toString()).subscribe(res => {
-              this.elements=[];
-              this.getData();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        } else if ('taskName' in obj) {
-          this.statusService.setTaskStatusOpen(obj.taskId.toString()).subscribe(res => {
-              this.elements=[];
-              this.getData();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        }
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  }
-
   onFilterCheckboxChange(event: any){
     if(event.target.checked){
       this.numOfChecked++;

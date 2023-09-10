@@ -18,8 +18,10 @@ import pl.polsl.tab.goji.model.entity.User;
 import pl.polsl.tab.goji.model.entity.UserRole;
 import pl.polsl.tab.goji.repository.*;
 import pl.polsl.tab.goji.utility.CurrentUserData;
+import pl.polsl.tab.goji.model.entity.Request;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -156,6 +158,15 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findUserByUserId(userId).get();
         user.setActive(false);
         user = userRepository.save(user);
+        if(Objects.equals(user.getUserRole().getRoleName(), "Account Manager")){
+            requestService.responsibleUserDisactivate(userId);
+        }
+        else if(Objects.equals(user.getUserRole().getRoleName(), "Product Manage")){
+            issueService.responsibleUserDisactivate(userId);
+        }
+        else if(Objects.equals(user.getUserRole().getRoleName(), "Worker")){
+            taskService.responsibleUserDisactivate(userId);
+        }
         return userMapper.toReadModel(user);
     }
 

@@ -10,6 +10,7 @@ import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
 import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
 import pl.polsl.tab.goji.model.dto.write.TaskWriteModel;
 import pl.polsl.tab.goji.model.entity.Issue;
+import pl.polsl.tab.goji.model.entity.Request;
 import pl.polsl.tab.goji.model.entity.Task;
 import pl.polsl.tab.goji.model.entity.User;
 import pl.polsl.tab.goji.model.enums.Status;
@@ -136,4 +137,12 @@ public class TaskService {
         return taskMapper.map(tasks);
     }
 
+    public void responsibleUserDisactivate(Long userId){
+        List<Task> tasks = taskRepository.findTasksForUser(userId);
+        for(Task task:tasks){
+            if(task.getStatus()==Status.IN_PROGRESS){
+                setTaskStatusClosed(task.getTaskId(),"Responsible user was deactivated while task was in progress");
+            }
+        }
+    }
 }

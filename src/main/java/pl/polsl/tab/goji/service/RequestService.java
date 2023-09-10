@@ -150,5 +150,14 @@ public class RequestService {
         List<Request> requests = requestRepository.findRequestsForUser(userId);
         return requestMapper.map(requests);
     }
+
+    public void responsibleUserDisactivate(Long userId){
+        List<Request> requests = requestRepository.findRequestsForUser(userId);
+        for(Request request:requests){
+            if(request.getStatus()==Status.IN_PROGRESS){
+                setRequestStatusClosed(request.getRequestId(),"Responsible user was deactivated while request was in progress");
+            }
+        }
+    }
 }
 

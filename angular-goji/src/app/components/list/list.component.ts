@@ -121,7 +121,7 @@ export class ListComponent implements OnInit {
               (response: Request[]) => {
                 response.forEach(request => {
                   this.elements?.push(request);
-                  this.applyFilters();
+                  // this.applyFilters();
                 })
                this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
@@ -132,7 +132,7 @@ export class ListComponent implements OnInit {
               (response: Issue[]) => {
                 response.forEach(issue => {
                   this.elements?.push(issue);
-                  this.applyFilters();
+                  // this.applyFilters();
                 })
                 this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
@@ -143,7 +143,7 @@ export class ListComponent implements OnInit {
               (response: Task[]) => {
                 response.forEach(task => {
                   this.elements?.push(task);
-                  this.applyFilters();
+                  // this.applyFilters();
                 })
                 this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
@@ -161,7 +161,7 @@ export class ListComponent implements OnInit {
               (response: Issue[]) => {
                 response.forEach(issue => {
                   this.elements?.push(issue);
-                  this.applyFilters();
+                  // this.applyFilters();
                 })
                 this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
@@ -172,7 +172,7 @@ export class ListComponent implements OnInit {
               (response: Task[]) => {
                 response.forEach(task => {
                   this.elements?.push(task);
-                  this.applyFilters();
+                  // this.applyFilters();
                 })
                this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
@@ -188,7 +188,7 @@ export class ListComponent implements OnInit {
             (response:Task[])=>{
               response.forEach(task=>{
                 this.elements?.push(task);
-                this.applyFilters();
+                // this.applyFilters();
               })
               this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
             }
@@ -538,6 +538,7 @@ export class ListComponent implements OnInit {
       if(item!==undefined) {
         this.elements=[];
         this.getData();
+        this.clearFilters();
       }
     });
   }
@@ -579,6 +580,7 @@ export class ListComponent implements OnInit {
         break;
       }
     }
+    this.clearFilters();
   }
 
   setOpen(obj:Request|Issue|Task|User|Client|Product) {
@@ -618,6 +620,7 @@ export class ListComponent implements OnInit {
         break;
       }
     }
+    this.clearFilters();
   }
 
   getParentElements(){

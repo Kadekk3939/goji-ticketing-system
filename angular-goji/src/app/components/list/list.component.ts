@@ -66,7 +66,6 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.getData();
     this.getParentElements();
-    console.log(this.parentElementsArray);
   }
 
   public getData(){
@@ -673,7 +672,7 @@ export class ListComponent implements OnInit {
   }
   onParentsCheckboxChange(event: any){
     for(let i = 0; i < this.parentElementsArray.length; i++){
-      if(event.value == this.parentElementsArray[i].id){
+      if(event.target.value == this.parentElementsArray[i].id){
         this.parentElementsArray[i].checked = !this.parentElementsArray[i].checked;
       }
     }
@@ -755,30 +754,52 @@ export class ListComponent implements OnInit {
         if (this.parentElementsArray[i].checked)
           parArrCh++;
       }
+      // console.log(this.parentElementsArray);
 
       if(this.statusArray[0].checked || this.statusArray[1].checked || this.statusArray[2].checked) {
-        // this.elements = [];
+        this.elements = [];
         for (let i = 0; i < this.statusArray.length; i++) {
           if (this.statusArray[i].checked == true) {
 
-            this.elements = this.elements.filter((e:any) => e.status == this.statusArray[i].name);
+            // this.elements = this.originalElements.filter((e:any) => e.status == this.statusArray[i].name);
 
-            this.tempArray = this.elements.filter((e: any) => e.status == this.statusArray[i].name);
+            this.tempArray = this.originalElements.filter((e: any) => e.status == this.statusArray[i].name);
 
-            // this.newArray = [];
-            // this.newArray.push(this.tempArray);
-            // for (let i = 0; i < this.newArray.length; i++) {
-            //   for (let j = 0; j < this.newArray[i].length; j++) {
-            //     const obj = this.newArray[i][j];
-            //     this.elements.push(obj);
-            //   }
-            // }
+            this.newArray = [];
+            this.newArray.push(this.tempArray);
+            for (let i = 0; i < this.newArray.length; i++) {
+              for (let j = 0; j < this.newArray[i].length; j++) {
+                const obj = this.newArray[i][j];
+                this.elements.push(obj);
+              }
+            }
 
           }
         }
-      } else{
-        this.elements = this.originalElements;
       }
+      if(parArrCh > 0){
+
+        this.newArray = [];
+        for (let i = 0; i < this.parentElementsArray.length; i++) {
+          if (this.parentElementsArray[i].checked == true) {
+            this.tempArray = this.elements.filter((e:any) => e.productId == this.parentElementsArray[i].id);
+
+            this.newArray.push(this.tempArray);
+
+
+          }
+        }
+        this.elements = [];
+        for (let i = 0; i < this.newArray.length; i++) {
+          for (let j = 0; j < this.newArray[i].length; j++) {
+            const obj = this.newArray[i][j];
+            this.elements.push(obj);
+          }
+        }
+      }
+      // else{
+      //   this.elements = this.originalElements;
+      // }
 
       if(this.opendateFValue != null) {
         const pick = new Date(new Date(this.opendateFValue.toISOString()).getTime()).setUTCHours(24,0,0,0);

@@ -35,39 +35,72 @@ export class FinishDialogComponent implements OnInit{
   }
 
   saveData() {
-    if(this.objType == 'request')
-    {
-      this.service.setRequestStatusClosed(this.inputData.id,this.finishForm.controls['result'].value).subscribe(res => {
-          this.closeDialog();
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-        }
-      );
+    if(this.inputData.status=='finish'){
+      if(this.objType == 'request')
+      {
+        this.service.setRequestStatusClosed(this.inputData.id,this.finishForm.controls['result'].value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+      else if(this.objType == 'issue')
+      {
+        this.service.setIssueStatusClosed(this.inputData.id,this.finishForm.controls['result'].value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+      else if(this.objType == 'task')
+      {
+        this.service.setTaskStatusClosed(this.inputData.id,this.finishForm.controls['result'].value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
     }
-    else if(this.objType == 'issue')
-    {
-      this.service.setIssueStatusClosed(this.inputData.id,this.finishForm.controls['result'].value).subscribe(res => {
-          this.closeDialog();
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-        }
-      );
-    }
-    else if(this.objType == 'task')
-    {
-      this.service.setTaskStatusClosed(this.inputData.id,this.finishForm.controls['result'].value).subscribe(res => {
-          this.closeDialog();
-        },
-        (error: HttpErrorResponse) => {
-          alert(error.message);
-        }
-      );
+    else{
+      if(this.objType == 'request')
+      {
+        this.service.setRequestStatusCancel(this.inputData.id,this.finishForm.controls['result'].value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+      else if(this.objType == 'issue')
+      {
+        this.service.setIssueStatusCancel(this.inputData.id,this.finishForm.controls['result'].value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
+      else if(this.objType == 'task')
+      {
+        this.service.setTaskStatusCancel(this.inputData.id,this.finishForm.controls['result'].value).subscribe(res => {
+            this.closeDialog();
+          },
+          (error: HttpErrorResponse) => {
+            alert(error.message);
+          }
+        );
+      }
     }
     this.closeDialog();
   }
-
   closeDialog() {
     this.ref.close('Closed using function');
   }

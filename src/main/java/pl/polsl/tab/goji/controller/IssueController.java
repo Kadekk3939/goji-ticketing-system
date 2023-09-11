@@ -62,8 +62,8 @@ public class IssueController {
     }
 
     @PutMapping("/{issueId}/cancel")
-    public ResponseEntity<IssueReadModel> setIssueStatusCancel(@PathVariable Long issueId,@RequestBody String userLogin) {
-        IssueReadModel issueReadModel = issueService.setIssueStatusCancel(issueId,userLogin);
+    public ResponseEntity<IssueReadModel> setIssueStatusCancel(@PathVariable Long issueId,@RequestBody String result) {
+        IssueReadModel issueReadModel = issueService.setIssueStatusCancel(issueId,result);
         return ResponseEntity.ok(issueReadModel);
     }
 

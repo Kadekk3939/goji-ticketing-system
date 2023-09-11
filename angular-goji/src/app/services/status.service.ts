@@ -25,8 +25,8 @@ export class StatusService {
     return this.http.put<Task>(`${environment.apiBaseUrl}/task/${taskId}/inProgress`, userLogin);
   }
 
-  public setTaskStatusCancel(taskId:string): Observable<Task> {
-    return this.http.put<Task>(`${environment.apiBaseUrl}/task/${taskId}/cancel`, null);
+  public setTaskStatusCancel(taskId:string, result:string): Observable<Task> {
+    return this.http.put<Task>(`${environment.apiBaseUrl}/task/${taskId}/cancel`, result);
   }
 
   public setIssueStatusClosed(issueId:string, result:string): Observable<Issue> {
@@ -37,8 +37,8 @@ export class StatusService {
     return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/open`, null);
   }
 
-  public setIssueStatusCancel(issueId:string): Observable<Issue> {
-    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/cancel`, null);
+  public setIssueStatusCancel(issueId:string, result:string): Observable<Issue> {
+    return this.http.put<Issue>(`${environment.apiBaseUrl}/issue/${issueId}/cancel`, result);
   }
 
   public setIssueStatusInProgress(issueId:string, userLogin:string): Observable<Issue> {
@@ -53,8 +53,8 @@ export class StatusService {
     return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/open`, null);
   }
 
-  public setRequestStatusCancel(requestId:string): Observable<Request> {
-    return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/cancel`, null);
+  public setRequestStatusCancel(requestId:string, result:string): Observable<Request> {
+    return this.http.put<Request>(`${environment.apiBaseUrl}/request/${requestId}/cancel`, result);
   }
 
   public setRequestStatusInProgress(requestId:string, userLogin:string): Observable<Request> {

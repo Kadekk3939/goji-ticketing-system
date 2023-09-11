@@ -469,7 +469,28 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
       exitAnimationDuration:'500ms',
       data:{
         id: id,
-        objectType: this.getObjType(obj)
+        objectType: this.getObjType(obj),
+        status:'finish'
+      }
+    })
+    _dialog.afterClosed().subscribe(item=>{
+      if(item!==undefined) {
+        this.element=null;
+        this.ngOnInit();
+      }
+    });
+  }
+
+  openCancelDialog(id:any, obj:Request|Issue|Task|User|Client|Product)
+  {
+    var _dialog = this.dialog.open(FinishDialogComponent, {
+      width:'40%',
+      enterAnimationDuration:'500ms',
+      exitAnimationDuration:'500ms',
+      data:{
+        id: id,
+        objectType: this.getObjType(obj),
+        status:'cancel'
       }
     })
     _dialog.afterClosed().subscribe(item=>{
@@ -525,45 +546,6 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
           );
         } else if ('taskName' in obj) {
           this.statusService.setTaskStatusOpen(obj.taskId.toString()).subscribe(res => {
-              this.element=null;
-              this.ngOnInit();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        }
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-  }
-
-  setCancel(obj:Request|Issue|Task|User|Client|Product) {
-    switch (typeof obj) {
-      case 'object': {
-        if ('requestName' in obj) {
-          this.statusService.setRequestStatusCancel(obj.requestId.toString()).subscribe(res => {
-              this.element=null;
-              this.ngOnInit();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        } else if ('issueName' in obj) {
-          this.statusService.setIssueStatusCancel(obj.issueId.toString()).subscribe(res => {
-              this.element=null;
-              this.ngOnInit();
-            },
-            (error: HttpErrorResponse) => {
-              alert(error.message);
-            }
-          );
-        } else if ('taskName' in obj) {
-          this.statusService.setTaskStatusCancel(obj.taskId.toString()).subscribe(res => {
               this.element=null;
               this.ngOnInit();
             },

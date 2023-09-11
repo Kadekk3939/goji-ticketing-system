@@ -133,10 +133,11 @@
                     <p>Closing date: {{getInfo(element)[2]}}</p>
                   </div>
                 </mat-card-content>
+
               </mat-card>
             </div>
           </div>
-          
+
           <div *ngIf="type!='/clients'&&type!='/products'" class="filters">
             <mat-card class="element-card mat-elevation-z8 filter-panel">
               <mat-card-header>
@@ -227,11 +228,12 @@
                       </div>
                     </mat-expansion-panel>
                   </mat-accordion>
-
-                </ng-template>
-              </mat-card-content>
-            </mat-card>
-          </div>
+                        </ng-template>
+                <br>
+                      <button mat-flat-button color="accent" class="mod-button" (click)="applyFilters()">Apply filters</button>
+                    </mat-card-content>
+                </mat-card>
+            </div>
         </div>
       </div>
     </div>

@@ -33,8 +33,8 @@ export class ListComponent implements OnInit {
   public elements:(Request|Issue|Task|User|Client|Product)[];
   public originalElements:(Request|Issue|Task|User|Client|Product)[];
   public pageSlice: (Request|Issue|Task|User|Client|Product)[];
-  public statusArray: any[] = [{id:1, name: 'OPEN'}, {id:2, name: 'CLOSED'}, {id:3, name: 'IN_PROGRESS'}];
-  public rolesArray: any[] = [{id:1, name: 'Admin'}, {id:2, name: 'Account Manager'}, {id:3, name: 'Product Manager'}, {id:4, name: 'Worker'}];
+  public statusArray: any[] = [{id:1, name: 'OPEN', checked: false}, {id:2, name: 'CLOSED', checked: false}, {id:3, name: 'IN_PROGRESS', checked: false}];
+  public rolesArray: any[] = [{id:1, name: 'Admin', checked: false}, {id:2, name: 'Account Manager', checked: false}, {id:3, name: 'Product Manager', checked: false}, {id:4, name: 'Worker', checked: false}];
   tempArray: any = [];
   newArray: any = [];
   numOfChecked: number = 0;
@@ -116,6 +116,7 @@ export class ListComponent implements OnInit {
               (response: Request[]) => {
                 response.forEach(request => {
                   this.elements?.push(request);
+                  this.applyFilters();
                 })
                this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
@@ -126,6 +127,7 @@ export class ListComponent implements OnInit {
               (response: Issue[]) => {
                 response.forEach(issue => {
                   this.elements?.push(issue);
+                  this.applyFilters();
                 })
                 this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
@@ -136,6 +138,7 @@ export class ListComponent implements OnInit {
               (response: Task[]) => {
                 response.forEach(task => {
                   this.elements?.push(task);
+                  this.applyFilters();
                 })
                 this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
@@ -153,6 +156,7 @@ export class ListComponent implements OnInit {
               (response: Issue[]) => {
                 response.forEach(issue => {
                   this.elements?.push(issue);
+                  this.applyFilters();
                 })
                 this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
@@ -163,6 +167,7 @@ export class ListComponent implements OnInit {
               (response: Task[]) => {
                 response.forEach(task => {
                   this.elements?.push(task);
+                  this.applyFilters();
                 })
                this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
               }
@@ -178,6 +183,7 @@ export class ListComponent implements OnInit {
             (response:Task[])=>{
               response.forEach(task=>{
                 this.elements?.push(task);
+                this.applyFilters();
               })
               this.pageSlice = this.elements!.slice(0,this.paginator?.pageSize);
             }
@@ -512,10 +518,30 @@ export class ListComponent implements OnInit {
       }
     });
   }
+
   onFilterCheckboxChange(event: any){
-    if(event.target.checked){
+    // if(event.target.checked){
+
+      if(event.target.value == 'OPEN'){
+        this.statusArray[0].checked = !this.statusArray[0].checked;
+      }else if(event.target.value == 'CLOSED'){
+        this.statusArray[1].checked = !this.statusArray[1].checked;
+      }else if(event.target.value == 'IN_PROGRESS'){
+        this.statusArray[2].checked = !this.statusArray[2].checked;
+      }else if(event.target.value == 'Admin'){
+        this.rolesArray[0].checked = !this.rolesArray[0].checked;
+      }else if(event.target.value == 'Account Manager'){
+        this.rolesArray[1].checked = !this.rolesArray[1].checked;
+      }else if(event.target.value == 'Product Manager'){
+        this.rolesArray[2].checked = !this.rolesArray[2].checked;
+      }else if(event.target.value == 'Worker'){
+        this.rolesArray[3].checked = !this.rolesArray[3].checked;
+      }
+
+/*
       this.numOfChecked++;
       this.tempArray = this.originalElements.filter((e: any)=> e.status == event.target.value || e.role == event.target.value);
+      console.log(event.target.value);
       this.elements = [];
       this.newArray.push(this.tempArray);
       for(let i = 0; i < this.newArray.length; i++){
@@ -541,9 +567,9 @@ export class ListComponent implements OnInit {
         }
       }
 
-    }
+    }*/
 
-    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
+    /*if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
     {
       const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
       let endIndex = startIndex+this.paginator?.pageSize;
@@ -551,7 +577,7 @@ export class ListComponent implements OnInit {
         endIndex=this.elements!.length;
       }
       this.pageSlice = this.elements!.slice(startIndex,endIndex);
-    }
+    }*/
   }
   onFilterDateChange(event: any, mode: string){
 
@@ -559,18 +585,18 @@ export class ListComponent implements OnInit {
     switch (mode) {
       case 'open': {
         this.opendateFValue = event.value;
-        this.elements = this.originalElements.filter((e: any) =>
-          new Date(new Date(new Date(e.openDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
+        // this.elements = this.originalElements.filter((e: any) =>
+        //   new Date(new Date(new Date(e.openDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
       case 'inProgress': {
         this.inProgressDateFValue = event.value;
-        this.elements = this.originalElements.filter((e: any) =>
-          new Date(new Date(new Date(e.inProgressDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
+        // this.elements = this.originalElements.filter((e: any) =>
+        //   new Date(new Date(new Date(e.inProgressDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
       case 'finalization': {
         this.closedDateFValue = event.value;
-        this.elements = this.originalElements.filter((e: any) =>
-          new Date(new Date(new Date(e.finalizationDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
+        // this.elements = this.originalElements.filter((e: any) =>
+        //   new Date(new Date(new Date(e.finalizationDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
       default: break;
     }
@@ -604,6 +630,76 @@ export class ListComponent implements OnInit {
         break;
     }
     this.elements = this.originalElements;
+  }
+
+  applyFilters(){
+    // @ts-ignore
+    if(this.user.role=='Admin'){
+      this.elements = [];
+      for(let i = 0; i < this.rolesArray.length; i++){
+        if(this.rolesArray[i].checked == true){
+          this.tempArray = this.originalElements.filter((e: any)=> e.role == this.rolesArray[i].name);
+          this.newArray = [];
+          this.newArray.push(this.tempArray);
+          for(let i = 0; i < this.newArray.length; i++){
+            for(let j = 0; j < this.newArray[i].length; j++){
+              const obj = this.newArray[i][j];
+              this.elements.push(obj);
+            }
+          }
+        }
+      }
+    } else{
+      if(this.statusArray[0].checked || this.statusArray[1].checked || this.statusArray[2].checked) {
+        this.elements = [];
+        for (let i = 0; i < this.statusArray.length; i++) {
+          if (this.statusArray[i].checked == true) {
+            this.tempArray = this.originalElements.filter((e: any) => e.status == this.statusArray[i].name);
+            this.newArray = [];
+            this.newArray.push(this.tempArray);
+            for (let i = 0; i < this.newArray.length; i++) {
+              for (let j = 0; j < this.newArray[i].length; j++) {
+                const obj = this.newArray[i][j];
+                this.elements.push(obj);
+              }
+            }
+          }
+        }
+      } else{
+        this.elements = this.originalElements;
+      }
+
+      if(this.opendateFValue != null) {
+        const pick = new Date(new Date(this.opendateFValue.toISOString()).getTime()).setUTCHours(24,0,0,0);
+          this.elements = this.elements.filter((e: any) =>
+            new Date(new Date(new Date(e.openDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
+      }
+      if(this.inProgressDateFValue != null) {
+        const pick = new Date(new Date(this.inProgressDateFValue.toISOString()).getTime()).setUTCHours(24,0,0,0);
+
+        this.elements = this.elements.filter((e: any) =>
+            new Date(new Date(new Date(e.inProgressDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
+      }
+      if(this.closedDateFValue != null) {
+        const pick = new Date(new Date(this.closedDateFValue.toISOString()).getTime()).setUTCHours(24,0,0,0);
+
+        this.elements = this.elements.filter((e: any) =>
+            new Date(new Date(new Date(e.finalizationDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
+      }
+
+
+    }
+
+    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
+    {
+      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
+      let endIndex = startIndex+this.paginator?.pageSize;
+      if(endIndex>this.elements!.length){
+        endIndex=this.elements!.length;
+      }
+      this.pageSlice = this.elements!.slice(startIndex,endIndex);
+    }
+
   }
 
 }

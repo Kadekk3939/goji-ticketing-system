@@ -32,15 +32,37 @@ img {
 .nav-item {
     float: left;
 }
+.content {
+  display: flex;
+  justify-content: space-around;
+  padding: 50px;
+  gap:50px;
+}
 
-.subElements {
+.container {
+  padding: 0;
+  margin: 0;
+}
+.sub {
     display: flex;
-    justify-content: flex-end;
-    /* Align items to the right side */
-    margin-left: 10px;
-    margin-top: 20px;
-    /* Add some margin for spacing */
-    padding-right: 50px;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 50svh;
+    overflow-y: auto;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+  color: white;
+  font-weight: 300;
+  font-family: 'system-ui';
+  text-transform: uppercase;
 }
 
 .card-container-sub {
@@ -48,35 +70,24 @@ img {
     cursor: pointer;
 }
 
-.card-container-parent {
-    width: 400px;
-    cursor: pointer;
-}
-
-
-/* Style for the container */
-
-.subAndParentsElements {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    /* Distribute elements evenly between parentElements and subElements */
-}
-
-.parents {
-    margin-top: 20px;
-    padding-left: 50px;
-}
-
-.specificElement {
-    padding-left: 50px;
-    padding-right: 50px;
-}
-
-.parentElement:hover {
-    background-color: #59ec66;
-}
-
 .subElement:hover {
-    background-color: #59ec66;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.9)
+}
+
+@media only screen and (max-width: 600px) {
+
+  .content {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .sub {
+    gap: 5px;
+    max-height: 30svh;
+  }
+
+  .card-container-sub {
+    width: 50svw;
+  }
+
 }

@@ -38,30 +38,33 @@
     <header>
         <h1>Welcome {{user?.login}}</h1>
     </header>
-    <!-- Page Content -->
-    <div class="container">
-        <div class="card border-0 shadow my-5">
-            <div class="card-body p-5">
-                <p class="lead">Name : {{user?.firstName}} {{user?.lastName}}</p>
-                <p class="lead">Email : {{user?.email}}</p>
-                <p class="lead">Role : {{user?.role}}</p>
-            </div>
+    <div class="content">
+      <div class="container">
+        <div class="card border-0 shadow">
+          <div class="card-body p-5">
+            <p class="lead">Name : {{user?.firstName}} {{user?.lastName}}</p>
+            <p class="lead">Email : {{user?.email}}</p>
+            <p class="lead">Role : {{user?.role}}</p>
+          </div>
         </div>
-    </div>
-    <div class='sub'>
-        <div>
-            <div *ngFor="let obj of subElements" class="subElements">
-                <div class="card-container-sub  mat-elevation-z3">
-                    <mat-card>
-                        <mat-card-content class="subElement" (click)="toSubElement(getSubElementInfo(obj)![4],obj)">
-                            <p><strong>Type:</strong> {{getSubElementInfo(obj)![0]}}</p>
-                            <p><strong>Name:</strong> {{getSubElementInfo(obj)![1] }}</p>
-                            <p><strong>Version:</strong> {{getSubElementInfo(obj)![2]}}</p>
-                            <p><strong>Description:</strong> {{getSubElementInfo(obj)![3] }}</p>
-                        </mat-card-content>
-                    </mat-card>
-                </div>
+      </div>
+      <div class="items">
+        <h2>Assigned items</h2>
+        <div class='sub'>
+          <div *ngFor="let obj of subElements" class="subElements">
+            <div class="card-container-sub  mat-elevation-z3">
+              <mat-card class="subElement">
+                <mat-card-header class="mb-3">
+                  <mat-card-title>{{getSubElementInfo(obj)![1] }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content (click)="toSubElement(getSubElementInfo(obj)![4],obj)">
+                  <p><strong>Description:</strong> {{getSubElementInfo(obj)![2]}}</p>
+                  <p><strong>Status:</strong> {{getSubElementInfo(obj)![3] }}</p>
+                </mat-card-content>
+              </mat-card>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 </body>

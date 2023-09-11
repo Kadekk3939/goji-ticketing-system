@@ -724,7 +724,6 @@ export class ListComponent implements OnInit {
       default:
         break;
     }
-    this.elements = this.originalElements;
   }
 
   applyFilters(){
@@ -795,6 +794,32 @@ export class ListComponent implements OnInit {
       this.pageSlice = this.elements!.slice(startIndex,endIndex);
     }
 
+  }
+
+  clearFilters(){
+
+    this.opendateFValue = null;
+    this.inProgressDateFValue = null;
+    this.closedDateFValue = null;
+    this.elements = this.originalElements;
+
+    let checkboxEl = (<HTMLInputElement[]><any>document.getElementsByName("statusChbx"));
+    for(let i = 0; i < checkboxEl.length; i++){
+      if (checkboxEl[i].checked) {
+        checkboxEl[i].checked = false
+      }
+      this.statusArray[i].checked = false;
+    }
+
+    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
+    {
+      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
+      let endIndex = startIndex+this.paginator?.pageSize;
+      if(endIndex>this.elements!.length){
+        endIndex=this.elements!.length;
+      }
+      this.pageSlice = this.elements!.slice(startIndex,endIndex);
+    }
   }
 
 }

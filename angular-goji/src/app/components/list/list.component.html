@@ -173,7 +173,7 @@
                       <div class="container ul_checkbox">
                         <ul>
                           <li *ngFor="let chbxArr of statusArray">
-                            <input type="checkbox" (change)="onFilterCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
+                            <input type="checkbox" name="statusChbx" (change)="onFilterCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
                           </li>
                         </ul>
                       </div>
@@ -249,6 +249,7 @@
                         </ng-template>
                 <br>
                       <button mat-flat-button color="accent" class="mod-button" (click)="applyFilters()">Apply filters</button>
+                      <button mat-flat-button color="primary" class="mod-button" (click)="clearFilters()">Clear filters</button>
                     </mat-card-content>
                 </mat-card>
             </div>

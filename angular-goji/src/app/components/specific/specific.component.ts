@@ -541,6 +541,45 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     }
   }
 
+  setCancel(obj:Request|Issue|Task|User|Client|Product) {
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          this.statusService.setRequestStatusCancel(obj.requestId.toString()).subscribe(res => {
+              this.element=null;
+              this.ngOnInit();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('issueName' in obj) {
+          this.statusService.setIssueStatusCancel(obj.issueId.toString()).subscribe(res => {
+              this.element=null;
+              this.ngOnInit();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('taskName' in obj) {
+          this.statusService.setTaskStatusCancel(obj.taskId.toString()).subscribe(res => {
+              this.element=null;
+              this.ngOnInit();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
   getActive(obj:User|Issue|Task|Request|Product|Client|null):string|null{
     if(obj!=null){
       if('firstName' in obj) {

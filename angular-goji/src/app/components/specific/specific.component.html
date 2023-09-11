@@ -75,6 +75,9 @@
                                     <button mat-flat-button color="accent" class="mod-button" (click)="openFinishDialog(getId(element!), element!)">
                                   Finish
                                 </button>
+                                  <button mat-flat-button color="accent" class="mod-button" (click)="setCancel(element!)">
+                                    Cancel
+                                  </button>
                                 </div>
                                 <div *ngIf="getStatus(element)=='CLOSED'">
                                     <button mat-flat-button color="accent" class="mod-button" (click)="setOpen(element!)">

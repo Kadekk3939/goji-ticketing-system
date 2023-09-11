@@ -848,6 +848,13 @@ export class ListComponent implements OnInit {
       }
       this.statusArray[i].checked = false;
     }
+    let parCheckboxEl = (<HTMLInputElement[]><any>document.getElementsByName("parentsChbx"));
+    for(let i = 0; i < parCheckboxEl.length; i++){
+      if (parCheckboxEl[i].checked) {
+        parCheckboxEl[i].checked = false
+      }
+      this.parentElementsArray[i].checked = false;
+    }
 
     if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
     {

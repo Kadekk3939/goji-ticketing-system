@@ -178,6 +178,22 @@
                         </ul>
                       </div>
                     </mat-expansion-panel>
+
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          Parent element
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div class="container ul_checkbox">
+                        <ul>
+                          <li *ngFor="let chbxArr of parentElementsArray">
+                            <input type="checkbox" name="parentsChbx" (change)="onParentsCheckboxChange($event)" value="{{chbxArr.id}}"> {{chbxArr.name}}
+                          </li>
+                        </ul>
+                      </div>
+                    </mat-expansion-panel>
+
                     <mat-expansion-panel>
                       <mat-expansion-panel-header>
                         <mat-panel-title>

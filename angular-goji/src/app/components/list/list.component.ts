@@ -35,6 +35,7 @@ export class ListComponent implements OnInit {
   public pageSlice: (Request|Issue|Task|User|Client|Product)[];
   public statusArray: any[] = [{id:1, name: 'OPEN', checked: false}, {id:2, name: 'CLOSED', checked: false}, {id:3, name: 'IN_PROGRESS', checked: false}];
   public rolesArray: any[] = [{id:1, name: 'Admin', checked: false}, {id:2, name: 'Account Manager', checked: false}, {id:3, name: 'Product Manager', checked: false}, {id:4, name: 'Worker', checked: false}];
+  public parentElementsArray: any[] = [];
   tempArray: any = [];
   newArray: any = [];
   numOfChecked: number = 0;
@@ -64,6 +65,8 @@ export class ListComponent implements OnInit {
     }
   ngOnInit() {
     this.getData();
+    this.getParentElements();
+    console.log(this.parentElementsArray);
   }
 
   public getData(){
@@ -614,6 +617,41 @@ export class ListComponent implements OnInit {
       }
     }
   }
+
+  getParentElements(){
+    this.parentElementsArray = [];
+    if(this.type=="/requests")
+    {
+      this.listService.getAllProducts().subscribe(
+        (response: Product[]) => {
+          response.forEach(product => {
+            this.parentElementsArray.push({id: product.productId, name: product.productName, checked: false});
+          })
+        }
+      )
+    }else if(this.type=="/issues")
+    {
+      this.listService.getAllRequests().subscribe(
+        (response: Request[]) => {
+          response.forEach(request => {
+            this.parentElementsArray.push({id: request.requestId, name: request.requestName, checked: false});
+          })
+        }
+      )
+    }else if(this.type=="/tasks")
+    {
+      this.listService.getAllIssues().subscribe(
+        (response: Issue[]) => {
+          response.forEach(issue => {
+            this.parentElementsArray.push({id: issue.issueId, name: issue.issueName, checked: false});
+          })
+        }
+      )
+    }
+
+
+  }
+
   onFilterCheckboxChange(event: any){
     // if(event.target.checked){
 
@@ -632,47 +670,13 @@ export class ListComponent implements OnInit {
       }else if(event.target.value == 'Worker'){
         this.rolesArray[3].checked = !this.rolesArray[3].checked;
       }
-
-/*
-      this.numOfChecked++;
-      this.tempArray = this.originalElements.filter((e: any)=> e.status == event.target.value || e.role == event.target.value);
-      console.log(event.target.value);
-      this.elements = [];
-      this.newArray.push(this.tempArray);
-      for(let i = 0; i < this.newArray.length; i++){
-        for(let j = 0; j < this.newArray[i].length; j++){
-          const obj = this.newArray[i][j];
-          this.elements.push(obj);
-        }
+  }
+  onParentsCheckboxChange(event: any){
+    for(let i = 0; i < this.parentElementsArray.length; i++){
+      if(event.value == this.parentElementsArray[i].id){
+        this.parentElementsArray[i].checked = !this.parentElementsArray[i].checked;
       }
-    }else{
-      this.numOfChecked--;
-      this.tempArray = this.elements.filter((e: any)=> e.status != event.target.value && e.role != event.target.value);
-      this.newArray = [];
-      this.elements = [];
-      this.newArray.push(this.tempArray);
-      if (this.numOfChecked == 0){
-        this.elements = this.originalElements;
-      }else{
-        for(let i = 0; i < this.newArray.length; i++){
-          for(let j = 0; j < this.newArray[i].length; j++){
-            const obj = this.newArray[i][j];
-            this.elements.push(obj);
-          }
-        }
-      }
-
-    }*/
-
-    /*if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
-    {
-      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
-      let endIndex = startIndex+this.paginator?.pageSize;
-      if(endIndex>this.elements!.length){
-        endIndex=this.elements!.length;
-      }
-      this.pageSlice = this.elements!.slice(startIndex,endIndex);
-    }*/
+    }
   }
   onFilterDateChange(event: any, mode: string){
 
@@ -727,6 +731,7 @@ export class ListComponent implements OnInit {
   }
 
   applyFilters(){
+    this.elements = this.originalElements;
     // @ts-ignore
     if(this.user.role=='Admin'){
       this.elements = [];
@@ -744,19 +749,31 @@ export class ListComponent implements OnInit {
         }
       }
     } else{
+
+      let parArrCh = 0;
+      for (let i = 0; i < this.parentElementsArray.length; i++){
+        if (this.parentElementsArray[i].checked)
+          parArrCh++;
+      }
+
       if(this.statusArray[0].checked || this.statusArray[1].checked || this.statusArray[2].checked) {
-        this.elements = [];
+        // this.elements = [];
         for (let i = 0; i < this.statusArray.length; i++) {
           if (this.statusArray[i].checked == true) {
-            this.tempArray = this.originalElements.filter((e: any) => e.status == this.statusArray[i].name);
-            this.newArray = [];
-            this.newArray.push(this.tempArray);
-            for (let i = 0; i < this.newArray.length; i++) {
-              for (let j = 0; j < this.newArray[i].length; j++) {
-                const obj = this.newArray[i][j];
-                this.elements.push(obj);
-              }
-            }
+
+            this.elements = this.elements.filter((e:any) => e.status == this.statusArray[i].name);
+
+            this.tempArray = this.elements.filter((e: any) => e.status == this.statusArray[i].name);
+
+            // this.newArray = [];
+            // this.newArray.push(this.tempArray);
+            // for (let i = 0; i < this.newArray.length; i++) {
+            //   for (let j = 0; j < this.newArray[i].length; j++) {
+            //     const obj = this.newArray[i][j];
+            //     this.elements.push(obj);
+            //   }
+            // }
+
           }
         }
       } else{

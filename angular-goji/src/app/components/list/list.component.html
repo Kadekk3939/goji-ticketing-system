@@ -212,6 +212,21 @@
                     <mat-expansion-panel>
                       <mat-expansion-panel-header>
                         <mat-panel-title>
+                          Responsible user
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div class="container ul_checkbox">
+                        <ul>
+                          <li *ngFor="let chbxArr of usersArray">
+                            <input type="checkbox" name="respUserChbx" (change)="onRespUserCheckboxChange($event)" value="{{chbxArr.id}}"> {{chbxArr.login}}
+                          </li>
+                        </ul>
+                      </div>
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
                           Open date
                         </mat-panel-title>
                       </mat-expansion-panel-header>

@@ -37,6 +37,7 @@ export class ListComponent implements OnInit {
   public rolesArray: any[] = [{id:1, name: 'Admin', checked: false}, {id:2, name: 'Account Manager', checked: false}, {id:3, name: 'Product Manager', checked: false}, {id:4, name: 'Worker', checked: false}];
   public typesArray: any[] = [{name: 'Bug', checked: false}, {name: 'Feature', checked: false}, {name: 'Update', checked: false}];
   public parentElementsArray: any[] = [];
+  public usersArray: any[] = [];
   tempArray: any = [];
   newArray: any = [];
   numOfChecked: number = 0;
@@ -67,6 +68,7 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.getData();
     this.getParentElements();
+    this.getUsersArray();
   }
 
   public getData(){
@@ -648,8 +650,19 @@ export class ListComponent implements OnInit {
         }
       )
     }
+  }
 
-
+  getUsersArray(){
+    this.usersArray = [];
+    if(this.user?.role != 'Admin'){
+      this.listService.getAllUsers().subscribe(
+        (response: User[]) => {
+          response.forEach(user => {
+            this.usersArray.push({id: user.userId, login: user.login, checked: false});
+          })
+        }
+      )
+    }
   }
 
   onFilterCheckboxChange(event: any){
@@ -685,6 +698,13 @@ export class ListComponent implements OnInit {
       }
     }
   }
+  onRespUserCheckboxChange(event: any){
+    for(let i = 0; i < this.usersArray.length; i++){
+      if(event.target.value == this.usersArray[i].id){
+        this.usersArray[i].checked = !this.usersArray[i].checked;
+      }
+    }
+  }
   onFilterDateChange(event: any, mode: string){
 
     const pick = new Date(new Date(event.value.toISOString()).getTime()).setUTCHours(24,0,0,0);
@@ -706,7 +726,7 @@ export class ListComponent implements OnInit {
         break;}
       default: break;
     }
-
+///?????
     if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
     {
       const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
@@ -739,6 +759,8 @@ export class ListComponent implements OnInit {
 
   applyFilters(){
     this.elements = this.originalElements;
+    console.log(this.usersArray);
+    console.log(this.elements);
     // @ts-ignore
     if(this.user.role=='Admin'){
       this.elements = [];
@@ -766,6 +788,11 @@ export class ListComponent implements OnInit {
       for (let i = 0; i < this.typesArray.length; i++){
         if (this.typesArray[i].checked)
           typeArrCh++;
+      }
+      let userArrCh = 0;
+      for (let i = 0; i < this.usersArray.length; i++){
+        if (this.usersArray[i].checked)
+          userArrCh++;
       }
 
       if(this.statusArray[0].checked || this.statusArray[1].checked || this.statusArray[2].checked) {
@@ -822,6 +849,24 @@ export class ListComponent implements OnInit {
             this.elements.push(obj);
           }
         }
+      }
+
+      if(userArrCh > 0){
+        this.newArray = [];
+        for (let i = 0; i < this.usersArray.length; i++) {
+          if (this.usersArray[i].checked == true) {
+            this.tempArray = this.elements.filter((e:any) => e.responsibleUser == this.usersArray[i].login);
+            this.newArray.push(this.tempArray);
+          }
+        }
+        this.elements = [];
+        for (let i = 0; i < this.newArray.length; i++) {
+          for (let j = 0; j < this.newArray[i].length; j++) {
+            const obj = this.newArray[i][j];
+            this.elements.push(obj);
+          }
+        }
+
       }
       // else{
       //   this.elements = this.originalElements;
@@ -880,6 +925,21 @@ export class ListComponent implements OnInit {
         parCheckboxEl[i].checked = false
       }
       this.parentElementsArray[i].checked = false;
+    }
+    let typesCheckboxEl = (<HTMLInputElement[]><any>document.getElementsByName("typesChbx"));
+    for(let i = 0; i < typesCheckboxEl.length; i++){
+      if (typesCheckboxEl[i].checked) {
+        typesCheckboxEl[i].checked = false
+      }
+      this.typesArray[i].checked = false;
+    }
+
+    let userCheckboxEl = (<HTMLInputElement[]><any>document.getElementsByName("respUserChbx"));
+    for(let i = 0; i < userCheckboxEl.length; i++){
+      if (userCheckboxEl[i].checked) {
+        userCheckboxEl[i].checked = false
+      }
+      this.usersArray[i].checked = false;
     }
 
     if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)

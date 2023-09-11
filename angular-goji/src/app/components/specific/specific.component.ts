@@ -330,25 +330,7 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
     this.openDialog(id,'Edit '+type, type);
   }
 
-  openDialog(id:any, title:any, type:any)
-  {
-    this.value='';
-    var _dialog = this.dialog.open(DialogComponent, {
-      width:'40%',
-      enterAnimationDuration:'500ms',
-      exitAnimationDuration:'500ms',
-      data:{
-        title: title,
-        id: id,
-        type: '/'+type+'s'
-      }
-    })
-    _dialog.afterClosed().subscribe(item=>{
-      if(item!==undefined) {
-        this.ngOnInit();
-      }
-    });
-  }
+
 
   getId(obj:Request|Issue|Task|User|Client|Product):number{
     switch (typeof obj) {
@@ -572,6 +554,55 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
       }
     }
     return ''
+  }
+
+  addData(type:any)
+  {
+    if(type=='request')
+      type='issue'
+    else if(type=='issue')
+      type='task'
+    this.openDialogToAdd('Add '+type.slice(1,-1), type);
+  }
+  
+  openDialogToAdd(title:any, type:any)
+  {
+    this.value='';
+    const _dialog = this.dialog.open(DialogComponent, {
+      width:'40%',
+      enterAnimationDuration:'500ms',
+      exitAnimationDuration:'500ms',
+      data:{
+        title: title,
+        id: 0,
+        type: '/'+type+'s'
+      }
+    })
+    _dialog.afterClosed().subscribe(item=>{
+      if(item!==undefined) {
+        this.router.navigate([type, item]);
+      }
+    });
+  }
+
+  openDialog(id:any, title:any, type:any)
+  {
+    this.value='';
+    var _dialog = this.dialog.open(DialogComponent, {
+      width:'40%',
+      enterAnimationDuration:'500ms',
+      exitAnimationDuration:'500ms',
+      data:{
+        title: title,
+        id: id,
+        type: '/'+type+'s'
+      }
+    })
+    _dialog.afterClosed().subscribe(item=>{
+      if(item!==undefined) {
+        this.ngOnInit();
+      }
+    });
   }
 
   setActive(obj:User|Issue|Task|Request|Product|Client){

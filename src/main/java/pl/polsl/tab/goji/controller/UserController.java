@@ -50,6 +50,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findUserByUserId(id));
     }
 
+    @GetMapping("/role/{role}")
+    public ResponseEntity<List<UserReadModel>> getUserWithRole(@PathVariable String role){
+        return ResponseEntity.ok(userService.getAllUserWithRole(role));
+    }
+
     @GetMapping("/login/{login}")
     public ResponseEntity<?> getUserByLogin(@PathVariable String login){
         UserReadModel user = userService.findUserByLogin(login);

@@ -107,4 +107,8 @@ export class DialogService {
   public getAllUsers():Observable<User[]>{
     return this.http.get<User[]>(`${environment.apiBaseUrl}/user`);
   }
+
+  public getUsersWithRole(role:string):Observable<User[]>{
+    return this.http.get<User[]>(`${environment.apiBaseUrl}/user/role/${role}`);
+  }
 }

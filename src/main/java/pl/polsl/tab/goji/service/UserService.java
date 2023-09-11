@@ -176,4 +176,8 @@ public class UserService implements UserDetailsService {
         user = userRepository.save(user);
         return userMapper.toReadModel(user);
     }
+
+    public List<UserReadModel> getAllUserWithRole(String role){
+        return userMapper.map(userRepository.getAllUsersWithRole(role));
+    }
 }

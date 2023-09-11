@@ -113,7 +113,12 @@ export class DialogComponent implements OnInit {
     this.requests$ = this.service.getAllRequests();
     this.products$ = this.service.getAllProducts();
     this.clients$ = this.service.getAllClients();
-    this.users$ = this.service.getAllUsers();
+    if(this.type=="/requests")
+      this.users$ = this.service.getUsersWithRole("Account Manager");
+    else if(this.type=="/tasks")
+      this.users$ = this.service.getUsersWithRole("Worker");
+    else if(this.type=="/issues")
+      this.users$ = this.service.getUsersWithRole("Product Manager");
   }
 
   setDialogData(id:any){

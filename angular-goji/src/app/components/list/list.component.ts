@@ -518,7 +518,102 @@ export class ListComponent implements OnInit {
       }
     });
   }
+  openFinishDialog(id:any, obj:Request|Issue|Task|User|Client|Product)
+  {
+    var _dialog = this.dialog.open(FinishDialogComponent, {
+      width:'40%',
+      enterAnimationDuration:'500ms',
+      exitAnimationDuration:'500ms',
+      data:{
+        id: id,
+        objectType: this.getObjType(obj)
+      }
+    })
+    _dialog.afterClosed().subscribe(item=>{
+      if(item!==undefined) {
+        this.elements=[];
+        this.getData();
+      }
+    });
+  }
 
+  setInProgress(obj:Request|Issue|Task|User|Client|Product) {
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          this.statusService.setRequestStatusInProgress(obj.requestId.toString(), this.user?.login??'').subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('issueName' in obj) {
+          this.statusService.setIssueStatusInProgress(obj.issueId.toString(),this.user?.login??'').subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('taskName' in obj) {
+          this.statusService.setTaskStatusInProgress(obj.taskId.toString(),this.user?.login??'').subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
+
+  setOpen(obj:Request|Issue|Task|User|Client|Product) {
+    switch (typeof obj) {
+      case 'object': {
+        if ('requestName' in obj) {
+          this.statusService.setRequestStatusOpen(obj.requestId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('issueName' in obj) {
+          this.statusService.setIssueStatusOpen(obj.issueId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        } else if ('taskName' in obj) {
+          this.statusService.setTaskStatusOpen(obj.taskId.toString()).subscribe(res => {
+              this.elements=[];
+              this.getData();
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            }
+          );
+        }
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  }
   onFilterCheckboxChange(event: any){
     // if(event.target.checked){
 

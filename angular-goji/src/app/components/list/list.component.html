@@ -133,7 +133,25 @@
                     <p>Closing date: {{getInfo(element)[2]}}</p>
                   </div>
                 </mat-card-content>
-
+                <mat-card-actions class="element-card-actions ">
+                  <div *ngIf="((user?.role=='Account Manager'&&type=='/requests')||(user?.role=='Product Manager'&&type=='/issues')||(user?.role=='Worker'&&type=='/tasks'))">
+                    <div *ngIf="getStatus(element)=='OPEN'">
+                      <button mat-flat-button color="accent" class="mod-button" (click)="setInProgress(element)">
+                        Start
+                      </button>
+                    </div>
+                    <div *ngIf="getStatus(element)=='IN_PROGRESS'">
+                      <button mat-flat-button color="accent" class="mod-button" (click)="openFinishDialog(getId(element), element)">
+                        Finish
+                      </button>
+                    </div>
+                    <div *ngIf="getStatus(element)=='CLOSED'">
+                      <button mat-flat-button color="accent" class="mod-button" (click)="setOpen(element)">
+                        Reopen
+                      </button>
+                    </div>
+                  </div>
+                </mat-card-actions>
               </mat-card>
             </div>
           </div>

@@ -194,6 +194,21 @@
                       </div>
                     </mat-expansion-panel>
 
+                    <mat-expansion-panel *ngIf="type=='/issues'||type=='/tasks'">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          Type
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div class="container ul_checkbox">
+                        <ul>
+                          <li *ngFor="let chbxArr of typesArray">
+                            <input type="checkbox" name="typesChbx" (change)="onTypesCheckboxChange($event)" value="{{chbxArr.name}}"> {{chbxArr.name}}
+                          </li>
+                        </ul>
+                      </div>
+                    </mat-expansion-panel>
+
                     <mat-expansion-panel>
                       <mat-expansion-panel-header>
                         <mat-panel-title>

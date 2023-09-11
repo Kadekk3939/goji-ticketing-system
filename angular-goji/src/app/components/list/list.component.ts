@@ -35,6 +35,7 @@ export class ListComponent implements OnInit {
   public pageSlice: (Request|Issue|Task|User|Client|Product)[];
   public statusArray: any[] = [{id:1, name: 'OPEN', checked: false}, {id:2, name: 'CLOSED', checked: false}, {id:3, name: 'IN_PROGRESS', checked: false}];
   public rolesArray: any[] = [{id:1, name: 'Admin', checked: false}, {id:2, name: 'Account Manager', checked: false}, {id:3, name: 'Product Manager', checked: false}, {id:4, name: 'Worker', checked: false}];
+  public typesArray: any[] = [{name: 'Bug', checked: false}, {name: 'Feature', checked: false}, {name: 'Update', checked: false}];
   public parentElementsArray: any[] = [];
   tempArray: any = [];
   newArray: any = [];
@@ -677,6 +678,13 @@ export class ListComponent implements OnInit {
       }
     }
   }
+  onTypesCheckboxChange(event: any){
+    for(let i = 0; i < this.typesArray.length; i++){
+      if(event.target.value == this.typesArray[i].name){
+        this.typesArray[i].checked = !this.typesArray[i].checked;
+      }
+    }
+  }
   onFilterDateChange(event: any, mode: string){
 
     const pick = new Date(new Date(event.value.toISOString()).getTime()).setUTCHours(24,0,0,0);
@@ -754,7 +762,11 @@ export class ListComponent implements OnInit {
         if (this.parentElementsArray[i].checked)
           parArrCh++;
       }
-      // console.log(this.parentElementsArray);
+      let typeArrCh = 0;
+      for (let i = 0; i < this.typesArray.length; i++){
+        if (this.typesArray[i].checked)
+          typeArrCh++;
+      }
 
       if(this.statusArray[0].checked || this.statusArray[1].checked || this.statusArray[2].checked) {
         this.elements = [];
@@ -777,16 +789,30 @@ export class ListComponent implements OnInit {
           }
         }
       }
-      if(parArrCh > 0){
 
+      if(parArrCh > 0){
         this.newArray = [];
         for (let i = 0; i < this.parentElementsArray.length; i++) {
           if (this.parentElementsArray[i].checked == true) {
             this.tempArray = this.elements.filter((e:any) => e.productId == this.parentElementsArray[i].id || e.requestId == this.parentElementsArray[i].id || e.issueId == this.parentElementsArray[i].id);
-
             this.newArray.push(this.tempArray);
+          }
+        }
+        this.elements = [];
+        for (let i = 0; i < this.newArray.length; i++) {
+          for (let j = 0; j < this.newArray[i].length; j++) {
+            const obj = this.newArray[i][j];
+            this.elements.push(obj);
+          }
+        }
+      }
 
-
+      if(typeArrCh > 0){
+        this.newArray = [];
+        for (let i = 0; i < this.typesArray.length; i++) {
+          if (this.typesArray[i].checked == true) {
+            this.tempArray = this.elements.filter((e:any) => e.type == this.typesArray[i].name);
+            this.newArray.push(this.tempArray);
           }
         }
         this.elements = [];

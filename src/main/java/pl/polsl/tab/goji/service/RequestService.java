@@ -166,5 +166,24 @@ public class RequestService {
             }
         }
     }
+
+    public RequestReadModel setRequestStatusCancel(Long requestId,String result){
+        Optional<Request> request = requestRepository.findRequestByRequestId(requestId);
+        Request requestToUpdate = new Request();
+        if(request.isPresent()){
+
+            requestToUpdate = request.get();
+            requestToUpdate.setStatus(Status.CANCEL);
+            if (result == null || result.isEmpty()) {
+                requestToUpdate.setResult("Not given");
+            } else {
+                System.out.println(result);
+                requestToUpdate.setResult(result);
+            }
+            requestToUpdate.setFinalizationDate(LocalDateTime.now());
+            requestToUpdate = requestRepository.save(requestToUpdate);
+        }
+        return requestMapper.toReadModel(requestToUpdate);
+    }
 }
 

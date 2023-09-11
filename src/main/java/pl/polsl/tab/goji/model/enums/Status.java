@@ -1,5 +1,5 @@
 package pl.polsl.tab.goji.model.enums;
 
 public enum Status {
-    OPEN, CLOSED, IN_PROGRESS;
+    OPEN, CLOSED, IN_PROGRESS,CANCEL;
 }

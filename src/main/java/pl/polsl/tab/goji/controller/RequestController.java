@@ -48,6 +48,12 @@ public class RequestController {
         return ResponseEntity.ok(request);
     }
 
+    @PutMapping("/{requestId}/cancel")
+    public ResponseEntity<RequestReadModel> setRequestStatusCancel(@PathVariable Long requestId,@RequestBody String result) {
+        RequestReadModel request = requestService.setRequestStatusCancel(requestId,result);
+        return ResponseEntity.ok(request);
+    }
+
     @PutMapping("/{requestId}/open")
     public ResponseEntity<RequestReadModel> setRequestStatusOpen(@PathVariable Long requestId) {
         RequestReadModel request = requestService.setRequestStatusOpen(requestId);

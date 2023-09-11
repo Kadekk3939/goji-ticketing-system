@@ -97,6 +97,24 @@ public class IssueService {
         return issueMapper.toReadModel(issueToUpdate);
     }
 
+    public IssueReadModel setIssueStatusCancel(Long issueId,String result){
+        Optional<Issue> issue = issueRepository.findIssueByIssueId(issueId);
+        Issue issueToUpdate = new Issue();
+        if(issue.isPresent()){
+            issueToUpdate = issue.get();
+            issueToUpdate.setStatus(Status.CANCEL);
+            if (result == null || result.isEmpty()) {
+                issueToUpdate.setResult("Not given");
+            } else {
+                System.out.println(result);
+                issueToUpdate.setResult(result);
+            }
+            issueToUpdate.setFinalizationDate(LocalDateTime.now());
+            issueToUpdate = issueRepository.save(issueToUpdate);
+        }
+        return issueMapper.toReadModel(issueToUpdate);
+    }
+
     public IssueReadModel setIssueStatusOpen(Long issueId){
         Optional<Issue> issue = issueRepository.findIssueByIssueId(issueId);
         Issue issueToUpdate = new Issue();

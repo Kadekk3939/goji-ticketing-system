@@ -61,6 +61,12 @@ public class IssueController {
         return ResponseEntity.ok(issueReadModel);
     }
 
+    @PutMapping("/{issueId}/cancel")
+    public ResponseEntity<IssueReadModel> setIssueStatusCancel(@PathVariable Long issueId,@RequestBody String userLogin) {
+        IssueReadModel issueReadModel = issueService.setIssueStatusCancel(issueId,userLogin);
+        return ResponseEntity.ok(issueReadModel);
+    }
+
     @GetMapping("/{issueId}/tasks")
     public ResponseEntity<List<TaskReadModel>> getSubTasks(@PathVariable Long issueId){
         return ResponseEntity.ok(issueService.getSubTusks(issueId));

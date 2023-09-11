@@ -48,7 +48,7 @@
           </div>
         </div>
       </div>
-      <div class="items">
+      <div class="items" [hidden]="user?.role=='Admin'">
         <h2>Assigned items</h2>
         <div class='sub'>
           <div *ngFor="let obj of subElements" class="subElements">

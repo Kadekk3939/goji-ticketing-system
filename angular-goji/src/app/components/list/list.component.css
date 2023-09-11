@@ -45,6 +45,22 @@ img {
 .element-card {
   max-height: 100svh;
   margin: 10px;
+  white-space: nowrap; /* Prevents text from wrapping onto a new line */
+  overflow: hidden; /* Hides the overflowed content */
+  text-overflow: ellipsis;
+}
+
+.card-content {
+  white-space: nowrap; /* Prevents text from wrapping onto a new line */
+  overflow: hidden; /* Hides the overflowed content */
+  text-overflow: ellipsis;
+  width:200px;
+}
+
+p {
+  white-space: nowrap; /* Prevents text from wrapping onto a new line */
+  overflow: hidden; /* Hides the overflowed content */
+  text-overflow: ellipsis;
 }
 
 .element-card-actions {

@@ -113,20 +113,20 @@
                   </mat-card-actions>
                 </mat-card-header>
                 <mat-card-content>
-                  <div *ngIf="user?.role=='Admin'">
+                  <div *ngIf="user?.role=='Admin'" class="card-content">
                     <p>Login: {{getInfo(element)[0]}}</p>
                     <p>Email: {{getInfo(element)[1]}}</p>
                     <p>Role: {{getInfo(element)[2]}}</p>
                   </div>
-                  <div *ngIf="type=='/products'">
+                  <div *ngIf="type=='/products'" class="card-content">
                     <p>Version: {{getInfo(element)[0]}}</p>
                     <p>Description: {{getInfo(element)[1]}}</p>
                   </div>
-                  <div *ngIf="type=='/clients'">
+                  <div *ngIf="type=='/clients'" class="card-content">
                     <p>Email: {{getInfo(element)[0]}}</p>
                     <p>Phone number: {{getInfo(element)[1]}}</p>
                   </div>
-                  <div *ngIf="(type=='/requests'||type=='/issues'||type=='/tasks')">
+                  <div *ngIf="(type=='/requests'||type=='/issues'||type=='/tasks')"class="card-content">
                     <p>Status: {{getStatus(element)}}</p>
                     <p>Opening date: {{getInfo(element)[0]}}</p>
                     <p>In progress date: {{getInfo(element)[1]}}</p>

@@ -64,10 +64,18 @@ h2 {
   font-family: 'system-ui';
   text-transform: uppercase;
 }
+p{
+  white-space: nowrap; /* Prevents text from wrapping onto a new line */
+  overflow: hidden; /* Hides the overflowed content */
+  text-overflow: ellipsis;
+}
 
 .card-container-sub {
     width: 400px;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .subElement:hover {

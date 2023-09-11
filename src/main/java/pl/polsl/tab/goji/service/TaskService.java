@@ -95,6 +95,25 @@ public class TaskService {
         return taskMapper.toReadModel(taskToUpdate);
     }
 
+    public TaskReadModel setTaskStatusCancel(Long taskId,String result){
+        Optional<Task> task = taskRepository.findTaskByTaskId(taskId);
+        Task taskToUpdate = new Task();
+        if(task.isPresent()){
+            taskToUpdate = task.get();
+            taskToUpdate.setStatus(Status.CANCEL);
+
+            if (result == null || result.isEmpty()) {
+                taskToUpdate.setResult("Not given");
+            } else {
+                System.out.println(result);
+                taskToUpdate.setResult(result);
+            }
+            taskToUpdate.setFinalizationDate(LocalDateTime.now());
+            taskToUpdate = taskRepository.save(taskToUpdate);
+        }
+        return taskMapper.toReadModel(taskToUpdate);
+    }
+
     public TaskReadModel setTaskStatusOpen(Long taskId){
         Optional<Task> task = taskRepository.findTaskByTaskId(taskId);
         Task taskToUpdate = new Task();

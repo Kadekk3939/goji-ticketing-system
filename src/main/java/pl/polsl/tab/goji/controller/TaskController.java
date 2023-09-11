@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import pl.polsl.tab.goji.model.dto.read.IssueReadModel;
+import pl.polsl.tab.goji.model.dto.read.RequestReadModel;
 import pl.polsl.tab.goji.model.dto.read.TaskReadModel;
 import pl.polsl.tab.goji.model.dto.read.UserReadModel;
 import pl.polsl.tab.goji.model.dto.write.IssueWriteModel;
@@ -75,5 +76,11 @@ public class TaskController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<TaskReadModel>> getTasksForUser(@PathVariable Long userId){
         return ResponseEntity.ok(taskService.getTasksForUser(userId));
+    }
+
+    @PutMapping("/{taskId}/cancel")
+    public ResponseEntity<TaskReadModel> setTAskStatusCancel(@PathVariable Long taskId, @RequestBody String result) {
+        TaskReadModel taskReadModel = taskService.setTaskStatusCancel(taskId,result);
+        return ResponseEntity.ok(taskReadModel);
     }
 }

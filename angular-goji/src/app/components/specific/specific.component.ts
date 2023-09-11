@@ -562,6 +562,8 @@ public getSubElementInfo(obj:Request|Issue|Task|Product|null):string[]{
       type='issue'
     else if(type=='issue')
       type='task'
+    else if(type=='product')
+      type='request'
     this.openDialogToAdd('Add '+type.slice(1,-1), type);
   }
   

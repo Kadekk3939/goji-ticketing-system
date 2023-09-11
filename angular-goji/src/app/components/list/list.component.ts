@@ -666,8 +666,6 @@ export class ListComponent implements OnInit {
   }
 
   onFilterCheckboxChange(event: any){
-    // if(event.target.checked){
-
       if(event.target.value == 'OPEN'){
         this.statusArray[0].checked = !this.statusArray[0].checked;
       }else if(event.target.value == 'CLOSED'){
@@ -706,35 +704,17 @@ export class ListComponent implements OnInit {
     }
   }
   onFilterDateChange(event: any, mode: string){
-
-    const pick = new Date(new Date(event.value.toISOString()).getTime()).setUTCHours(24,0,0,0);
     switch (mode) {
       case 'open': {
         this.opendateFValue = event.value;
-        // this.elements = this.originalElements.filter((e: any) =>
-        //   new Date(new Date(new Date(e.openDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
       case 'inProgress': {
         this.inProgressDateFValue = event.value;
-        // this.elements = this.originalElements.filter((e: any) =>
-        //   new Date(new Date(new Date(e.inProgressDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
       case 'finalization': {
         this.closedDateFValue = event.value;
-        // this.elements = this.originalElements.filter((e: any) =>
-        //   new Date(new Date(new Date(e.finalizationDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
         break;}
       default: break;
-    }
-///?????
-    if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
-    {
-      const startIndex = this.paginator?.pageIndex*this.paginator?.pageSize;
-      let endIndex = startIndex+this.paginator?.pageSize;
-      if(endIndex>this.elements!.length){
-        endIndex=this.elements!.length;
-      }
-      this.pageSlice = this.elements!.slice(startIndex,endIndex);
     }
   }
   onClearDateFilter(event: any, mode: string){
@@ -759,8 +739,6 @@ export class ListComponent implements OnInit {
 
   applyFilters(){
     this.elements = this.originalElements;
-    console.log(this.usersArray);
-    console.log(this.elements);
     // @ts-ignore
     if(this.user.role=='Admin'){
       this.elements = [];
@@ -799,11 +777,7 @@ export class ListComponent implements OnInit {
         this.elements = [];
         for (let i = 0; i < this.statusArray.length; i++) {
           if (this.statusArray[i].checked == true) {
-
-            // this.elements = this.originalElements.filter((e:any) => e.status == this.statusArray[i].name);
-
             this.tempArray = this.originalElements.filter((e: any) => e.status == this.statusArray[i].name);
-
             this.newArray = [];
             this.newArray.push(this.tempArray);
             for (let i = 0; i < this.newArray.length; i++) {
@@ -812,7 +786,6 @@ export class ListComponent implements OnInit {
                 this.elements.push(obj);
               }
             }
-
           }
         }
       }
@@ -868,9 +841,6 @@ export class ListComponent implements OnInit {
         }
 
       }
-      // else{
-      //   this.elements = this.originalElements;
-      // }
 
       if(this.opendateFValue != null) {
         const pick = new Date(new Date(this.opendateFValue.toISOString()).getTime()).setUTCHours(24,0,0,0);
@@ -889,8 +859,6 @@ export class ListComponent implements OnInit {
         this.elements = this.elements.filter((e: any) =>
             new Date(new Date(new Date(e.finalizationDate).toISOString()).getTime()).setUTCHours(0,0,0,0) == pick);
       }
-
-
     }
 
     if(this.paginator?.pageIndex!=undefined&&this.paginator?.pageSize!=undefined)
@@ -902,7 +870,6 @@ export class ListComponent implements OnInit {
       }
       this.pageSlice = this.elements!.slice(startIndex,endIndex);
     }
-
   }
 
   clearFilters(){
@@ -952,7 +919,6 @@ export class ListComponent implements OnInit {
       this.pageSlice = this.elements!.slice(startIndex,endIndex);
     }
   }
-
 }
 
 

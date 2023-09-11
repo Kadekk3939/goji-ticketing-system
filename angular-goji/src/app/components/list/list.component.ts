@@ -782,7 +782,7 @@ export class ListComponent implements OnInit {
         this.newArray = [];
         for (let i = 0; i < this.parentElementsArray.length; i++) {
           if (this.parentElementsArray[i].checked == true) {
-            this.tempArray = this.elements.filter((e:any) => e.productId == this.parentElementsArray[i].id);
+            this.tempArray = this.elements.filter((e:any) => e.productId == this.parentElementsArray[i].id || e.requestId == this.parentElementsArray[i].id || e.issueId == this.parentElementsArray[i].id);
 
             this.newArray.push(this.tempArray);
 

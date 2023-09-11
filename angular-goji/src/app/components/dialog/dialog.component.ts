@@ -35,7 +35,7 @@ export class DialogComponent implements OnInit {
   ];
 
   types = ['Bug', 'Feature', 'Update'];
-
+  typesForWorker = ['Projektowanie', 'Architektura', 'Testowanie' ,'Programowanie']
   public user:User|undefined;
 
   addUserForm: FormGroup;

@@ -6,41 +6,41 @@
                 <mat-label>Firstname</mat-label>
                 <input formControlName="firstName" matInput>
                 <mat-error *ngIf="addUserForm.controls['firstName'].hasError('required')">
-                  First name is <strong>required</strong>
+                    First name is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Lastname</mat-label>
                 <input formControlName="lastName" matInput>
                 <mat-error *ngIf="addUserForm.controls['lastName'].hasError('required')">
-                  Last name is <strong>required</strong>
+                    Last name is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Login</mat-label>
                 <input formControlName="login" matInput>
                 <mat-error *ngIf="addUserForm.controls['login'].hasError('required')">
-                  Login is <strong>required</strong>
+                    Login is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Password</mat-label>
                 <input formControlName="password" type="password" matInput>
                 <mat-error *ngIf="addUserForm.controls['password'].hasError('required')">
-                  Password is <strong>required</strong>
+                    Password is <strong>required</strong>
                 </mat-error>
                 <mat-error *ngIf="addUserForm.controls['password'].hasError('pattern') && !addUserForm.controls['password'].hasError('required')">
-                  Password should have at least one lowercase letter, uppercase letter, digit and minimum length of 8 characters.
+                    Password should have at least one lowercase letter, uppercase letter, digit and minimum length of 8 characters.
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Email</mat-label>
                 <input formControlName="email" type="email" matInput>
                 <mat-error *ngIf="addUserForm.controls['email'].hasError('email') && !addUserForm.controls['email'].hasError('required')">
-                  Please enter a valid email address
+                    Please enter a valid email address
                 </mat-error>
                 <mat-error *ngIf="addUserForm.controls['email'].hasError('required')">
-                  Email is <strong>required</strong>
+                    Email is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -51,7 +51,7 @@
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="addUserForm.controls['role'].hasError('required')">
-                  Role is <strong>required</strong>
+                    Role is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <p class="loginWarning" [hidden]="!isLoginWarningVisible">❗ User with such login already exist</p>
@@ -64,145 +64,145 @@
     </form>
 </div>
 <div *ngIf="type=='/users'&&this.inputData.id!=0">
-  <form [formGroup]="editUserForm" (ngSubmit)="SaveData()">
-    <h1 mat-dialog-title>{{inputData.title}}</h1>
-    <div mat-dialog-content>
-      <mat-form-field>
-        <mat-label>Firstname</mat-label>
-        <input formControlName="firstName" matInput>
-        <mat-error *ngIf="editUserForm.controls['firstName'].hasError('required')">
-          First name is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Lastname</mat-label>
-        <input formControlName="lastName" matInput>
-        <mat-error *ngIf="editUserForm.controls['lastName'].hasError('required')">
-          Last name is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Login</mat-label>
-        <input formControlName="login" matInput>
-        <mat-error *ngIf="editUserForm.controls['login'].hasError('required')">
-          Login is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input formControlName="email" type="email" matInput>
-        <mat-error *ngIf="editUserForm.controls['email'].hasError('email') && !editUserForm.controls['email'].hasError('required')">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="editUserForm.controls['email'].hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Role</mat-label>
-        <mat-select formControlName="role" matInput>
-          <mat-option *ngFor="let role of roles" [value]="role.value">
-            {{role.viewValue}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="editUserForm.controls['role'].hasError('required')">
-          Role is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <p class="loginWarning" [hidden]="!isLoginWarningVisible">❗ User with such login already exist</p>
-      <p class="emailWarning" [hidden]="!isEmailWarningVisible">❗ Check if email is correct</p>
-    </div>
-    <div mat-dialog-actions>
-      <button mat-raised-button color="primary" [disabled]="!isFormValid(editUserForm)">Save</button>
-      <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
-    </div>
-  </form>
+    <form [formGroup]="editUserForm" (ngSubmit)="SaveData()">
+        <h1 mat-dialog-title>{{inputData.title}}</h1>
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Firstname</mat-label>
+                <input formControlName="firstName" matInput>
+                <mat-error *ngIf="editUserForm.controls['firstName'].hasError('required')">
+                    First name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Lastname</mat-label>
+                <input formControlName="lastName" matInput>
+                <mat-error *ngIf="editUserForm.controls['lastName'].hasError('required')">
+                    Last name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Login</mat-label>
+                <input formControlName="login" matInput>
+                <mat-error *ngIf="editUserForm.controls['login'].hasError('required')">
+                    Login is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input formControlName="email" type="email" matInput>
+                <mat-error *ngIf="editUserForm.controls['email'].hasError('email') && !editUserForm.controls['email'].hasError('required')">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="editUserForm.controls['email'].hasError('required')">
+                    Email is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Role</mat-label>
+                <mat-select formControlName="role" matInput>
+                    <mat-option *ngFor="let role of roles" [value]="role.value">
+                        {{role.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="editUserForm.controls['role'].hasError('required')">
+                    Role is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <p class="loginWarning" [hidden]="!isLoginWarningVisible">❗ User with such login already exist</p>
+            <p class="emailWarning" [hidden]="!isEmailWarningVisible">❗ Check if email is correct</p>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-raised-button color="primary" [disabled]="!isFormValid(editUserForm)">Save</button>
+            <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
+        </div>
+    </form>
 </div>
 <div *ngIf="type=='/clients'">
-  <form [formGroup]="clientForm" (ngSubmit)="SaveData()">
-    <h1 mat-dialog-title>{{inputData.title}}</h1>
-    <div mat-dialog-content>
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input formControlName="name" matInput>
-        <mat-error *ngIf="clientForm.controls['name'].hasError('required')">
-          Name is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input type="email" formControlName="email" matInput>
-        <mat-error *ngIf="clientForm.controls['email'].hasError('email') && !clientForm.controls['email'].hasError('required')">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="clientForm.controls['email'].hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Phone number</mat-label>
-        <input type="tel" formControlName="phoneNumber" matInput>
-        <mat-error *ngIf="clientForm.controls['phoneNumber'].hasError('pattern') && !clientForm.controls['phoneNumber'].hasError('required')">
-          Please enter a valid phone number
-        </mat-error>
-        <mat-error *ngIf="clientForm.controls['phoneNumber'].hasError('required')">
-          Phone number is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div mat-dialog-actions>
-      <button mat-raised-button color="primary" [disabled]="!isFormValid(clientForm)">Save</button>
-      <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
-    </div>
-  </form>
+    <form [formGroup]="clientForm" (ngSubmit)="SaveData()">
+        <h1 mat-dialog-title>{{inputData.title}}</h1>
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input formControlName="name" matInput>
+                <mat-error *ngIf="clientForm.controls['name'].hasError('required')">
+                    Name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Email</mat-label>
+                <input type="email" formControlName="email" matInput>
+                <mat-error *ngIf="clientForm.controls['email'].hasError('email') && !clientForm.controls['email'].hasError('required')">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="clientForm.controls['email'].hasError('required')">
+                    Email is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Phone number</mat-label>
+                <input type="tel" formControlName="phoneNumber" matInput>
+                <mat-error *ngIf="clientForm.controls['phoneNumber'].hasError('pattern') && !clientForm.controls['phoneNumber'].hasError('required')">
+                    Please enter a valid phone number
+                </mat-error>
+                <mat-error *ngIf="clientForm.controls['phoneNumber'].hasError('required')">
+                    Phone number is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-raised-button color="primary" [disabled]="!isFormValid(clientForm)">Save</button>
+            <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
+        </div>
+    </form>
 </div>
 <div *ngIf="type=='/products'">
-  <form [formGroup]="productForm" (ngSubmit)="SaveData()">
-    <h1 mat-dialog-title>{{inputData.title}}</h1>
-    <div mat-dialog-content>
-      <mat-form-field *ngIf="clients$ | async as clients" [hidden]="inputData.id">
-        <mat-label>Client</mat-label>
-        <mat-select formControlName="clientId" matInput>
-          <mat-option *ngFor="let client of clients" [value]="client.clientId">
-            {{client.name}}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="productForm.controls['clientId'].hasError('required')">
-          Client is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Product name</mat-label>
-        <input formControlName="productName" matInput>
-        <mat-error *ngIf="productForm.controls['productName'].hasError('required')">
-          Product name is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Version number</mat-label>
-        <input type="number" min="1" step="0.1" formControlName="version" matInput>
-        <mat-error *ngIf="productForm.controls['version'].hasError('required')">
-          Version is <strong>required</strong>
-        </mat-error>
-        <mat-error *ngIf="productForm.controls['version'].hasError('min')">
-          Invalid number input
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Description</mat-label>
-        <textarea #productDescription maxlength="400" formControlName="description" matInput></textarea>
-        <mat-hint align="end">{{productDescription.value.length}}/400</mat-hint>
-        <mat-error *ngIf="productForm.controls['description'].hasError('required')">
-          Description is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-    </div>
+    <form [formGroup]="productForm" (ngSubmit)="SaveData()">
+        <h1 mat-dialog-title>{{inputData.title}}</h1>
+        <div mat-dialog-content>
+            <mat-form-field *ngIf="clients$ | async as clients" [hidden]="inputData.id">
+                <mat-label>Client</mat-label>
+                <mat-select formControlName="clientId" matInput>
+                    <mat-option *ngFor="let client of clients" [value]="client.clientId">
+                        {{client.name}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="productForm.controls['clientId'].hasError('required')">
+                    Client is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Product name</mat-label>
+                <input formControlName="productName" matInput>
+                <mat-error *ngIf="productForm.controls['productName'].hasError('required')">
+                    Product name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Version number</mat-label>
+                <input type="number" min="1" step="0.1" formControlName="version" matInput>
+                <mat-error *ngIf="productForm.controls['version'].hasError('required')">
+                    Version is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="productForm.controls['version'].hasError('min')">
+                    Invalid number input
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea #productDescription maxlength="400" formControlName="description" matInput></textarea>
+                <mat-hint align="end">{{productDescription.value.length}}/400</mat-hint>
+                <mat-error *ngIf="productForm.controls['description'].hasError('required')">
+                    Description is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
 
-    <div mat-dialog-actions>
-      <button mat-raised-button color="primary" [disabled]="!isFormValid(productForm)">Save</button>
-      <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
-    </div>
-  </form>
+        <div mat-dialog-actions>
+            <button mat-raised-button color="primary" [disabled]="!isFormValid(productForm)">Save</button>
+            <button [mat-dialog-close] mat-raised-button color="warn">Cancel</button>
+        </div>
+    </form>
 </div>
 <div *ngIf="type=='/requests'">
     <form [formGroup]="requestForm" (ngSubmit)="SaveData()">
@@ -212,7 +212,7 @@
                 <mat-label>Name</mat-label>
                 <input formControlName="requestName" matInput>
                 <mat-error *ngIf="requestForm.controls['requestName'].hasError('required')">
-                  Request name is <strong>required</strong>
+                    Request name is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -220,17 +220,17 @@
                 <textarea #requestDescription maxlength="400" formControlName="description" matInput></textarea>
                 <mat-hint align="end">{{requestDescription.value.length}}/400</mat-hint>
                 <mat-error *ngIf="requestForm.controls['description'].hasError('required')">
-                  Description is <strong>required</strong>
+                    Description is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="users$ | async as users">
-              <mat-label>Responsible user</mat-label>
-              <mat-select formControlName="responsibleUser" matInput>
-                <mat-option [value]="''">None</mat-option>
-                <mat-option *ngFor="let user of users" [value]="user.login">
-                  {{user.firstName+' '+user.lastName}}
-                </mat-option>
-              </mat-select>
+                <mat-label>Responsible user</mat-label>
+                <mat-select formControlName="responsibleUser" matInput>
+                    <mat-option [value]="''">None</mat-option>
+                    <mat-option *ngFor="let user of users" [value]="user.login">
+                        {{user.firstName+' '+user.lastName}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
             <mat-form-field *ngIf="products$ | async as products" [hidden]="inputData.id">
                 <mat-label>Product</mat-label>
@@ -240,7 +240,7 @@
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="requestForm.controls['productId'].hasError('required')">
-                  Product is <strong>required</strong>
+                    Product is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
         </div>
@@ -259,7 +259,7 @@
                 <mat-label>Name</mat-label>
                 <input formControlName="issueName" matInput>
                 <mat-error *ngIf="issueForm.controls['issueName'].hasError('required')">
-                  Issue name is <strong>required</strong>
+                    Issue name is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -267,17 +267,17 @@
                 <textarea #issueDescription maxlength="400" formControlName="description" matInput></textarea>
                 <mat-hint align="end">{{issueDescription.value.length}}/400</mat-hint>
                 <mat-error *ngIf="issueForm.controls['description'].hasError('required')">
-                  Description is <strong>required</strong>
+                    Description is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="users$ | async as users">
-              <mat-label>Responsible user</mat-label>
-              <mat-select formControlName="responsibleUser" matInput>
-                <mat-option [value]="''">None</mat-option>
-                <mat-option *ngFor="let user of users" [value]="user.login">
-                  {{user.firstName+' '+user.lastName}}
-                </mat-option>
-              </mat-select>
+                <mat-label>Responsible user</mat-label>
+                <mat-select formControlName="responsibleUser" matInput>
+                    <mat-option [value]="''">None</mat-option>
+                    <mat-option *ngFor="let user of users" [value]="user.login">
+                        {{user.firstName+' '+user.lastName}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
             <mat-form-field *ngIf="requests$ | async as requests" [hidden]="inputData.id">
                 <mat-label>Request</mat-label>
@@ -287,19 +287,19 @@
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="issueForm.controls['requestId'].hasError('required')">
-                  Request is <strong>required</strong>
+                    Request is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
-              <mat-label>Type</mat-label>
-              <mat-select formControlName="type" matInput>
-                <mat-option *ngFor="let type of types" [value]="type">
-                  {{type}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="issueForm.controls['type'].hasError('required')">
-                Type is <strong>required</strong>
-              </mat-error>
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="type" matInput>
+                    <mat-option *ngFor="let type of types" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="issueForm.controls['type'].hasError('required')">
+                    Type is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
         </div>
         <div mat-dialog-actions>
@@ -316,7 +316,7 @@
                 <mat-label>Name</mat-label>
                 <input formControlName="taskName" matInput>
                 <mat-error *ngIf="taskForm.controls['taskName'].hasError('required')">
-                  Task name is <strong>required</strong>
+                    Task name is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -324,17 +324,17 @@
                 <textarea #taskDescription maxlength="400" formControlName="description" matInput></textarea>
                 <mat-hint align="end">{{taskDescription.value.length}}/400</mat-hint>
                 <mat-error *ngIf="taskForm.controls['description'].hasError('required')">
-                  Description is <strong>required</strong>
+                    Description is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="users$ | async as users">
-              <mat-label>Responsible user</mat-label>
-              <mat-select formControlName="responsibleUser" matInput>
-                <mat-option [value]="''">None</mat-option>
-                <mat-option *ngFor="let user of users" [value]="user.login">
-                  {{user.firstName+' '+user.lastName}}
-                </mat-option>
-              </mat-select>
+                <mat-label>Responsible user</mat-label>
+                <mat-select formControlName="responsibleUser" matInput>
+                    <mat-option [value]="''">None</mat-option>
+                    <mat-option *ngFor="let user of users" [value]="user.login">
+                        {{user.firstName+' '+user.lastName}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
             <mat-form-field *ngIf="issues$ | async as issues" [hidden]="inputData.id">
                 <mat-label>Issue</mat-label>
@@ -344,19 +344,19 @@
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="taskForm.controls['issueId'].hasError('required')">
-                  Issue is <strong>required</strong>
+                    Issue is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
-              <mat-label>Type</mat-label>
-              <mat-select formControlName="type" matInput>
-                <mat-option *ngFor="let type of types" [value]="type">
-                  {{type}}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="taskForm.controls['type'].hasError('required')">
-                Type is <strong>required</strong>
-              </mat-error>
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="type" matInput>
+                    <mat-option *ngFor="let type of typesForWorker" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="taskForm.controls['type'].hasError('required')">
+                    Type is <strong>required</strong>
+                </mat-error>
             </mat-form-field>
         </div>
 
